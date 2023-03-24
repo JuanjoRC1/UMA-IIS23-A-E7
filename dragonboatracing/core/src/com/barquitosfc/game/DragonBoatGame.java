@@ -121,7 +121,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case SHOP:
 			break;
 		case QUIT:
-				
+			System.exit(0);
+
 			break;
 			}
 		
