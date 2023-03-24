@@ -35,18 +35,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 		//BACKGROUND
 		
 		Texture board = new Texture(Gdx.files.internal("data/fondo.png"));
-        Image background = new Image(board);
-        background.setOrigin(0, 0);
-        background.setSize(1280, 720);
-        background.rotateBy(0);
-        background.setPosition(0, 0);
-        stage.addActor(background);
+      
 		
 	}
 
 	@Override
 	public void render () {
+		
 		ScreenUtils.clear(0, 0, 0.2f, 1);
+		
 		
 		switch(gameState) {
 		case MENU:
