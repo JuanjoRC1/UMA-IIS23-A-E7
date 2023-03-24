@@ -2,6 +2,8 @@ package com.barquitosfc.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +25,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public static GameState gameState;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
+	private Texture board;
+	private Texture boatTexture;
+	private Rectangle boat;
+	private Table table;
+	
 	
 	@Override
 	public void create () {
@@ -33,23 +40,27 @@ public class DragonBoatGame extends ApplicationAdapter {
 		gameState=GameState.MENU;
 		stage = new Stage();
 		//BACKGROUND
-		
-		Texture board = new Texture(Gdx.files.internal("data/fondo.png"));
-      
+		 board = new Texture(Gdx.files.internal("data/fondo.png"));
+		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
+		 boat=crearBarco();
 		
 	}
 
 	@Override
 	public void render () {
 		
-		ScreenUtils.clear(0, 0, 0.2f, 1);
-		
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.begin();
+        batch.draw(board, 0, 0);
+        batch.end();
 		
 		switch(gameState) {
 		case MENU:
 			stage = new Stage();
-			Table table=new Table();
-			table.setPosition(150,720/4);
+			table=new Table();
+			table.setPosition(150,720/7);
 			table.setFillParent(true);
 			table.setHeight(200);
 			stage.addActor(table);
@@ -110,8 +121,25 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
+			table.clear();
+			batch= new SpriteBatch();
+			ScreenUtils.clear(0, 0, 0.2f, 1);
+			camera.update();
+			batch.setProjectionMatrix(camera.combined);
+			batch.begin();
+			batch.draw(boatTexture,boat.x,boat.y );
+			batch.end();
 			
+			if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+				boat.x -= 200 * Gdx.graphics.getDeltaTime();
+				boat.y += 30 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				boat.x += 200 * Gdx.graphics.getDeltaTime();
+				boat.y += 30 * Gdx.graphics.getDeltaTime();
+			}
 			
+
 			break;
 		case CONFIG:
 			break;
@@ -141,5 +169,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
 		}
 		return skin;
+	}
+	private Rectangle crearBarco(){
+		 Rectangle boat = new Rectangle();
+		boat.x = 1280 / 2 - 720 / 2; 
+		boat.y = 20; 
+		boat.width = 10;
+		boat.height = 10;
+		return boat;
 	}
 }
