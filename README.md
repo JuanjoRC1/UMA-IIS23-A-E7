@@ -8,7 +8,7 @@ Participantes:
 
 3. Gamez Sanchez, Alejandro
 
-4. Stridht Fernandez, Eric
+4. Stridh Fernandez, Eric
 
 5. Guardeño Algar, Jose Antonio 
 
