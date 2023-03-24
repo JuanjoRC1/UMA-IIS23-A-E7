@@ -4,9 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,22 +23,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public static GameState gameState;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private ShapeRenderer shapeRenderer;
-	private BitmapFont font;
-	private float dt;
-	private Rectangle glViewport;
-	
 	
 	@Override
 	public void create () {
 		camera=new OrthographicCamera();
+		camera.setToOrtho(false,1280,720);
+		batch= new SpriteBatch();
+		camera.update();
+		gameState=GameState.MENU;
 		
-		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
+		ScreenUtils.clear(0, 0, 0.2f, 1);
 		switch(gameState) {
 		case MENU:
 			stage = new Stage();
@@ -131,7 +127,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 	protected Skin getSkin() {
 		if (skin==null) {
-			skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
+			skin= new Skin(Gdx.files.internal("uiskin.json"));
 		}
 		return skin;
 	}
