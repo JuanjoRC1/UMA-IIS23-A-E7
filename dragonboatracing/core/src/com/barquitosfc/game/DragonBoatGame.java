@@ -1,6 +1,7 @@
 package com.barquitosfc.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,7 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class DragonBoatGame extends ApplicationAdapter {
 	Texture img;
 	public enum GameState {
-		MENU,PLAY,CREDITS,QUIT
+		MENU,PLAY,CONFIG,QUIT,SHOP
 	}
 	private Skin skin;
 	private Stage stage;
@@ -52,7 +53,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(label);
 			//Botones
 			TextButton buttonPlay= new TextButton("Inicio",getSkin());
-			buttonPlay.setPosition(label.getOriginX()-150, label.getOriginY());
+			buttonPlay.setPosition(label.getOriginX()+100	, label.getOriginY());
 			buttonPlay.setWidth(200);
 			buttonPlay.setHeight(40);
 			buttonPlay.addListener(new InputListener() {
@@ -62,9 +63,46 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 			});
 			table.addActor(buttonPlay);
-			
-			
-		}
+			//BOTON
+			TextButton buttonConfig= new TextButton("Opciones",getSkin());
+			buttonPlay.setPosition(label.getOriginX()+250, label.getOriginY());
+			buttonPlay.setWidth(200);
+			buttonPlay.setHeight(40);
+			buttonPlay.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					gameState=GameState.CONFIG;
+					return false;
+				}
+			});
+			table.addActor(buttonConfig);
+			//BOTON
+			TextButton buttonShop= new TextButton("Tienda",getSkin());
+			buttonPlay.setPosition(label.getOriginX()+500, label.getOriginY());
+			buttonPlay.setWidth(200);
+			buttonPlay.setHeight(40);
+			buttonPlay.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					gameState=GameState.SHOP;
+					return false;
+				}
+			});
+			table.addActor(buttonShop);
+			//BOTON
+			TextButton buttonQuit= new TextButton("Salir",getSkin());
+			buttonPlay.setPosition(label.getOriginX()+750, label.getOriginY());
+			buttonPlay.setWidth(200);
+			buttonPlay.setHeight(40);
+			buttonPlay.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					gameState=GameState.QUIT;
+					return false;
+				}
+			});
+			table.addActor(buttonQuit);
+			stage.act(Gdx.graphics.getDeltaTime());
+			stage.draw();
+			Gdx.input.setInputProcessor(stage);
+			}
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
@@ -74,5 +112,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+	}
+	
+	protected Skin getSkin() {
+		if (skin==null) {
+			skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
+		}
+		return skin;
 	}
 }
