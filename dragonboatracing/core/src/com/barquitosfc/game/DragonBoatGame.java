@@ -26,6 +26,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
 		camera=new OrthographicCamera();
 		camera.setToOrtho(false,1280,720);
 		batch= new SpriteBatch();
@@ -84,7 +85,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(buttonShop);
 			//BOTON
-			TextButton buttonQuit= new TextButton("Salir",getSkin());
+			TextButton buttonQuit= new TextButton("Salir",skin);
 			buttonPlay.setPosition(label.getOriginX()+750, label.getOriginY());
 			buttonPlay.setWidth(200);
 			buttonPlay.setHeight(40);
@@ -127,7 +128,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 	protected Skin getSkin() {
 		if (skin==null) {
-			skin= new Skin(Gdx.files.internal("uiskin.json"));
+			skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
 		}
 		return skin;
 	}
