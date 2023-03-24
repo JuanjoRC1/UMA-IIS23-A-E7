@@ -26,31 +26,42 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
 		camera=new OrthographicCamera();
 		camera.setToOrtho(false,1280,720);
 		batch= new SpriteBatch();
 		camera.update();
 		gameState=GameState.MENU;
+		stage = new Stage();
+		//BACKGROUND
+		
+		Texture board = new Texture(Gdx.files.internal("data/fondo.png"));
+        Image background = new Image(board);
+        background.setOrigin(0, 0);
+        background.setSize(1280, 720);
+        background.rotateBy(0);
+        background.setPosition(0, 0);
+        stage.addActor(background);
 		
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0.2f, 1);
+		
 		switch(gameState) {
 		case MENU:
 			stage = new Stage();
 			Table table=new Table();
-			table.setPosition(800,720/4);
+			table.setPosition(150,720/4);
 			table.setFillParent(true);
 			table.setHeight(200);
 			stage.addActor(table);
-			Label label= new Label("Bienvenidos a Dragon Boat Racing",getSkin());
+			Label label= new Label("Bienvenido a Dragon Boat Racing",getSkin());
+			label.setPosition(365, 400);
 			table.addActor(label);
 			//Botones
 			TextButton buttonPlay= new TextButton("Inicio",getSkin());
-			buttonPlay.setPosition(label.getOriginX()+100	, label.getOriginY());
+			buttonPlay.setPosition(table.getOriginX(), table.getOriginY());
 			buttonPlay.setWidth(200);
 			buttonPlay.setHeight(40);
 			buttonPlay.addListener(new InputListener() {
@@ -62,10 +73,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(buttonPlay);
 			//BOTON
 			TextButton buttonConfig= new TextButton("Opciones",getSkin());
-			buttonPlay.setPosition(label.getOriginX()+250, label.getOriginY());
-			buttonPlay.setWidth(200);
-			buttonPlay.setHeight(40);
-			buttonPlay.addListener(new InputListener() {
+			buttonConfig.setPosition(table.getOriginX()+250, table.getOriginY());
+			buttonConfig.setWidth(200);
+			buttonConfig.setHeight(40);
+			buttonConfig.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.CONFIG;
 					return false;
@@ -74,10 +85,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(buttonConfig);
 			//BOTON
 			TextButton buttonShop= new TextButton("Tienda",getSkin());
-			buttonPlay.setPosition(label.getOriginX()+500, label.getOriginY());
-			buttonPlay.setWidth(200);
-			buttonPlay.setHeight(40);
-			buttonPlay.addListener(new InputListener() {
+			buttonShop.setPosition(table.getOriginX()+500, table.getOriginY());
+			buttonShop.setWidth(200);
+			buttonShop.setHeight(40);
+			buttonShop.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.SHOP;
 					return false;
@@ -86,10 +97,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(buttonShop);
 			//BOTON
 			TextButton buttonQuit= new TextButton("Salir",skin);
-			buttonPlay.setPosition(label.getOriginX()+750, label.getOriginY());
-			buttonPlay.setWidth(200);
-			buttonPlay.setHeight(40);
-			buttonPlay.addListener(new InputListener() {
+			buttonQuit.setPosition(table.getOriginX()+750, table.getOriginY());
+			buttonQuit.setWidth(200);
+			buttonQuit.setHeight(40);
+			buttonQuit.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.QUIT;
 					return false;
@@ -110,6 +121,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case SHOP:
 			break;
 		case QUIT:
+				
 			break;
 			}
 		
@@ -123,7 +135,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		skin.dispose();
 	}
 	
 	protected Skin getSkin() {
