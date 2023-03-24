@@ -102,10 +102,25 @@ public class DragonBoatGame extends ApplicationAdapter {
 			stage.act(Gdx.graphics.getDeltaTime());
 			stage.draw();
 			Gdx.input.setInputProcessor(stage);
+			break;
+			
+		case PLAY:
+			
+			
+			break;
+		case CONFIG:
+			break;
+		case SHOP:
+			break;
+		case QUIT:
+			break;
 			}
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		
+		
+			
+//		batch.begin();
+//		batch.draw(img, 0, 0);
+//		batch.end();
 	}
 	
 	@Override
