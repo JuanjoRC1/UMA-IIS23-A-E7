@@ -129,15 +129,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
-			
-			if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+			 // Movimiento del barco
+			if(Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A)) {
 				boat.x -= 200 * Gdx.graphics.getDeltaTime();
-				boat.y += 30 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			if(Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) {
 				boat.x += 200 * Gdx.graphics.getDeltaTime();
-				boat.y += 30 * Gdx.graphics.getDeltaTime();
 			}
+			if(Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)){
+				boat.y += 200 * Gdx.graphics.getDeltaTime();
+			}
+			if(Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S)) {
+				boat.y -= 200 * Gdx.graphics.getDeltaTime();
+			}
+
+
 			
 
 			break;
