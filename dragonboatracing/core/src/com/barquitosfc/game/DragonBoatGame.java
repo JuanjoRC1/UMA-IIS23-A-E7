@@ -6,11 +6,12 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
@@ -21,6 +22,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		MENU,PLAY,CONFIG,QUIT,SHOP
 	}
 	private Skin skin;
+	private Texture bInicio;
+	private Texture bAjustes;
+	private Texture bTienda;
+	private Texture bSalir;
 	private Stage stage;
 	public static GameState gameState;
 	private OrthographicCamera camera;
@@ -29,7 +34,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture boatTexture;
 	private Rectangle boat;
 	private Table table;
-	
+	private SpriteDrawable spriteBInicio;
+	private SpriteDrawable spriteBAjustes;
+	private SpriteDrawable spriteBTienda;
+	private SpriteDrawable spriteBSalir;
 	
 	@Override
 	public void create () {
@@ -39,10 +47,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 		camera.update();
 		gameState=GameState.MENU;
 		stage = new Stage();
+		//BOTONES
+		Texture bInicio= new Texture(Gdx.files.internal("ui/Boton_INICIO.png"));
+		Texture bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
+		Texture bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
+		Texture bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 boat=crearBarco();
+		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio)); // sprite cuando esta sin apretar, apretado y con el raton encima
+		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
+		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
+		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
 		
 	}
 
@@ -68,10 +85,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			label.setPosition(365, 400);
 			table.addActor(label);
 			//Botones
-			TextButton buttonPlay= new TextButton("Inicio",getSkin());
+			Button buttonPlay= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
+//			TextButton buttonPlay= new TextButton("Inicio",getSkin());
 			buttonPlay.setPosition(table.getOriginX(), table.getOriginY());
-			buttonPlay.setWidth(200);
-			buttonPlay.setHeight(40);
+			buttonPlay.setSize(200,40);
 			buttonPlay.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.PLAY;
@@ -81,6 +98,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(buttonPlay);
 			//BOTON
 			TextButton buttonConfig= new TextButton("Opciones",getSkin());
+//			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
 			buttonConfig.setPosition(table.getOriginX()+250, table.getOriginY());
 			buttonConfig.setWidth(200);
 			buttonConfig.setHeight(40);
@@ -92,6 +110,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(buttonConfig);
 			//BOTON
+//			Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
 			TextButton buttonShop= new TextButton("Tienda",getSkin());
 			buttonShop.setPosition(table.getOriginX()+500, table.getOriginY());
 			buttonShop.setWidth(200);
@@ -105,6 +124,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(buttonShop);
 			//BOTON
 			TextButton buttonQuit= new TextButton("Salir",skin);
+//			Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
 			buttonQuit.setPosition(table.getOriginX()+750, table.getOriginY());
 			buttonQuit.setWidth(200);
 			buttonQuit.setHeight(40);
@@ -121,7 +141,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-			table.clear();
+			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			batch= new SpriteBatch();
 			ScreenUtils.clear(0, 0, 0.2f, 1);
 			camera.update();
@@ -162,10 +182,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		skin.dispose();
+		stage.dispose();
 	}
 	
 	protected Skin getSkin() {
-		if (skin==null) {
+		if (skin==null) {	
 			skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
 		}
 		return skin;
