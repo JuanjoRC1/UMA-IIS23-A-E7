@@ -31,6 +31,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Texture board;
+	private Texture boardPlay;
 	private Texture boatTexture;
 	private Rectangle boat;
 	private Table table;
@@ -54,9 +55,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		Texture bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
+		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 boat=crearBarco();
-		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio)); // sprite cuando esta sin apretar, apretado y con el raton encima
+		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
@@ -142,24 +144,27 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 		case PLAY:
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
+			Gdx.gl.glClearColor(1, 1, 1, 1);
+	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
 			batch= new SpriteBatch();
 			ScreenUtils.clear(0, 0, 0.2f, 1);
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
+			batch.draw(boardPlay, 0, 0);
 			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
 			 // Movimiento del barco
-			if(Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A)) {
+			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
 				boat.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) {
+			if((Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) && !(boat.x>=1240)) {
 				boat.x += 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W)){
+			if((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W))&& !(boat.y>=640)){
 				boat.y += 200 * Gdx.graphics.getDeltaTime();
 			}
-			if(Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S)) {
+			if((Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S))&& !(boat.y<=0)) {
 				boat.y -= 200 * Gdx.graphics.getDeltaTime();
 			}
 
@@ -176,12 +181,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			break;
 			}
-		
-		
-			
-//		batch.begin();
-//		batch.draw(img, 0, 0);
-//		batch.end();
 	}
 	
 	@Override
@@ -197,12 +196,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 		}
 		return skin;
 	}
+	
+
 	private Rectangle crearBarco(){
 		 Rectangle boat = new Rectangle();
-		boat.x = 1280 / 2 - 720 / 2; 
-		boat.y = 20; 
-		boat.width = 10;
-		boat.height = 10;
+		boat.x = 1280/2; 
+		boat.y = 720/5; 
+		boat.width = 40;
+		boat.height = 80;
 		return boat;
 	}
 }
