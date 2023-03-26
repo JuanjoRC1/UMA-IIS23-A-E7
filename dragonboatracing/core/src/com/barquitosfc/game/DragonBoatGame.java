@@ -26,6 +26,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture bAjustes;
 	private Texture bTienda;
 	private Texture bSalir;
+	private Texture bInicioCheck;
 	private Stage stage;
 	public static GameState gameState;
 	private OrthographicCamera camera;
@@ -33,12 +34,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture board;
 	private Texture boardPlay;
 	private Texture boatTexture;
-	private Rectangle boat;
+	private Barco boat;
 	private Table table;
 	private SpriteDrawable spriteBInicio;
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
+	private SpriteDrawable spriteBInicioCheck;
+
 	
 	@Override
 	public void create () {
@@ -53,6 +56,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		Texture bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
 		Texture bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
 		Texture bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
+		Texture bInicioCheck= new Texture(Gdx.files.internal("ui/Boton_INICIOCHECK.png"));
+
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
 		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
@@ -62,6 +67,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
+		 spriteBInicioCheck = new SpriteDrawable(new Sprite(bInicioCheck));
 		
 	}
 
@@ -83,10 +89,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.setFillParent(true);
 			table.setHeight(200);
 			stage.addActor(table);
-			Label label= new Label("Bienvenido a Dragon Boat Racing",getSkin());
-			label.setPosition(365, 400);
-			table.addActor(label);
-			//Botones
+			//Botones Inicio
 			Button buttonPlay= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
 //			TextButton buttonPlay= new TextButton("Inicio",getSkin());
 			buttonPlay.setPosition(table.getOriginX(), table.getOriginY());
@@ -99,11 +102,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(buttonPlay);
 			//BOTON
-			TextButton buttonConfig= new TextButton("Opciones",getSkin());
-//			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
+//			TextButton buttonConfig= new TextButton("Opciones",getSkin());
+			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
 			buttonConfig.setPosition(table.getOriginX()+250, table.getOriginY());
-			buttonConfig.setWidth(200);
-			buttonConfig.setHeight(40);
+			buttonConfig.setSize(200,40);
+
 			buttonConfig.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.CONFIG;
@@ -112,8 +115,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(buttonConfig);
 			//BOTON
-//			Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
-			TextButton buttonShop= new TextButton("Tienda",getSkin());
+			Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
+//			TextButton buttonShop= new TextButton("Tienda",getSkin());
 			buttonShop.setPosition(table.getOriginX()+500, table.getOriginY());
 			buttonShop.setWidth(200);
 			buttonShop.setHeight(40);
@@ -125,8 +128,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(buttonShop);
 			//BOTON
-			TextButton buttonQuit= new TextButton("Salir",skin);
-//			Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
+//			TextButton buttonQuit= new TextButton("Salir",skin);
+			Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
 			buttonQuit.setPosition(table.getOriginX()+750, table.getOriginY());
 			buttonQuit.setWidth(200);
 			buttonQuit.setHeight(40);
@@ -155,9 +158,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
 			 // Movimiento del barco
-			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
-				boat.x -= 200 * Gdx.graphics.getDeltaTime();
-			}
+			if(boat.y > 0) boat.y -= 10 * Gdx.graphics.getDeltaTime();
+			
+		
 			if((Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) && !(boat.x>=1240)) {
 				boat.x += 200 * Gdx.graphics.getDeltaTime();
 			}
@@ -167,7 +170,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if((Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S))&& !(boat.y<=0)) {
 				boat.y -= 200 * Gdx.graphics.getDeltaTime();
 			}
-
+			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
+				boat.x -= 200 * Gdx.graphics.getDeltaTime();
+			}
 
 			
 
@@ -186,24 +191,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		skin.dispose();
 		stage.dispose();
 	}
 	
-	protected Skin getSkin() {
-		if (skin==null) {	
-			skin= new Skin(Gdx.files.internal("ui/uiskin.json"));
-		}
-		return skin;
-	}
+
 	
 
-	private Rectangle crearBarco(){
-		 Rectangle boat = new Rectangle();
-		boat.x = 1280/2; 
-		boat.y = 720/5; 
-		boat.width = 40;
-		boat.height = 80;
+	private Barco crearBarco(){
+		Barco boat = new Barco(1280/2,720/5,40,80);
+//		boat.x = 1280/2; 
+//		boat.y = 720/5; 
+//		boat.width = 40;
+//		boat.height = 80;
 		return boat;
 	}
 }
