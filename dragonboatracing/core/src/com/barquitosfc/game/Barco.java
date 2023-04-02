@@ -18,7 +18,7 @@ public class Barco {
 		return area;
 	}
 	
-	public void setRotation(int i) {
-		 area.se
-	}
+//	public void setRotation(int i) {
+//		 area.se
+//	}
 }

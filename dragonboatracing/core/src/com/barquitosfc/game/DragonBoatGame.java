@@ -53,11 +53,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 		gameState=GameState.MENU;
 		stage = new Stage();
 		//BOTONES
-		Texture bInicio= new Texture(Gdx.files.internal("ui/Boton_INICIO.png"));
-		Texture bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
-		Texture bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
-		Texture bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
-		Texture bInicioCheck= new Texture(Gdx.files.internal("ui/Boton_INICIOCHECK.png"));
+		 bInicio= new Texture(Gdx.files.internal("ui/Boton_INICIO.png"));
+		 bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
+		 bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
+		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
+		 bInicioCheck= new Texture(Gdx.files.internal("ui/Boton_INICIOCHECK.png"));
 
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
