@@ -19,8 +19,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class DragonBoatGame extends ApplicationAdapter {
 	Texture img;
 	public enum GameState {
-		MENU,PLAY,CONFIG,QUIT,SHOP
+		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
+	private int dinero;
 	private Skin skin;
 	private Texture bInicio;
 	private Texture bAjustes;
@@ -174,17 +175,28 @@ public class DragonBoatGame extends ApplicationAdapter {
 				boat.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
 
-			
 
 			break;
+			
+			
 		case CONFIG:
+			
 			break;
+			
 		case SHOP:
+			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
+			Gdx.gl.glClearColor(1, 1, 1, 1);
+	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 			break;
+			
+		case MINIJUEGO:
+			break;
+			
 		case QUIT:
 			System.exit(0);
 
 			break;
+			
 			}
 	}
 	
