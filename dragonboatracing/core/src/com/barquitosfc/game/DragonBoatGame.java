@@ -42,12 +42,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
 	private SpriteDrawable spriteBInicioCheck;
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
 
 	
 	@Override
 	public void create () {
 		camera=new OrthographicCamera();
-		camera.setToOrtho(false,1280,720);
+		camera.setToOrtho(false,WIDTH,HEIGHT);
 		batch= new SpriteBatch();
 		camera.update();
 		gameState=GameState.MENU;
