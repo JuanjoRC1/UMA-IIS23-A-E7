@@ -1,5 +1,7 @@
 package com.barquitosfc.game;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -7,12 +9,15 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 
 
 
@@ -34,7 +39,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture board;
 	private Texture boardPlay;
 	private Texture boatTexture;
-	private Barco boat;
+	private Rectangle boat;
 	private Table table;
 	private SpriteDrawable spriteBInicio;
 	private SpriteDrawable spriteBAjustes;
@@ -42,6 +47,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBSalir;
 	private static final int WIDTH=1280;
 	private static final int HEIGHT	=720;
+	private Array<Rectangle> Rocas;
+	private long lastDropTime;
 	
 	@Override
 	public void create () {
@@ -68,6 +75,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
 		 
+		 //Obstaculos 
+		 Rocas = new Array<Rectangle>();
+		 spawnRoca();
 		
 	}
 
@@ -154,6 +164,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
+			   for(Rectangle roca: Rocas) {
+			      batch.draw(boatTexture, roca.x, roca.y);
+			   }
 			batch.draw(boardPlay, 0, 0);
 			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
@@ -173,7 +186,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
 				boat.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-
+			 if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRoca();
+			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
+			      Rectangle roca = iter.next();
+			      roca.y -= 200 * Gdx.graphics.getDeltaTime();
+			      if(roca.y + 64 < 0) iter.remove();
+			      if(roca.overlaps(boat)) {
+				         iter.remove();
+				      }
+			   }
 
 			break;
 			
@@ -209,13 +230,24 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	
 
-	private Barco crearBarco(){
-		Barco boat = new Barco(1280/2,720/5,40,80);
-//		boat.x = 1280/2; 
-//		boat.y = 720/5; 
-//		boat.width = 40;
-//		boat.height = 80;
+	private Rectangle crearBarco(){
+		Rectangle boat = new Rectangle();
+		boat.x = 1280/2; 
+		boat.y = 720/5; 
+		boat.width = 40;
+		boat.height = 80;
 		return boat;
 	}
+	 private void spawnRoca() {
+	      Rectangle roca = new Rectangle();
+	      roca.x = MathUtils.random(0, 1280-64);
+	      roca.y = 720;
+	      roca.width = 64;
+	      roca.height = 64;
+	      Rocas.add(roca);
+	      lastDropTime = TimeUtils.nanoTime();
+	   }
+	 
+	
 	
 }
