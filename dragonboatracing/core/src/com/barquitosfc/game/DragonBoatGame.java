@@ -189,7 +189,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRoca();
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
-			      roca.y -= 200 * Gdx.graphics.getDeltaTime();
+			      roca.y -= 30 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < 0) iter.remove();
 			      if(roca.overlaps(boat)) {
 				         iter.remove();
@@ -221,10 +221,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 			}
 	}
 	
+	
+	
 	@Override
 	public void dispose () {
 		batch.dispose();
 		stage.dispose();
+		boatTexture.dispose();
+		
 	}
 	
 
@@ -238,6 +242,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		boat.height = 80;
 		return boat;
 	}
+	
 	 private void spawnRoca() {
 	      Rectangle roca = new Rectangle();
 	      roca.x = MathUtils.random(0, 1280-64);

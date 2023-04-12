@@ -1,4 +1,4 @@
-package com.barquitosfc.game;
+ package com.barquitosfc.game;
 
 import java.awt.Color;
 import java.awt.Font;
