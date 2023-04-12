@@ -166,24 +166,29 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
-			batch= new SpriteBatch();
 			ScreenUtils.clear(0, 0, 0.2f, 1);
+			
+			//RENDERIZADO
+			
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-			   for(Rectangle roca: Rocas) {
+			batch.draw(boardPlay, 0, 0);
+			batch.draw(boatTexture,boat.x,boat.y );
+			batch.end();
+			batch.begin();
+			 for(Rectangle roca: Rocas) {
 			      batch.draw(boatTexture, roca.x, roca.y);
 			   }
-			   for(Rectangle tronco: Troncos) {
-				      batch.draw(boatTexture, tronco.x, tronco.y);
+			   for(Rectangle tronco: Troncos) {  
+				   batch.draw(boatTexture, tronco.x, tronco.y);
 				   }
 			   for(Rectangle cocodrilo: Cocodrilos) {
 				      batch.draw(boatTexture, cocodrilo.x, cocodrilo.y);
 				   }
-			batch.draw(boardPlay, 0, 0);
-			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
 			 // Movimiento del barco
+			
 			if(boat.y > 0) boat.y -= 10 * Gdx.graphics.getDeltaTime();
 			
 		
@@ -199,9 +204,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
 				boat.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			 if(TimeUtils.millis() - lastDropTimeRoca > 1000) spawnRoca();
-			 if(TimeUtils.millis() - lastDropTimeTroncos > 2000) spawnTronco();
-			 if(TimeUtils.millis() - lastDropTimeCocodrilos > 3000) spawnRoca();
+			
+			
+			//OBSTACULOS 
+			
+			 if(TimeUtils.millis() - lastDropTimeRoca > 4000) spawnRoca();
+			 if(TimeUtils.millis() - lastDropTimeTroncos > 13000) spawnTronco();
+			 if(TimeUtils.millis() - lastDropTimeCocodrilos > 9000) spawnRoca();
 			 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
@@ -211,6 +220,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				         iter.remove();
 				      }
 			   }
+			 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
 			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
@@ -219,6 +229,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				         iter.remove();
 				      }
 			   }
+			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
 			      cocodrilo.y -= 200 * Gdx.graphics.getDeltaTime();
