@@ -48,7 +48,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private static final int WIDTH=1280;
 	private static final int HEIGHT	=720;
 	private Array<Rectangle> Rocas;
-	private long lastDropTime;
+	private Array<Rectangle> Troncos;
+	private Array<Rectangle> Cocodrilos;
+	private long lastDropTimeRoca;
+	private long lastDropTimeTroncos;
+	private long lastDropTimeCocodrilos;
 	
 	@Override
 	public void create () {
@@ -78,7 +82,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
 		 spawnRoca();
-		
+		 Troncos = new Array<Rectangle>();
+		 spawnTronco();
+		 Cocodrilos = new Array<Rectangle>();
+		 spawnCocodrilo();
 	}
 
 	@Override
@@ -167,6 +174,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			   for(Rectangle roca: Rocas) {
 			      batch.draw(boatTexture, roca.x, roca.y);
 			   }
+			   for(Rectangle tronco: Troncos) {
+				      batch.draw(boatTexture, tronco.x, tronco.y);
+				   }
+			   for(Rectangle cocodrilo: Cocodrilos) {
+				      batch.draw(boatTexture, cocodrilo.x, cocodrilo.y);
+				   }
 			batch.draw(boardPlay, 0, 0);
 			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
@@ -186,12 +199,31 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
 				boat.x -= 200 * Gdx.graphics.getDeltaTime();
 			}
-			 if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRoca();
+			 if(TimeUtils.millis() - lastDropTimeRoca > 1000) spawnRoca();
+			 if(TimeUtils.millis() - lastDropTimeTroncos > 2000) spawnTronco();
+			 if(TimeUtils.millis() - lastDropTimeCocodrilos > 3000) spawnRoca();
+			 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
 			      roca.y -= 200 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < 0) iter.remove();
 			      if(roca.overlaps(boat)) {
+				         iter.remove();
+				      }
+			   }
+			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
+			      Rectangle tronco = iter.next();
+			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
+			      if(tronco.y + 64 < 0) iter.remove();
+			      if(tronco.overlaps(boat)) {
+				         iter.remove();
+				      }
+			   }
+			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
+			      Rectangle cocodrilo = iter.next();
+			      cocodrilo.y -= 200 * Gdx.graphics.getDeltaTime();
+			      if(cocodrilo.y + 64 < 0) iter.remove();
+			      if(cocodrilo.overlaps(boat)) {
 				         iter.remove();
 				      }
 			   }
@@ -245,9 +277,25 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      roca.width = 64;
 	      roca.height = 64;
 	      Rocas.add(roca);
-	      lastDropTime = TimeUtils.nanoTime();
+	      lastDropTimeRoca = TimeUtils.millis();
 	   }
-	 
-	
+	 private void spawnTronco() {
+	      Rectangle tronco = new Rectangle();
+	      tronco.x = MathUtils.random(0, 1280-64);
+	      tronco.y = 720;
+	      tronco.width = 64;
+	      tronco.height = 64;
+	      Troncos.add(tronco);
+	      lastDropTimeTroncos = TimeUtils.millis();
+	   }
+	 private void spawnCocodrilo() {
+	      Rectangle cocodrilo = new Rectangle();
+	      cocodrilo.x = MathUtils.random(0, 1280-64);
+	      cocodrilo.y = 720;
+	      cocodrilo.width = 64;
+	      cocodrilo.height = 64;
+	      Cocodrilos.add(cocodrilo);
+	      lastDropTimeCocodrilos = TimeUtils.millis();
+	   }
 	
 }
