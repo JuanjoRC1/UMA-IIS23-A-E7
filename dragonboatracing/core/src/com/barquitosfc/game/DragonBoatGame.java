@@ -27,7 +27,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture bAjustes;
 	private Texture bTienda;
 	private Texture bSalir;
-	private Texture bInicioCheck;
 	private Stage stage;
 	public static GameState gameState;
 	private OrthographicCamera camera;
@@ -41,10 +40,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-	private SpriteDrawable spriteBInicioCheck;
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 720;
-
+	private static final int WIDTH=1280;
+	private static final int HEIGHT	=720;
 	
 	@Override
 	public void create () {
@@ -59,7 +56,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
 		 bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
 		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
-		 bInicioCheck= new Texture(Gdx.files.internal("ui/Boton_INICIOCHECK.png"));
+		
 
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
@@ -70,7 +67,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
-		 spriteBInicioCheck = new SpriteDrawable(new Sprite(bInicioCheck));
+		 
 		
 	}
 
@@ -192,6 +189,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case MINIJUEGO:
+			
 			break;
 			
 		case QUIT:
