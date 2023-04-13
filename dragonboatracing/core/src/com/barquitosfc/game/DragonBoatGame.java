@@ -27,7 +27,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public enum GameState {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
-	
+	float leftLimit, rightLimit, topLimit, bottomLimit;
 	private Vector2 velocity = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
@@ -57,11 +57,16 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private long lastDropTimeRoca;
 	private long lastDropTimeTroncos;
 	private long lastDropTimeCocodrilos;
-	private int aceler;
+
 	
 	@Override
 	public void create () {
 		camera=new OrthographicCamera();
+		camera = new OrthographicCamera();
+		leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
+		rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
+		topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
+		bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
 		camera.setToOrtho(false,WIDTH,HEIGHT);
 		batch= new SpriteBatch();
 		camera.update();
@@ -184,6 +189,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			batch.draw(boardPlay, 0, 0);
+			for(int i = 0; i < 10 ; i++) {
+				batch.draw(boardPlay,0,HEIGHT*i);
+			}
 			batch.draw(boatTexture,boat.x,boat.y );
 			batch.end();
 			batch.begin();
@@ -199,33 +207,25 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 }
 			batch.end();
 			 // Movimiento del barco
-			if(boat.y > 0) {//boat.y -= 10 * Gdx.graphics.getDeltaTime();
-				boat.y += aceler * Gdx.graphics.getDeltaTime();
-				acceleration.set(0, -6f);
+			if(boat.y > 0) {
+				boat.y += Gdx.graphics.getDeltaTime();
+				acceleration.set(0, 0f);
 			}
-			
 		    handleInput();
 		    update(Gdx.graphics.getDeltaTime());
-		
-//			if((Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) && !(boat.x>=1240)) {
-//				boat.x += 100 * Gdx.graphics.getDeltaTime();
-//			}
-//			if((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W))&& !(boat.y>=640)){
-//				aceler += 200 ;
-//			}
-//			if((Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S))&& !(boat.y<=0)) {
-//				boat.y -= 50 * Gdx.graphics.getDeltaTime();
-//			}
-//			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
-//				boat.x -= 100 * Gdx.graphics.getDeltaTime();
-//			}
+				
 			
-			
-			//OBSTACULOS 
+			//Actualizar zonas para la aparicion de objetos 
+		    camera.update();
+		    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
+		    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
+		    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
+		    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
 			
 			 if(TimeUtils.millis() - lastDropTimeRoca > 4000) spawnRoca();
 			 if(TimeUtils.millis() - lastDropTimeTroncos > 13000) spawnTronco();
 			 if(TimeUtils.millis() - lastDropTimeCocodrilos > 9000) spawnRoca();
+		 
 			 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
@@ -304,7 +304,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	 private void spawnRoca() {
 	      Rectangle roca = new Rectangle();
 	      roca.x = MathUtils.random(0, 1280-64);
-	      roca.y = 720;
+	      roca.y = topLimit +360;
 	      roca.width = 64;
 	      roca.height = 64;
 	      Rocas.add(roca);
@@ -313,7 +313,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	 private void spawnTronco() {
 	      Rectangle tronco = new Rectangle();
 	      tronco.x = MathUtils.random(0, 1280-64);
-	      tronco.y = 720;
+	      tronco.y = topLimit + 360;
 	      tronco.width = 64;
 	      tronco.height = 64;
 	      Troncos.add(tronco);
@@ -322,12 +322,29 @@ public class DragonBoatGame extends ApplicationAdapter {
 	 private void spawnCocodrilo() {
 	      Rectangle cocodrilo = new Rectangle();
 	      cocodrilo.x = MathUtils.random(0, 1280-64);
-	      cocodrilo.y = 720;
+	      cocodrilo.y = topLimit + 360;
 	      cocodrilo.width = 64;
 	      cocodrilo.height = 64;
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
+	
+	//Prueba 
+//	private class Obstaculo {
+//		int width; 
+//		int height; 
+//		int velocity; 
+//		int x; 
+//		int y; 
+//		
+//		public Obstaculo(int ja, int jo) {
+//			x = ja; 
+//			y = jo;
+//		}
+//		
+//		
+//		
+//	}
 	 
 	 // Barco Movimiento
 
@@ -337,12 +354,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	 public void handleInput() { 
 		    if (Gdx.input.isKeyPressed(Keys.W)) {
 		        if (acceleration.y < maxAcceleration) {
-		            acceleration.y += 25;
+		            acceleration.y += 100;
 		        }
 		    }
 		    if (Gdx.input.isKeyPressed(Keys.S)) {
 		        if (acceleration.y < maxAcceleration) {
-		            acceleration.y -= 20;
+		            acceleration.y -= 100;
 		        }
 		    }
 		    if (Gdx.input.isKeyPressed(Keys.D)) {
