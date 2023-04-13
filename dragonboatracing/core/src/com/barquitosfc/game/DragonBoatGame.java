@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -26,6 +27,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public enum GameState {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
+	
+	private Vector2 velocity = new Vector2();
+	private Vector2 acceleration = new Vector2();
 	private int dinero;
 	private Skin skin;
 	private Texture bInicio;
@@ -53,6 +57,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private long lastDropTimeRoca;
 	private long lastDropTimeTroncos;
 	private long lastDropTimeCocodrilos;
+	private int aceler;
 	
 	@Override
 	public void create () {
@@ -163,6 +168,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
+			//Nueva camara que sigue al barco
+			OrthographicCamera camera = new OrthographicCamera();
+			camera.setToOrtho(false, WIDTH, 720);
+			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
+			camera.update();
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
@@ -179,31 +189,36 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			 for(Rectangle roca: Rocas) {
 			      batch.draw(boatTexture, roca.x, roca.y);
-			   }
-			   for(Rectangle tronco: Troncos) {  
-				   batch.draw(boatTexture, tronco.x, tronco.y);
-				   }
-			   for(Rectangle cocodrilo: Cocodrilos) {
-				      batch.draw(boatTexture, cocodrilo.x, cocodrilo.y);
-				   }
+			 }
+			 for(Rectangle tronco: Troncos) {  
+				 batch.draw(boatTexture, tronco.x, tronco.y);
+			 }
+			 for(Rectangle cocodrilo: Cocodrilos) {
+				 batch.draw(boatTexture, cocodrilo.x, cocodrilo.y);
+				 
+			 }
 			batch.end();
 			 // Movimiento del barco
+			if(boat.y > 0) {//boat.y -= 10 * Gdx.graphics.getDeltaTime();
+				boat.y += aceler * Gdx.graphics.getDeltaTime();
+				acceleration.set(0, -6f);
+			}
 			
-			if(boat.y > 0) boat.y -= 10 * Gdx.graphics.getDeltaTime();
-			
+		    handleInput();
+		    update(Gdx.graphics.getDeltaTime());
 		
-			if((Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) && !(boat.x>=1240)) {
-				boat.x += 200 * Gdx.graphics.getDeltaTime();
-			}
-			if((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W))&& !(boat.y>=640)){
-				boat.y += 200 * Gdx.graphics.getDeltaTime();
-			}
-			if((Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S))&& !(boat.y<=0)) {
-				boat.y -= 200 * Gdx.graphics.getDeltaTime();
-			}
-			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
-				boat.x -= 200 * Gdx.graphics.getDeltaTime();
-			}
+//			if((Gdx.input.isKeyPressed(Keys.RIGHT)||Gdx.input.isKeyPressed(Keys.D)) && !(boat.x>=1240)) {
+//				boat.x += 100 * Gdx.graphics.getDeltaTime();
+//			}
+//			if((Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed(Keys.W))&& !(boat.y>=640)){
+//				aceler += 200 ;
+//			}
+//			if((Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed(Keys.S))&& !(boat.y<=0)) {
+//				boat.y -= 50 * Gdx.graphics.getDeltaTime();
+//			}
+//			if((Gdx.input.isKeyPressed(Keys.LEFT)||Gdx.input.isKeyPressed(Keys.A))&& !(boat.x<0)) {
+//				boat.x -= 100 * Gdx.graphics.getDeltaTime();
+//			}
 			
 			
 			//OBSTACULOS 
@@ -313,5 +328,58 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
+	 
+	 // Barco Movimiento
+
+	 private float maxAcceleration = 30f; //Aceleracionmaxima
+	 private float maxAcceleration2 = 40f;
+	 	//Controles
+	 public void handleInput() { 
+		    if (Gdx.input.isKeyPressed(Keys.W)) {
+		        if (acceleration.y < maxAcceleration) {
+		            acceleration.y += 25;
+		        }
+		    }
+		    if (Gdx.input.isKeyPressed(Keys.S)) {
+		        if (acceleration.y < maxAcceleration) {
+		            acceleration.y -= 20;
+		        }
+		    }
+		    if (Gdx.input.isKeyPressed(Keys.D)) {
+		        if (acceleration.y < maxAcceleration2) {
+		            acceleration.y += 1;
+		            acceleration.x += 40;
+		        }
+		    }
+		    if (Gdx.input.isKeyPressed(Keys.A)) {
+		        if (acceleration.y < maxAcceleration2) {
+		            acceleration.y += 1;
+		            acceleration.x -= 40;
+		        }
+		    }
+		    
+		}
+	 
+	    public void update(float deltaTime) {
+	        velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        boat.x += velocity.x * deltaTime;
+	        boat.y += velocity.y * deltaTime;
+	    }
+	    public Vector2 getVelocity() {
+	        return velocity;
+	    }
+
+	    public Vector2 getAcceleration() {
+	        return acceleration;
+	    }
+
+	    public void setVelocity(Vector2 velocity) {
+	        this.velocity = velocity;
+	    }
+
+	    public void setAcceleration(Vector2 acceleration) {
+	        this.acceleration = acceleration;
+	    }
+	 
 	
 }
