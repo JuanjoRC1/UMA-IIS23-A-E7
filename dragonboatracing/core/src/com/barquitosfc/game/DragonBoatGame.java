@@ -49,8 +49,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-	private static final int WIDTH=1280;
-	private static final int HEIGHT	=720;
+	private static final int WIDTH=1920;
+	private static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas;
 	private Array<Rectangle> Troncos;
 	private Array<Rectangle> Cocodrilos;
@@ -80,11 +80,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 		
 
 		//BACKGROUND
-		 board = new Texture(Gdx.files.internal("data/fondo.png"));
+		 board = new Texture(Gdx.files.internal("data/fondoMENU.png"));
 		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 boat = new Sprite(boatTexture);
-		 boat.setPosition(1280/2, 720/5);
+		 boat.setPosition(WIDTH/2, HEIGHT/5);
 		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
@@ -113,7 +113,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case MENU:
 			stage = new Stage();
 			table=new Table();
-			table.setPosition(150,720/7);
+			table.setPosition(260,HEIGHT/7);
 			table.setFillParent(true);
 			table.setHeight(200);
 			stage.addActor(table);
@@ -133,7 +133,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
 			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
-			buttonConfig.setPosition(table.getOriginX()+250, table.getOriginY());
+			buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+200, table.getOriginY());
 			buttonConfig.setSize(200,40);
 
 			buttonConfig.addListener(new InputListener() {
@@ -146,7 +146,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//BOTON
 			Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
 //			TextButton buttonShop= new TextButton("Tienda",getSkin());
-			buttonShop.setPosition(table.getOriginX()+500, table.getOriginY());
+			buttonShop.setPosition(buttonConfig.getX()+buttonConfig.getWidth()+200, table.getOriginY());
 			buttonShop.setWidth(200);
 			buttonShop.setHeight(40);
 			buttonShop.addListener(new InputListener() {
@@ -159,7 +159,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//BOTON
 //			TextButton buttonQuit= new TextButton("Salir",skin);
 			Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
-			buttonQuit.setPosition(table.getOriginX()+750, table.getOriginY());
+			buttonQuit.setPosition(buttonShop.getX()+buttonShop.getWidth()+200, table.getOriginY());
 			buttonQuit.setWidth(200);
 			buttonQuit.setHeight(40);
 			buttonQuit.addListener(new InputListener() {
@@ -175,55 +175,40 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-//			Nueva camara que sigue al barco
-			OrthographicCamera camera = new OrthographicCamera();
-//			boat.setPosition(1280/2, 720/5);
-			camera.setToOrtho(false, WIDTH, 720);
-			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
-			camera.update();
-//			boat.setPosition(1248/2, 720/5);// proporciones del barco
-			boat.setScale(1f); 
+
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
 			ScreenUtils.clear(0, 0, 0.2f, 1);
-			
-			//RENDERIZADO
-		
+			//			Nueva camara que sigue al barco
+			OrthographicCamera camera = new OrthographicCamera();
+			camera.setToOrtho(false, WIDTH, 720);
+			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
+			//RENDERIZADO
 			batch.begin();
 			batch.draw(boardPlay, 0, 0);
 			for(int i = 0; i < 100000 ; i++) {
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
-			
-//			batch.draw(boat,1280/2,720/5);
-			batch.end();	
-			
-			batch.begin(); 
-			boat.draw(batch); 
 			batch.end();
-			
+		
 			batch.begin();	
-
-			
 			 for(Rectangle roca: Rocas) {
-			      batch.draw(boatTexture, roca.x, roca.y);
+			      batch.draw(bInicio, roca.x, roca.y);
 			 }
 			 for(Rectangle tronco: Troncos) {  
-				 batch.draw(boatTexture, tronco.x, tronco.y);
+				 batch.draw(bInicio, tronco.x, tronco.y);
 			 }
 			 for(Rectangle cocodrilo: Cocodrilos) {
-				 batch.draw(boatTexture, cocodrilo.x, cocodrilo.y);
-				 
+				 batch.draw(bInicio, cocodrilo.x, cocodrilo.y);
 			 }
 			batch.end();
+			
 //			  Movimiento del barco
 			
-			
-			
-		    // mover el barco en funci髇 de las teclas presionadas
+		    // mover el barco en funci贸n de las teclas presionadas
 		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 		    	if(acceleration.x < maxrotation);
 		    		acceleration.add(-3, 0);
@@ -242,12 +227,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 		    }
 		    // actualizar el barco
-		    update1(Gdx.graphics.getDeltaTime());
+		    update(Gdx.graphics.getDeltaTime());
 
-			
-//		    handleInput();
-//		    update(Gdx.graphics.getDeltaTime());
-				
 		    //Combertir el sprite en rectangle 
 		    Rectangle rect1 = boat.getBoundingRectangle(); 
 			//Actualizar zonas para la aparicion de objetos 
@@ -323,18 +304,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 		boatTexture.dispose();
 		
 	}
-	
-
-	
-
-//	private Sprite crearBarco(){
-//		Sprite boat = new Sprite(boatTexture, 1280/2, 720/5, WIDTH, HEIGHT);
-////		boat.setX(1280/2); 
-////		boat.setY(720/5); 
-////		boat.setSize(40, 80);
-//		return boat;
-//	}
-	
 	 private void spawnRoca() {
 	      Rectangle roca = new Rectangle();
 	      roca.x = MathUtils.random(0, 1280-64);
@@ -366,24 +335,28 @@ public class DragonBoatGame extends ApplicationAdapter {
 //		    setPosition(getX() + velocity.x * deltaTime, getY() + velocity.y * deltaTime);
 //		}
 	 
-	 public void update1(float delta) {
-		 
-		 velocity.add(acceleration); 
-		 boat.setPosition(velocity.x, velocity.y);;
-		 
-	 }
-	 public void dibujar(SpriteBatch batch) {
-		    // configurar la posici髇 del sprite
-		    boat.setPosition(boat.getX(), boat.getY());
-
-		    // dibujar el sprite
+	 public void update(float delta) {
+		    batch.begin();
 		    boat.draw(batch);
+		    batch.end();
+
+		    // Multiplica la velocidad por delta
+		    velocity.scl(delta);
+
+		    // Actualiza la posici贸n del objeto con la velocidad
+		    boat.setPosition(boat.getX() + velocity.x, boat.getY() + velocity.y);
+
+		    // Restaura la velocidad multiplicando por 1/delta
+		    velocity.scl(1 / delta);
+
+		    // Actualiza la aceleraci贸n del objeto aqu铆, si es necesario
+		    velocity.add(acceleration);
 		}
 	 private float maxAcceleration = 10f;
 	 private float maxrotation = 4f;
 	 
 //	 public void actualizar() {
-//		    // mover el barco en funci髇 de las teclas presionadas
+//		    // mover el barco en funci贸n de las teclas presionadas
 //		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 //		    	if(acceleration.x < maxAcceleration)
 //		    	acceleration.add(-1, 0);

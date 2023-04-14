@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("Dragonboatracing");
-		config.setWindowedMode(1280, 720);
+		config.setWindowedMode(1920, 1080);
 		config.useVsync(true);
 		config.setForegroundFPS(30);
 		new Lwjgl3Application(new DragonBoatGame(), config);
