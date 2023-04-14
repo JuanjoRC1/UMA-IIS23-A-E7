@@ -43,7 +43,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture board;
 	private Texture boardPlay;
 	private Texture boatTexture;
-	private Rectangle boat;
+	private Sprite boat;
 	private Table table;
 	private SpriteDrawable spriteBInicio;
 	private SpriteDrawable spriteBAjustes;
@@ -83,7 +83,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
 		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
-		 boat=crearBarco();
+		 boat = new Sprite();
+		 boat = new Sprite(boatTexture);
+		 boat.setPosition(1248/2, 720/5);
 		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
@@ -173,13 +175,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-			//Nueva camara que sigue al barco
+//			Nueva camara que sigue al barco
 			OrthographicCamera camera = new OrthographicCamera();
 			camera.setToOrtho(false, WIDTH, 720);
 			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
 			camera.update();
+//			boat.setPosition(1248/2, 720/5);// proporciones del barco
+			boat.setScale(1f); 
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
-			Gdx.gl.glClearColor(1, 1, 1, 1);
+			Gdx.gl.glClearColor(0, 0, 0, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
 			ScreenUtils.clear(0, 0, 0.2f, 1);
 			
@@ -189,10 +193,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			batch.draw(boardPlay, 0, 0);
-			for(int i = 0; i < 10 ; i++) {
+			for(int i = 0; i < 100000 ; i++) {
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
-			batch.draw(boatTexture,boat.x,boat.y );
+			boat.draw(batch);
 			batch.end();
 			batch.begin();
 			 for(Rectangle roca: Rocas) {
@@ -206,15 +210,35 @@ public class DragonBoatGame extends ApplicationAdapter {
 				 
 			 }
 			batch.end();
-			 // Movimiento del barco
-			if(boat.y > 0) {
-				boat.y += Gdx.graphics.getDeltaTime();
-				acceleration.set(0, 0f);
-			}
-		    handleInput();
-		    update(Gdx.graphics.getDeltaTime());
-				
+//			  Movimiento del barco
 			
+			
+			
+		    // mover el barco en función de las teclas presionadas
+		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		    	acceleration.add(-10, 0);
+		    } else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		    	acceleration.add(10, 0);    
+		    }else {
+
+		    }
+
+		    if (Gdx.input.isKeyPressed(Keys.UP)) {
+		    	acceleration.add(0, 100);
+		    } else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		    	acceleration.add(0, -100);
+		    } else {
+
+		    }
+		    // actualizar el barco
+		    update1(Gdx.graphics.getDeltaTime());
+
+			
+//		    handleInput();
+//		    update(Gdx.graphics.getDeltaTime());
+				
+		    //Combertir el sprite en rectangle 
+		    Rectangle rect1 = boat.getBoundingRectangle(); 
 			//Actualizar zonas para la aparicion de objetos 
 		    camera.update();
 		    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
@@ -231,7 +255,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      Rectangle roca = iter.next();
 			      roca.y -= 30 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < 0) iter.remove();
-			      if(roca.overlaps(boat)) {
+			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				      }
 			   }
@@ -240,7 +264,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      Rectangle tronco = iter.next();
 			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y + 64 < 0) iter.remove();
-			      if(tronco.overlaps(boat)) {
+			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				      }
 			   }
@@ -249,7 +273,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      Rectangle cocodrilo = iter.next();
 			      cocodrilo.y -= 200 * Gdx.graphics.getDeltaTime();
 			      if(cocodrilo.y + 64 < 0) iter.remove();
-			      if(cocodrilo.overlaps(boat)) {
+			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				      }
 			   }
@@ -292,14 +316,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	
 
-	private Rectangle crearBarco(){
-		Rectangle boat = new Rectangle();
-		boat.x = 1280/2; 
-		boat.y = 720/5; 
-		boat.width = 40;
-		boat.height = 80;
-		return boat;
-	}
+//	private Sprite crearBarco(){
+//		Sprite boat = new Sprite(boatTexture, 1280/2, 720/5, WIDTH, HEIGHT);
+////		boat.setX(1280/2); 
+////		boat.setY(720/5); 
+////		boat.setSize(40, 80);
+//		return boat;
+//	}
 	
 	 private void spawnRoca() {
 	      Rectangle roca = new Rectangle();
@@ -328,75 +351,48 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
-	
-	//Prueba 
-//	private class Obstaculo {
-//		int width; 
-//		int height; 
-//		int velocity; 
-//		int x; 
-//		int y; 
-//		
-//		public Obstaculo(int ja, int jo) {
-//			x = ja; 
-//			y = jo;
+	 // MOvimineto con aceleracion
+	 
+//	 public void update(float deltaTime) {
+//		    handleInput();
+//		    velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+//		    setPosition(getX() + velocity.x * deltaTime, getY() + velocity.y * deltaTime);
 //		}
-//		
-//		
-//		
-//	}
 	 
-	 // Barco Movimiento
+	 public void update1(float delta) {
+		 if(acceleration.x < maxAcceleration)
+		 velocity.add(acceleration); 
+		 boat.setOriginBasedPosition(velocity.x, velocity.y);;
+		 
+	 }
+	 public void dibujar(SpriteBatch batch) {
+		    // configurar la posición del sprite
+		    boat.setPosition(boat.getX(), boat.getY());
 
-	 private float maxAcceleration = 30f; //Aceleracionmaxima
-	 private float maxAcceleration2 = 40f;
-	 	//Controles
-	 public void handleInput() { 
-		    if (Gdx.input.isKeyPressed(Keys.W)) {
-		        if (acceleration.y < maxAcceleration) {
-		            acceleration.y += 100;
-		        }
-		    }
-		    if (Gdx.input.isKeyPressed(Keys.S)) {
-		        if (acceleration.y < maxAcceleration) {
-		            acceleration.y -= 100;
-		        }
-		    }
-		    if (Gdx.input.isKeyPressed(Keys.D)) {
-		        if (acceleration.y < maxAcceleration2) {
-		            acceleration.y += 1;
-		            acceleration.x += 40;
-		        }
-		    }
-		    if (Gdx.input.isKeyPressed(Keys.A)) {
-		        if (acceleration.y < maxAcceleration2) {
-		            acceleration.y += 1;
-		            acceleration.x -= 40;
-		        }
-		    }
-		    
+		    // dibujar el sprite
+		    boat.draw(batch);
 		}
-	 
-	    public void update(float deltaTime) {
-	        velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
-	        boat.x += velocity.x * deltaTime;
-	        boat.y += velocity.y * deltaTime;
-	    }
-	    public Vector2 getVelocity() {
-	        return velocity;
-	    }
+	 private float maxAcceleration = 100f;
+	 public void actualizar() {
+		    // mover el barco en función de las teclas presionadas
+		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		    	if(acceleration.x < maxAcceleration)
+		    	acceleration.add(-10, 0);
+		    } 
+		    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		    	if(acceleration.x < maxAcceleration)
+		    	acceleration.add(10, 0);    
+		    }
+		    if (Gdx.input.isKeyPressed(Keys.UP)) {
+		    	if(acceleration.y < maxAcceleration)
+		    	acceleration.add(0, 100);
+		    }
+		    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		    	if(acceleration.y < maxAcceleration)
+		    	acceleration.add(0, -100);
+		    }
 
-	    public Vector2 getAcceleration() {
-	        return acceleration;
-	    }
-
-	    public void setVelocity(Vector2 velocity) {
-	        this.velocity = velocity;
-	    }
-
-	    public void setAcceleration(Vector2 acceleration) {
-	        this.acceleration = acceleration;
-	    }
-	 
+		    update1(Gdx.graphics.getDeltaTime());
+		}
 	
 }
