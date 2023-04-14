@@ -83,9 +83,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 board = new Texture(Gdx.files.internal("data/fondo.png"));
 		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
-		 boat = new Sprite();
 		 boat = new Sprite(boatTexture);
-		 boat.setPosition(1248/2, 720/5);
+		 boat.setPosition(1280/2, 720/5);
 		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
@@ -127,6 +126,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.PLAY;
 					return false;
+					
 				}
 			});
 			table.addActor(buttonPlay);
@@ -177,6 +177,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case PLAY:
 //			Nueva camara que sigue al barco
 			OrthographicCamera camera = new OrthographicCamera();
+//			boat.setPosition(1280/2, 720/5);
 			camera.setToOrtho(false, WIDTH, 720);
 			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
 			camera.update();
@@ -188,7 +189,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			ScreenUtils.clear(0, 0, 0.2f, 1);
 			
 			//RENDERIZADO
-			
+		
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
@@ -196,9 +197,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 			for(int i = 0; i < 100000 ; i++) {
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
-			boat.draw(batch);
+			
+//			batch.draw(boat,1280/2,720/5);
+			batch.end();	
+			
+			batch.begin(); 
+			boat.draw(batch); 
 			batch.end();
-			batch.begin();
+			
+			batch.begin();	
+
+			
 			 for(Rectangle roca: Rocas) {
 			      batch.draw(boatTexture, roca.x, roca.y);
 			 }
@@ -216,17 +225,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 		    // mover el barco en función de las teclas presionadas
 		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-		    	acceleration.add(-10, 0);
+		    	if(acceleration.x < maxrotation);
+		    		acceleration.add(-3, 0);
 		    } else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-		    	acceleration.add(10, 0);    
+		    	if(acceleration.x < maxrotation)
+		    		acceleration.add(3, 0);    
 		    }else {
 
 		    }
 
 		    if (Gdx.input.isKeyPressed(Keys.UP)) {
-		    	acceleration.add(0, 100);
+		    	acceleration.add(0, 3);
 		    } else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-		    	acceleration.add(0, -100);
+		    	acceleration.add(0, -3);
 		    } else {
 
 		    }
@@ -343,11 +354,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
 	 private void spawnCocodrilo() {
-	      Rectangle cocodrilo = new Rectangle();
-	      cocodrilo.x = MathUtils.random(0, 1280-64);
-	      cocodrilo.y = topLimit + 360;
-	      cocodrilo.width = 64;
-	      cocodrilo.height = 64;
+	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, 1280-64),topLimit + 360,64,64);
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
@@ -360,9 +367,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 //		}
 	 
 	 public void update1(float delta) {
-		 if(acceleration.x < maxAcceleration)
+		 
 		 velocity.add(acceleration); 
-		 boat.setOriginBasedPosition(velocity.x, velocity.y);;
+		 boat.setPosition(velocity.x, velocity.y);;
 		 
 	 }
 	 public void dibujar(SpriteBatch batch) {
@@ -372,27 +379,29 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    // dibujar el sprite
 		    boat.draw(batch);
 		}
-	 private float maxAcceleration = 100f;
-	 public void actualizar() {
-		    // mover el barco en función de las teclas presionadas
-		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-		    	if(acceleration.x < maxAcceleration)
-		    	acceleration.add(-10, 0);
-		    } 
-		    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-		    	if(acceleration.x < maxAcceleration)
-		    	acceleration.add(10, 0);    
-		    }
-		    if (Gdx.input.isKeyPressed(Keys.UP)) {
-		    	if(acceleration.y < maxAcceleration)
-		    	acceleration.add(0, 100);
-		    }
-		    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-		    	if(acceleration.y < maxAcceleration)
-		    	acceleration.add(0, -100);
-		    }
-
-		    update1(Gdx.graphics.getDeltaTime());
-		}
+	 private float maxAcceleration = 10f;
+	 private float maxrotation = 4f;
+	 
+//	 public void actualizar() {
+//		    // mover el barco en función de las teclas presionadas
+//		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+//		    	if(acceleration.x < maxAcceleration)
+//		    	acceleration.add(-1, 0);
+//		    } 
+//		    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+//		    	if(acceleration.x < maxAcceleration)
+//		    	acceleration.add(1, 0);    
+//		    }
+//		    if (Gdx.input.isKeyPressed(Keys.UP)) {
+//		    	if(acceleration.y < maxAcceleration)
+//		    	acceleration.add(0, 1);
+//		    }
+//		    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+//		    	if(acceleration.y < maxAcceleration)
+//		    	acceleration.add(0, -1);
+//		    }
+//
+//		    update1(Gdx.graphics.getDeltaTime());
+//		}
 	
 }
