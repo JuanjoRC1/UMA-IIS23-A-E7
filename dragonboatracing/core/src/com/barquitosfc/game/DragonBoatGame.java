@@ -34,6 +34,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private int vidas;
 	private int vPunta;
 	private int agilidad;
+	private float limiteY=HEIGHT / 2;
 	private Texture bInicio;
 	private Texture bAjustes;
 	private Texture bTienda;
@@ -187,14 +188,24 @@ public class DragonBoatGame extends ApplicationAdapter {
 			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
-			//RENDERIZADO
+			//PINTAR EL FONDO
+			
+			
+			if (boat.getY()<limiteY) {
+				camera.position.set(WIDTH/2,limiteY,0);
+			} else {
+				camera.position.set(WIDTH / 2, boat.getY() + boat.getHeight() / 2, 0);
+			}
+			camera.update();
+			
 			batch.begin();
 			batch.draw(boardPlay, 0, 0);
 			for(int i = 0; i < 100000 ; i++) {
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
 			batch.end();
-		
+			
+//			PINTAR LOS OBSTACULOS
 			batch.begin();	
 			 for(Rectangle roca: Rocas) {
 			      batch.draw(bInicio, roca.x, roca.y);
@@ -207,18 +218,35 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 }
 			batch.end();
 			
-//			  Movimiento del barco
+//			  LIMITES DEL BARCO
 			
-			if (boat.getX()<64) {
-				boat.setX(0);
+			if (boat.getX() < 0) {
+			    boat.setX(64);
+			    acceleration.add(3,0);
+			    camera.position.x = WIDTH / 2;
 			}
-			if (boat.getX()>WIDTH-64) {
-				boat.setX(WIDTH);
+			if (boat.getX() > WIDTH - 64) {
+			    boat.setX(WIDTH-64);
+			    camera.position.x = WIDTH / 2;
 			}
+
+			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
+			if (boat.getY() < camera.position.y - HEIGHT / 4) {
+			    camera.position.y = boat.getY() + HEIGHT / 4;
+			}
+			if (boat.getY() > camera.position.y + HEIGHT / 4) {
+			    camera.position.y = boat.getY() - HEIGHT / 4;
+			}
+
+			
+			
+			
 			if (boat.getY()<64) {
 				boat.setY(0);
 			}
-		    // mover el barco en función de las teclas presionadas
+			
+			
+//		     MOVIMIENTO DEL BARCO
 		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 		    	if(acceleration.x < maxrotation);
 		    		acceleration.add(-3, 0);
@@ -247,11 +275,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
 		    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
 			
-			 if(TimeUtils.millis() - lastDropTimeRoca > 4000) spawnRoca();
+			 if(TimeUtils.millis() - lastDropTimeRoca > 6000) spawnRoca();
 			 if(TimeUtils.millis() - lastDropTimeTroncos > 13000) spawnTronco();
 			 if(TimeUtils.millis() - lastDropTimeCocodrilos > 9000) spawnRoca();
 		 
-			 
+			 //MOVIMIENTO DE LOS OBSTACULOS
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
 			      roca.y -= 30 * Gdx.graphics.getDeltaTime();
@@ -259,6 +287,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				      }
+			      
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
@@ -268,6 +297,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				      }
+			      
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
@@ -277,6 +307,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				      }
+			      
 			   }
 
 			break;
