@@ -229,7 +229,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    boat.setX(WIDTH-64);
 			    camera.position.x = WIDTH / 2;
 			}
-
+			
+			float limiteY=(boat.getY()/HEIGHT)*HEIGHT;
+			if (boat.getY()<limiteY) {
+				boat.setY(limiteY+20);
+			}
 			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
 			if (boat.getY() < camera.position.y - HEIGHT / 4) {
 			    camera.position.y = boat.getY() + HEIGHT / 4;
@@ -239,11 +243,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			}
 
 			
-			
 
-//			if (boat.getY()<((boat.getY()-1)%HEIGHT)*HEIGHT-HEIGHT) {
-//				boat.setY((boat.getY()%HEIGHT)*HEIGHT+64-HEIGHT);
-//			}
+
 			
 			
 //		     MOVIMIENTO DEL BARCO
@@ -273,7 +274,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
 			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
-			      if(roca.y + 64 < 0) iter.remove();
+			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				      }
@@ -283,7 +284,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
 			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
-			      if(tronco.y + 64 < 0) iter.remove();
+			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				      }
@@ -293,7 +294,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
 			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
-			      if(cocodrilo.y + 64 < 0) iter.remove();
+			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				      }
@@ -357,18 +358,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
-	  private float maxAcceleration = 30f; //Aceleracionmaxima
-	  private float maxAcceleration2 = 40f;
+	  private float maxAcceleration = 200f; //Aceleracionmaxima
+	  private float maxAcceleration2 = 200f;
 	         //Controles
 	     public void handleInput() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)) {
 	                if (acceleration.y < maxAcceleration) {
-	                    acceleration.y += 25;
+	                    acceleration.y += 65;
 	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S)) {
 	                if (acceleration.y < maxAcceleration) {
-	                    acceleration.y -= 20;
+	                    acceleration.y -= 65;
 	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)) {
