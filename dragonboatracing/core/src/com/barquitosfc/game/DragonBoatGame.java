@@ -36,6 +36,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private int agilidad;
 	private int contadorFondo;
 	private int aceler;
+	private BitmapFont font;
 	private Texture bInicio;
 	private Texture bAjustes;
 	private Texture bTienda;
@@ -80,7 +81,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
 		 bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
 		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
-		
+		 font = new BitmapFont();
 
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondoMENU.png"));
@@ -230,10 +231,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    camera.position.x = WIDTH / 2;
 			}
 			
-			float limiteY=(boat.getY()/HEIGHT)*HEIGHT;
-			if (boat.getY()<limiteY) {
-				boat.setY(limiteY+20);
+			int limiteY=(int) (boat.getY()/HEIGHT);
+			if (boat.getY()<(limiteY*HEIGHT)) {
+				boat.setY((limiteY*HEIGHT)+20);
 			}
+			batch.begin();
+			font.draw(batch, "Y: " + limiteY*HEIGHT, 100, boat.getY()+100);
+			batch.end();
 			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
 			if (boat.getY() < camera.position.y - HEIGHT / 4) {
 			    camera.position.y = boat.getY() + HEIGHT / 4;
@@ -364,12 +368,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	     public void handleInput() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)) {
 	                if (acceleration.y < maxAcceleration) {
-	                    acceleration.y += 65;
+	                    acceleration.y += 200;
 	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S)) {
 	                if (acceleration.y < maxAcceleration) {
-	                    acceleration.y -= 65;
+	                    acceleration.y -= 200;
 	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)) {
