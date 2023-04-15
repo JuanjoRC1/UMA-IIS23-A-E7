@@ -228,7 +228,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    camera.position.x = WIDTH / 2;
 			}
 			if (boat.getX() > WIDTH - 64) {
-			    boat.setX(WIDTH-64);
+			    boat.setX(WIDTH-66);
 			    camera.position.x = WIDTH / 2;
 			}
 			
