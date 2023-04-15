@@ -223,7 +223,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			if (boat.getX() < 0) {
 			    boat.setX(64);
-			    acceleration.add(3,0);
 			    camera.position.x = WIDTH / 2;
 			}
 			if (boat.getX() > WIDTH - 64) {
@@ -241,10 +240,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			
 			
-			
-			if (boat.getY()<((boat.getY()-1)%HEIGHT)*HEIGHT-HEIGHT) {
-				boat.setY((boat.getY()%HEIGHT)*HEIGHT+64-HEIGHT);
-			}
+
+//			if (boat.getY()<((boat.getY()-1)%HEIGHT)*HEIGHT-HEIGHT) {
+//				boat.setY((boat.getY()%HEIGHT)*HEIGHT+64-HEIGHT);
+//			}
 			
 			
 //		     MOVIMIENTO DEL BARCO
