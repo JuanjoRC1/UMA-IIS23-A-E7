@@ -31,12 +31,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocity = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
-	private int vidas;
+	private int vidas = 3;
 	private int vPunta = 300;
 	private int agilidad;
 	private int contadorFondo;
 	private int aceler;
-	private float ilit = 0; 
+	private float ilit = 500; 
 	private BitmapFont font;
 	private Texture bInicio;
 	private Texture bAjustes;
@@ -241,7 +241,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
 		    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
 		    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
-		 
+		    
 
 			break;
 			
@@ -295,7 +295,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
 	            	if(boat.getY()>(ilit)) 
-	                    	acceleration.y -= 200;
+	                    	acceleration.y -= 2000;
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)|| Gdx.input.isKeyPressed(Keys.RIGHT)) {
 	                    acceleration.x += 140;
@@ -372,6 +372,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
+				         vidas -= 1;
 				      }
 			   }
 			 
@@ -381,6 +382,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
+				         vidas -= 1;
 				      }
 			   }
 			 
@@ -390,8 +392,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
+				         vidas -= 1;
 				      }
 			 }
+			 
+			 if(vidas == 0) 
+					gameState=GameState.MENU;
+
 	        }
 	        public void stopBoat() {
 	            // Establece la velocidad en cero
