@@ -31,7 +31,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocity = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
-	private Skin skin;
+	private int vidas;
+	private int vPunta;
+	private int agilidad;
 	private Texture bInicio;
 	private Texture bAjustes;
 	private Texture bTienda;
@@ -49,8 +51,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-	private static final int WIDTH=1920;
-	private static final int HEIGHT	=1080;
+	public static final int WIDTH=1920;
+	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas;
 	private Array<Rectangle> Troncos;
 	private Array<Rectangle> Cocodrilos;
@@ -61,7 +63,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		camera=new OrthographicCamera();
 		camera = new OrthographicCamera();
 		leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
 		rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
@@ -208,24 +209,32 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 //			  Movimiento del barco
 			
+			if (boat.getX()<64) {
+				boat.setX(0);
+			}
+			if (boat.getX()>WIDTH-64) {
+				boat.setX(WIDTH);
+			}
+			if (boat.getY()<64) {
+				boat.setY(0);
+			}
 		    // mover el barco en función de las teclas presionadas
 		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 		    	if(acceleration.x < maxrotation);
 		    		acceleration.add(-3, 0);
-		    } else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		    }
+		    
+		    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 		    	if(acceleration.x < maxrotation)
 		    		acceleration.add(3, 0);    
-		    }else {
-
 		    }
-
 		    if (Gdx.input.isKeyPressed(Keys.UP)) {
 		    	acceleration.add(0, 3);
-		    } else if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+		    } 
+		    
+		    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
 		    	acceleration.add(0, -3);
-		    } else {
-
-		    }
+		    } 
 		    // actualizar el barco
 		    update(Gdx.graphics.getDeltaTime());
 
