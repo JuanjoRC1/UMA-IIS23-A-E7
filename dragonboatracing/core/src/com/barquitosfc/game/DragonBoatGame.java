@@ -232,11 +232,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			}
 			
 			int limiteY=(int) (boat.getY()/HEIGHT);
-			if (boat.getY()<(limiteY*HEIGHT)) {
+			if (boat.getY()<(limiteY*HEIGHT)+1) {
 				boat.setY((limiteY*HEIGHT)+20);
+				acceleration.y=0;
 			}
 			batch.begin();
-			font.draw(batch, "Y: " + limiteY*HEIGHT, 100, boat.getY()+100);
+			font.draw(batch, "Y: " + limiteY*HEIGHT+"POSBARCO: "+boat.getY(), 100, boat.getY()+100);
 			batch.end();
 			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
 			if (boat.getY() < camera.position.y - HEIGHT / 4) {
