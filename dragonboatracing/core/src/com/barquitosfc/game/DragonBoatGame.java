@@ -98,11 +98,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
-		 spawnRoca();
+
 		 Troncos = new Array<Rectangle>();
-		 spawnTronco();
+
 		 Cocodrilos = new Array<Rectangle>();
-		 spawnCocodrilo();
+
 	}
 
 	@Override
@@ -189,17 +189,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//			Nueva camara que sigue al barco
 			OrthographicCamera camera = new OrthographicCamera();
 			camera.setToOrtho(false, WIDTH, 720);
-			camera.position.set(WIDTH /2, boat.getY() + boat.getHeight() / 2, 0);
+			camera.position.set(WIDTH /2, boat.getY() + 200 + boat.getHeight() / 2, 0);
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			//PINTAR EL FONDO
-			
-			
-			
 			camera.update();
 			
 			batch.begin();
-			batch.draw(boardPlay, 0, 0);
+			batch.draw(boardPlay, 1920, 1080);
 			for(int i = 0; i < 100000 ; i++) {
 				contadorFondo=i;
 				batch.draw(boardPlay,0,HEIGHT*i);
@@ -222,28 +219,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 }
 			batch.end();
 			
-//			  LIMITES DEL BARCO HORIZONTAL
-			
-			if (boat.getX() < 0) {
-			    boat.setX(1);
-			    velocity.x = 0; 
-			    camera.position.x = WIDTH / 2;
-			}
-			if (boat.getX() > WIDTH - 64) {
-			    boat.setX(WIDTH-65);
-			    velocity.x = 0; 
-			    camera.position.x = WIDTH / 2;
-			}
-			
-// 			 LIMITES DEL BARCO VERTICAL
-			if(ilit <  bottomLimit) ilit = bottomLimit; 
-			
-			if (boat.getY()<(ilit+10)) {
-				boat.setY((ilit)+10);
-				if(velocity.y<0) stopBoat();
-			}
-
-			
 			batch.begin();
 			font.draw(batch, "Y: " + acceleration +"POSBARCO: "+ velocity, 100, boat.getY()+100);
 			batch.end();
@@ -257,18 +232,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    camera.position.y = boat.getY() - HEIGHT / 4;
 			}
 			
-//		     MOVIMIENTO DEL BARCO
-			if(boat.getY() > (ilit)+1) {
-                boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
-                acceleration.set(0, -6f);
-            }else {
-            	stopBoat();
-            }
             handleInput();
             update(Gdx.graphics.getDeltaTime());
-
-		    //Combertir el sprite en rectangle 
-		    Rectangle rect1 = boat.getBoundingRectangle(); 
 		    
 			//Actualizar zonas para la aparicion de objetos 
 		    camera.update();
@@ -276,38 +241,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
 		    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
 		    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
-			
-			 if(TimeUtils.millis() - lastDropTimeRoca > 6000) spawnRoca();
-			 if(TimeUtils.millis() - lastDropTimeTroncos > 13000) spawnTronco();
-			 if(TimeUtils.millis() - lastDropTimeCocodrilos > 9000) spawnRoca();
 		 
-			 //MOVIMIENTO DE LOS OBSTACULOS
-			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
-			      Rectangle roca = iter.next();
-			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
-			      if(roca.y + 64 < bottomLimit+100) iter.remove();
-			      if(roca.overlaps(rect1)) {
-				         iter.remove();
-				      }
-			   }
-			 
-			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
-			      Rectangle tronco = iter.next();
-			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
-			      if(tronco.y +64<bottomLimit+100) iter.remove();
-			      if(tronco.overlaps(rect1)) {
-				         iter.remove();
-				      }
-			   }
-			 
-			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
-			      Rectangle cocodrilo = iter.next();
-			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
-			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
-			      if(cocodrilo.overlaps(rect1)) {
-				         iter.remove();
-				      }
-			   }
 
 			break;
 			
@@ -356,20 +290,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	         //Controles
 	     public void handleInput() { 
-	            if (Gdx.input.isKeyPressed(Keys.W)) {
+	            if (Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.UP) ) {
 	                    acceleration.y += 200;
 	            }
-	            if (Gdx.input.isKeyPressed(Keys.S)) {
+	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
 	            	if(boat.getY()>(ilit)) 
 	                    	acceleration.y -= 200;
 	            }
-	            if (Gdx.input.isKeyPressed(Keys.D)) {
-	                    acceleration.y += 1;
-	                    acceleration.x += 40;
+	            if (Gdx.input.isKeyPressed(Keys.D)|| Gdx.input.isKeyPressed(Keys.RIGHT)) {
+	                    acceleration.x += 140;
 	            }
-	            if (Gdx.input.isKeyPressed(Keys.A)) {
-	                    acceleration.y += 1;
-	                    acceleration.x -= 40;
+	            if (Gdx.input.isKeyPressed(Keys.A)|| Gdx.input.isKeyPressed(Keys.LEFT)) {
+	                    acceleration.x -= 140;
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 	                stopBoat();
@@ -379,12 +311,87 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        }
 
 	        public void update(float deltaTime) {
+//	   			MOVIMINETO DEL BARCO
 	        	if(vPunta > velocity.y)
 	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
 	        	else if(acceleration.y < 0)
 	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        	
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
+	            
+//			     MOVIMIENTO DEL BARCO
+				if(boat.getY() > (ilit)+1) {
+	                boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
+	                acceleration.set(0, -6f);
+	            }else {
+	            	stopBoat();
+	            }
+	            
+//				  LIMITES DEL BARCO HORIZONTAL
+				
+				if (boat.getX() < 0) {
+				    boat.setX(1);
+				    velocity.x = 0; 
+				    camera.position.x = WIDTH / 2;
+				}
+				if (boat.getX() > WIDTH - 64) {
+				    boat.setX(WIDTH-65);
+				    velocity.x = 0; 
+				    camera.position.x = WIDTH / 2;
+				}
+				
+//	 			 LIMITES DEL BARCO VERTICAL
+				if(ilit <  bottomLimit) ilit = bottomLimit; 
+				
+				if (boat.getY()<(ilit+10)) {
+					boat.setY((ilit)+10);
+					if(velocity.y<0) stopBoat();
+				}
+	            
+	            
+	   		 final int tiempoDeEsperaEntreObstaculos = 1000; // espera 100 milisegundos entre cada generación de obstáculos
+			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos) {
+			     spawnRoca();
+			     lastDropTimeRoca = TimeUtils.millis(); // actualiza el tiempo de la última generación de rocas
+			 }
+			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos) {
+			     spawnTronco();
+			     lastDropTimeTroncos = TimeUtils.millis(); // actualiza el tiempo de la última generación de troncos
+			 }
+			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos) {
+			     spawnCocodrilo();
+			     lastDropTimeCocodrilos = TimeUtils.millis(); // actualiza el tiempo de la última generación de cocodrilos
+			 }
+			 
+			    Rectangle rect1 = boat.getBoundingRectangle(); 
+
+			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
+			      Rectangle roca = iter.next();
+			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
+			      if(roca.y + 64 < bottomLimit+100) iter.remove();
+			      if(roca.overlaps(rect1)) {
+				         iter.remove();
+				      }
+			   }
+			 
+			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
+			      Rectangle tronco = iter.next();
+			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
+			      if(tronco.y +64<bottomLimit+100) iter.remove();
+			      if(tronco.overlaps(rect1)) {
+				         iter.remove();
+				      }
+			   }
+			 
+			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
+			      Rectangle cocodrilo = iter.next();
+			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
+			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
+			      if(cocodrilo.overlaps(rect1)) {
+				         iter.remove();
+				      }
+			 }
 	        }
 	        public void stopBoat() {
 	            // Establece la velocidad en cero
