@@ -35,7 +35,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private int vPunta;
 	private int agilidad;
 	private int contadorFondo;
-	private float limiteY=HEIGHT / 2;
+	private int aceler;
 	private Texture bInicio;
 	private Texture bAjustes;
 	private Texture bTienda;
@@ -192,11 +192,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//PINTAR EL FONDO
 			
 			
-			if (boat.getY()<limiteY) {
-				camera.position.set(WIDTH/2,limiteY,0);
-			} else {
-				camera.position.set(WIDTH / 2, boat.getY() + boat.getHeight() / 2, 0);
-			}
+			
 			camera.update();
 			
 			batch.begin();
@@ -207,6 +203,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			}
 			batch.end();
 			
+			batch.begin();
+			batch.draw(boatTexture,boat.getX(),boat.getY() );
+			batch.end();
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
 			 for(Rectangle roca: Rocas) {
@@ -243,30 +242,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			
 			
-			if (boat.getY()<(boat.getY()%HEIGHT)*HEIGHT) {
-				boat.setY((boat.getY()%HEIGHT)*HEIGHT+64);
+			if (boat.getY()<((boat.getY()-1)%HEIGHT)*HEIGHT-HEIGHT) {
+				boat.setY((boat.getY()%HEIGHT)*HEIGHT+64-HEIGHT);
 			}
 			
 			
 //		     MOVIMIENTO DEL BARCO
-		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-		    	if(acceleration.x < maxrotation);
-		    		acceleration.add(-3, 0);
-		    }
+			if(boat.getY() > 0) {
+                boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
+                acceleration.set(0, -6f);
+            }
+            handleInput();
+            update(Gdx.graphics.getDeltaTime());
 		    
-		    if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-		    	if(acceleration.x < maxrotation)
-		    		acceleration.add(3, 0);    
-		    }
-		    if (Gdx.input.isKeyPressed(Keys.UP)) {
-		    	acceleration.add(0, 3);
-		    } 
-		    
-		    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-		    	acceleration.add(0, -3);
-		    } 
-		    // actualizar el barco
-		    update(Gdx.graphics.getDeltaTime());
+		  
 
 		    //Combertir el sprite en rectangle 
 		    Rectangle rect1 = boat.getBoundingRectangle(); 
@@ -284,7 +273,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 //MOVIMIENTO DE LOS OBSTACULOS
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
-			      roca.y -= 30 * Gdx.graphics.getDeltaTime();
+			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < 0) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
@@ -304,7 +293,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
-			      cocodrilo.y -= 200 * Gdx.graphics.getDeltaTime();
+			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
 			      if(cocodrilo.y + 64 < 0) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
@@ -348,7 +337,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	}
 	 private void spawnRoca() {
 	      Rectangle roca = new Rectangle();
-	      roca.x = MathUtils.random(0, 1280-64);
+	      roca.x = MathUtils.random(0, WIDTH-64);
 	      roca.y = topLimit +360;
 	      roca.width = 64;
 	      roca.height = 64;
@@ -357,7 +346,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	   }
 	 private void spawnTronco() {
 	      Rectangle tronco = new Rectangle();
-	      tronco.x = MathUtils.random(0, 1280-64);
+	      tronco.x = MathUtils.random(0, WIDTH-64);
 	      tronco.y = topLimit + 360;
 	      tronco.width = 64;
 	      tronco.height = 64;
@@ -365,58 +354,59 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
 	 private void spawnCocodrilo() {
-	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, 1280-64),topLimit + 360,64,64);
+	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,64,64);
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
-	 // MOvimineto con aceleracion
-	 
-//	 public void update(float deltaTime) {
-//		    handleInput();
-//		    velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
-//		    setPosition(getX() + velocity.x * deltaTime, getY() + velocity.y * deltaTime);
-//		}
-	 
-	 public void update(float delta) {
-		    batch.begin();
-		    boat.draw(batch);
-		    batch.end();
+	  private float maxAcceleration = 30f; //Aceleracionmaxima
+	  private float maxAcceleration2 = 40f;
+	         //Controles
+	     public void handleInput() { 
+	            if (Gdx.input.isKeyPressed(Keys.W)) {
+	                if (acceleration.y < maxAcceleration) {
+	                    acceleration.y += 25;
+	                }
+	            }
+	            if (Gdx.input.isKeyPressed(Keys.S)) {
+	                if (acceleration.y < maxAcceleration) {
+	                    acceleration.y -= 20;
+	                }
+	            }
+	            if (Gdx.input.isKeyPressed(Keys.D)) {
+	                if (acceleration.y < maxAcceleration2) {
+	                    acceleration.y += 1;
+	                    acceleration.x += 40;
+	                }
+	            }
+	            if (Gdx.input.isKeyPressed(Keys.A)) {
+	                if (acceleration.y < maxAcceleration2) {
+	                    acceleration.y += 1;
+	                    acceleration.x -= 40;
+	                }
+	            }
 
-		    // Multiplica la velocidad por delta
-		    velocity.scl(delta);
+	        }
 
-		    // Actualiza la posición del objeto con la velocidad
-		    boat.setPosition(boat.getX() + velocity.x, boat.getY() + velocity.y);
+	        public void update(float deltaTime) {
+	            velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	            boat.setX(boat.getX() + velocity.x * deltaTime);
+	            boat.setY(boat.getY() + velocity.y * deltaTime);
+	        }
+	        public Vector2 getVelocity() {
+	            return velocity;
+	        }
 
-		    // Restaura la velocidad multiplicando por 1/delta
-		    velocity.scl(1 / delta);
+	        public Vector2 getAcceleration() {
+	            return acceleration;
+	        }
 
-		    // Actualiza la aceleración del objeto aquí, si es necesario
-		    velocity.add(acceleration);
-		}
-	 private float maxAcceleration = 10f;
-	 private float maxrotation = 4f;
-	 
-//	 public void actualizar() {
-//		    // mover el barco en función de las teclas presionadas
-//		    if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-//		    	if(acceleration.x < maxAcceleration)
-//		    	acceleration.add(-1, 0);
-//		    } 
-//		    if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-//		    	if(acceleration.x < maxAcceleration)
-//		    	acceleration.add(1, 0);    
-//		    }
-//		    if (Gdx.input.isKeyPressed(Keys.UP)) {
-//		    	if(acceleration.y < maxAcceleration)
-//		    	acceleration.add(0, 1);
-//		    }
-//		    if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-//		    	if(acceleration.y < maxAcceleration)
-//		    	acceleration.add(0, -1);
-//		    }
-//
-//		    update1(Gdx.graphics.getDeltaTime());
-//		}
-	
-}
+	        public void setVelocity(Vector2 velocity) {
+	            this.velocity = velocity;
+	        }
+
+	        public void setAcceleration(Vector2 acceleration) {
+	            this.acceleration = acceleration;
+	        }
+
+
+	}
