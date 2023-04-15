@@ -34,6 +34,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private int vidas;
 	private int vPunta;
 	private int agilidad;
+	private int contadorFondo;
 	private float limiteY=HEIGHT / 2;
 	private Texture bInicio;
 	private Texture bAjustes;
@@ -201,6 +202,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			batch.draw(boardPlay, 0, 0);
 			for(int i = 0; i < 100000 ; i++) {
+				contadorFondo=i;
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
 			batch.end();
@@ -241,8 +243,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			
 			
-			if (boat.getY()<64) {
-				boat.setY(0);
+			if (boat.getY()<(boat.getY()%HEIGHT)*HEIGHT) {
+				boat.setY((boat.getY()%HEIGHT)*HEIGHT+64);
 			}
 			
 			
