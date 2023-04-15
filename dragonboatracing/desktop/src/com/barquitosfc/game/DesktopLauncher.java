@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.setTitle("Dragonboatracing");
 		config.setWindowedMode(1920, 1080);
 		config.useVsync(true);
-		config.setForegroundFPS(30);
+		config.setForegroundFPS(120);
 		new Lwjgl3Application(new DragonBoatGame(), config);
 	}
 }

@@ -36,6 +36,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private int agilidad;
 	private int contadorFondo;
 	private int aceler;
+	private int limiteY;
 	private BitmapFont font;
 	private Texture bInicio;
 	private Texture bAjustes;
@@ -231,14 +232,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    camera.position.x = WIDTH / 2;
 			}
 			
-			int limiteY=(int) (boat.getY()/HEIGHT);
-			if (boat.getY()<(limiteY*HEIGHT)+1) {
-				boat.setY((limiteY*HEIGHT)+20);
-				acceleration.y=0;
+			limiteY=(int) (boat.getY()/HEIGHT);
+			if (boat.getY()<(limiteY*HEIGHT+10)) {
+				boat.setY((limiteY*HEIGHT)+10);
+				
+				if(velocity.y<0) {
+					stopBoat();
+				}
 			}
+			
+			
 			batch.begin();
 			font.draw(batch, "Y: " + limiteY*HEIGHT+"POSBARCO: "+boat.getY(), 100, boat.getY()+100);
 			batch.end();
+			
+			
 			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
 			if (boat.getY() < camera.position.y - HEIGHT / 4) {
 			    camera.position.y = boat.getY() + HEIGHT / 4;
@@ -253,9 +261,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			
 //		     MOVIMIENTO DEL BARCO
-			if(boat.getY() > 0) {
+			if(boat.getY() > (limiteY*HEIGHT)+1) {
                 boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
                 acceleration.set(0, -6f);
+            }else {
+            	stopBoat();
             }
             handleInput();
             update(Gdx.graphics.getDeltaTime());
@@ -373,9 +383,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S)) {
-	                if (acceleration.y < maxAcceleration) {
-	                    acceleration.y -= 200;
-	                }
+	            	if(boat.getY()>(limiteY*HEIGHT)) {
+	            		if (acceleration.y < maxAcceleration) {
+	                    	acceleration.y -= 200;
+	                	}
+	            	}
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)) {
 	                if (acceleration.y < maxAcceleration2) {
@@ -389,6 +401,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	                    acceleration.x -= 40;
 	                }
 	            }
+	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+	                stopBoat();
+	            }
+
 
 	        }
 
@@ -397,6 +413,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
 	        }
+	        public void stopBoat() {
+	            // Establece la velocidad en cero
+	            velocity.set(0, 0);
+	            // Establece la aceleración en cero
+	            acceleration.set(0, 0);
+	        }
+
 	        public Vector2 getVelocity() {
 	            return velocity;
 	        }
