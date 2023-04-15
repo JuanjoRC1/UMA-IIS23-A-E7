@@ -32,11 +32,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
 	private int vidas;
-	private int vPunta;
+	private int vPunta = 300;
 	private int agilidad;
 	private int contadorFondo;
 	private int aceler;
-	private int limiteY;
+	private float ilit = 0; 
 	private BitmapFont font;
 	private Texture bInicio;
 	private Texture bAjustes;
@@ -63,6 +63,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private long lastDropTimeRoca;
 	private long lastDropTimeTroncos;
 	private long lastDropTimeCocodrilos;
+
 
 	
 	@Override
@@ -221,29 +222,30 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 }
 			batch.end();
 			
-//			  LIMITES DEL BARCO
+//			  LIMITES DEL BARCO HORIZONTAL
 			
 			if (boat.getX() < 0) {
-			    boat.setX(64);
+			    boat.setX(1);
+			    velocity.x = 0; 
 			    camera.position.x = WIDTH / 2;
 			}
 			if (boat.getX() > WIDTH - 64) {
-			    boat.setX(WIDTH-66);
+			    boat.setX(WIDTH-65);
+			    velocity.x = 0; 
 			    camera.position.x = WIDTH / 2;
 			}
 			
-			limiteY=(int) (boat.getY()/HEIGHT);
-			if (boat.getY()<(limiteY*HEIGHT+10)) {
-				boat.setY((limiteY*HEIGHT)+10);
-				
-				if(velocity.y<0) {
-					stopBoat();
-				}
-			}
+// 			 LIMITES DEL BARCO VERTICAL
+			if(ilit <  bottomLimit) ilit = bottomLimit; 
 			
+			if (boat.getY()<(ilit+10)) {
+				boat.setY((ilit)+10);
+				if(velocity.y<0) stopBoat();
+			}
+
 			
 			batch.begin();
-			font.draw(batch, "Y: " + limiteY*HEIGHT+"POSBARCO: "+boat.getY(), 100, boat.getY()+100);
+			font.draw(batch, "Y: " + acceleration +"POSBARCO: "+ velocity, 100, boat.getY()+100);
 			batch.end();
 			
 			
@@ -254,14 +256,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if (boat.getY() > camera.position.y + HEIGHT / 4) {
 			    camera.position.y = boat.getY() - HEIGHT / 4;
 			}
-
-			
-
-
-			
 			
 //		     MOVIMIENTO DEL BARCO
-			if(boat.getY() > (limiteY*HEIGHT)+1) {
+			if(boat.getY() > (ilit)+1) {
                 boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
                 acceleration.set(0, -6f);
             }else {
@@ -269,11 +266,10 @@ public class DragonBoatGame extends ApplicationAdapter {
             }
             handleInput();
             update(Gdx.graphics.getDeltaTime());
-		    
-		  
 
 		    //Combertir el sprite en rectangle 
 		    Rectangle rect1 = boat.getBoundingRectangle(); 
+		    
 			//Actualizar zonas para la aparicion de objetos 
 		    camera.update();
 		    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
@@ -293,7 +289,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				      }
-			      
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
@@ -303,7 +298,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				      }
-			      
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
@@ -313,11 +307,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				      }
-			      
 			   }
 
 			break;
-			
 			
 		case CONFIG:
 			
@@ -340,31 +332,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			}
 	}
-	
-	
-	
 	@Override
 	public void dispose () {
 		batch.dispose();
 		stage.dispose();
 		boatTexture.dispose();
-		
 	}
 	 private void spawnRoca() {
-	      Rectangle roca = new Rectangle();
-	      roca.x = MathUtils.random(0, WIDTH-64);
-	      roca.y = topLimit +360;
-	      roca.width = 64;
-	      roca.height = 64;
+	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,64,64);
 	      Rocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
 	 private void spawnTronco() {
-	      Rectangle tronco = new Rectangle();
-	      tronco.x = MathUtils.random(0, WIDTH-64);
-	      tronco.y = topLimit + 360;
-	      tronco.width = 64;
-	      tronco.height = 64;
+	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,64,64);
 	      Troncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
@@ -373,33 +353,23 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
-	  private float maxAcceleration = 200f; //Aceleracionmaxima
-	  private float maxAcceleration2 = 200f;
+
 	         //Controles
 	     public void handleInput() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)) {
-	                if (acceleration.y < maxAcceleration) {
 	                    acceleration.y += 200;
-	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S)) {
-	            	if(boat.getY()>(limiteY*HEIGHT)) {
-	            		if (acceleration.y < maxAcceleration) {
+	            	if(boat.getY()>(ilit)) 
 	                    	acceleration.y -= 200;
-	                	}
-	            	}
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)) {
-	                if (acceleration.y < maxAcceleration2) {
 	                    acceleration.y += 1;
 	                    acceleration.x += 40;
-	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.A)) {
-	                if (acceleration.y < maxAcceleration2) {
 	                    acceleration.y += 1;
 	                    acceleration.x -= 40;
-	                }
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 	                stopBoat();
@@ -409,7 +379,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        }
 
 	        public void update(float deltaTime) {
-	            velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        	if(vPunta > velocity.y)
+	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        	else if(acceleration.y < 0)
+	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
 	        }
