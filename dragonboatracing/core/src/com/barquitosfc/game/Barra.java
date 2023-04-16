@@ -5,7 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 public class Barra {
-	private int x, y;
+	float x;
+	float y;
 	private int vel = 0;
 	private int speed = 10;
 	private int width = 25, height = 100;
@@ -13,14 +14,13 @@ public class Barra {
 	private Color color;
 	private boolean left;
 	
-	public Barra(Color c, boolean left) {
-		color = c;
-		this.left = left;
-		if (this.left) {
+	public Barra( boolean left) {
+		
+		if (left) {
 			x = 0;
 		}
 		else {
-			x = DragonBoatGame.WIDTH - width;
+			x =DragonBoatGame.WIDTH-width-250;
 		}
 		y = DragonBoatGame.HEIGHT/2 - height/2;
 	}
@@ -88,5 +88,30 @@ public class Barra {
 		vel = 0;
 		
 	}
+	public float getX() {
+		return x;
+	}
 
+	public float getY() {
+		return y;
+	}
+	public int getvel() {
+		return vel;
+	}
+	public int getspeed() {
+		return speed;
+	}
+	
+	public void setx(float posx) {
+		x=posx;
+	}
+	public void sety(float f) {
+		y=f;
+	}
+	public void setvel(int vell) {
+		vel=vell;
+	}
+	public void setspeed(int speedd) {
+		speedd=speed;
+	}
 }
