@@ -278,7 +278,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
 			ScreenUtils.clear(0, 0, 0.2f, 1);		
 			batch.begin();
-			batch.draw(boardminit,1920,1080);
+			for(int i = 0; i < 500 ; i++) {
+				batch.draw(boardminit,0,HEIGHT*i);
+			}
+			
 			batch.draw(BolaTexture,Bola.getX(),Bola.getY() );
 			batch.draw(Barra1Texture, Barra1.getX(),Barra1.getY());
 			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
