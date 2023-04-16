@@ -52,6 +52,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture board;
 	private Texture boardPlay;
+	private Texture boardminit;
 	private Texture boatTexture;
 	private Texture Barra1Texture;
 	private Texture Barra2Texture;
@@ -99,6 +100,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("data/fondoMENU.png"));
 		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
+		 boardminit = new Texture(Gdx.files.internal("data/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
@@ -272,10 +274,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			t1.start();*/
 			table=new Table();
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
-			Gdx.gl.glClearColor(1, 1, 1, 1);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);        
-			ScreenUtils.clear(0, 0, 0.2f, 1);			
+			Gdx.gl.glClearColor(0, 0, 0, 1);
+	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
+			ScreenUtils.clear(0, 0, 0.2f, 1);		
 			batch.begin();
+			batch.draw(boardminit,1920,1080);
 			batch.draw(BolaTexture,Bola.getX(),Bola.getY() );
 			batch.draw(Barra1Texture, Barra1.getX(),Barra1.getY());
 			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
