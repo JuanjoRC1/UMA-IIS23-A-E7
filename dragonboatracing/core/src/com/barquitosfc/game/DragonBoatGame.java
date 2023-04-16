@@ -366,10 +366,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
 	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
+	       
 //	    		Bol
 	            Bola.setX(Bola.getX()+speedx*deltaTime);
 	            Bola.setY(Bola.getY()+speedy*deltaTime);
-				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-100)
+	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
+	            Rectangle bar2 = Barra2.getBoundingRectangle(); 
+	            Rectangle bol=Bola.getBoundingRectangle();
+				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-100||bar1.overlaps(bol)||bar2.overlaps(bol))
 				{
 					speedx*=-1;
 					speedy *=-1;
@@ -381,7 +385,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				if (Bola.getY() >700||Bola.getY()<0) {
 					speedy *=-1;
 				}
-//	 			 LIMITES de la barra VERTICAL
+/*	 		 LIMITES de la barra VERTICAL
 				if (Barra1.getY() < 0) {
 				    Barra1.setY(0);
 				    velocity.y = 0; 
@@ -389,7 +393,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				if (Barra1.getY() > 700) {
 				    Barra1.setY(700);
 				    velocity.y = 0; 
-	            }
+	            }*/
 	            
 //			     MOVIMIENTO DEL BARCO
 				if(boat.getY() > (ilit)+1) {
