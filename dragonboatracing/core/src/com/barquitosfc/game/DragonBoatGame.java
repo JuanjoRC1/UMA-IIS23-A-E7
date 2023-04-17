@@ -265,7 +265,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
 			batch.end();
 			 handleInputm();
-	         updatemin(Gdx.graphics.getDeltaTime());
+	         update(Gdx.graphics.getDeltaTime());
 			
 			break;
 			
@@ -357,16 +357,24 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
 			    
 //	   			MOVIMINETO DEL BARCO
-	        	if(vPunta > velocity.y)
-	        		velocity.add(0, acceleration.y * deltaTime);
-	        	else if(acceleration.y < 0)
-        		velocity.add(0, acceleration.y * deltaTime);
-	        	if(agilidad >= (int)velocity.x)
-	        		velocity.add(acceleration.x * deltaTime , 0);
+
+	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        	    if(velocity.y > vPunta +1) {
+				    	velocity.y = vPunta; 
+				    	acceleration.y = 0;  
+				    }
+
+				    if(velocity.x > agilidad +1) {
+				    	velocity.x = agilidad; 
+				    	acceleration.x = 0;  
+				    }
+				    
+				    if(velocity.x < -agilidad -1) {
+				    	velocity.x = -agilidad; 
+				    	acceleration.x = 0; 
+				    }
 
 
-
-	        	
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
 	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
@@ -429,7 +437,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 	            
 	            
-	   		 final int tiempoDeEsperaEntreObstaculos = 1000; // espera 100 milisegundos entre cada generaci�n de obst�culos
+	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos) {
 			     spawnRoca();
 			     lastDropTimeRoca = TimeUtils.millis(); // actualiza el tiempo de la �ltima generaci�n de rocas
@@ -447,17 +455,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
-			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
+//			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
 				      }
 			   }
-			 
+//			 que el tronco vaya si nope 
+//			 es mas facil asi de la otra forma es mas dificil 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
-			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
+			      tronco.y -= 100 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
@@ -467,7 +476,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
-			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
+			      if(cocodrilo.x < WIDTH/ 2)
+			    	  cocodrilo.x += 20 * Gdx.graphics.getDeltaTime();
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
@@ -510,49 +520,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	                    
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-	            	
+	            	if(boat.getY()>(ilit)) 
 	                    	velocity.y = -400;
 	            }
 
 	        }
-	        public void updatemin(float deltaTime) {
-
-
-	
-	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
-	       
-//	    		Bol
-	            Bola.setX(Bola.getX()+speedx*deltaTime);
-	            Bola.setY(Bola.getY()+speedy*deltaTime);
-	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
-	            Rectangle bar2 = Barra2.getBoundingRectangle(); 
-	            Rectangle bol=Bola.getBoundingRectangle();
-				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-400||bar1.overlaps(bol)||bar2.overlaps(bol))
-				{
-					speedx*=-1;
-					speedy *=-1;
-				}
-				if (Bola.getX() < 25||Bola.getX()>WIDTH) {
-					reset();
-					speedx*=-1;
-				}
-				if (Bola.getY() >700||Bola.getY()<0) {
-					speedy *=-1;
-				}
-// 		 LIMITES de la barra VERTICAL
-				if (Barra1.getY() <= 0) {
-				    
-				    velocity.y = +400; 
-	            }
-				if (Barra1.getY() >= 700) {
-				    
-				    velocity.y = -400; 
-	            }
-	            
-
-	       
-	        }
 		 
 		     
 
-}
+	}
