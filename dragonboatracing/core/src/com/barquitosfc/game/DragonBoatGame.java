@@ -106,11 +106,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
-		 BolaTexture= new Texture(Gdx.files.internal("data/bala16.png"));
+		 BolaTexture= new Texture(Gdx.files.internal("data/bala.png"));
 		 Barra1= new Sprite(Barra1Texture);
 		 Barra1.setY(HEIGHT/2);
+		 Barra1.setX(WIDTH-1670);
 		 Barra2= new Sprite(Barra2Texture);
-		 Barra2.setX(WIDTH-500);
+		 Barra2.setY(HEIGHT/2);
+		 Barra2.setX(WIDTH-250);
 		 Bola= new Sprite(BolaTexture);
 		 Bola.setX(WIDTH/2);
 		 Bola.setY(HEIGHT/2);
@@ -265,7 +267,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
 			batch.end();
 			 handleInputm();
-	         update(Gdx.graphics.getDeltaTime());
+	         updatemin(Gdx.graphics.getDeltaTime());
 			
 			break;
 			
@@ -516,14 +518,50 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        //Controles
 	        public void handleInputm() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.UP) ) {
-	                    velocity.y = 400;
+	                    velocity.y = 100;
 	                    
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-	            	if(boat.getY()>(ilit)) 
-	                    	velocity.y = -400;
+	                    	velocity.y = -100;
 	            }
 
+	        }
+	        
+	        public void updatemin(float deltaTime) {
+
+
+	        	
+	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
+	       
+//	    		Bol
+	            Bola.setX(Bola.getX()+speedx*deltaTime);
+	            Bola.setY(Bola.getY()+speedy*deltaTime);
+	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
+	            Rectangle bar2 = Barra2.getBoundingRectangle(); 
+	            Rectangle bol=Bola.getBoundingRectangle();
+				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-400||bar1.overlaps(bol)||bar2.overlaps(bol))
+				{
+					speedx*=-1;
+					speedy *=-1.2;
+				}
+				if (Bola.getX() < 25||Bola.getX()>WIDTH) {
+					speedx*=-1;
+				}
+				if (Bola.getY() >840 ||Bola.getY()<200) {
+					speedy *=-0.8;
+				}
+// 		 LIMITES de la barra VERTICAL
+				if (Barra1.getY() <= 200) {
+				    
+				    velocity.y = +400; 
+	            }
+				if (Barra1.getY() >= 750) {
+				    
+				    velocity.y = -400; 
+	            }
+	            
+
+	       
 	        }
 		 
 		     
