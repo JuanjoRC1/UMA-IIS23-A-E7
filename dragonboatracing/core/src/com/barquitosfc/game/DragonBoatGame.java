@@ -35,9 +35,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
-	private int vidas = 6;
+	private int vidas = 600;
 	private int vPunta = 300;
-	private int agilidad;
+	private int agilidad = 200;
 	private int contadorFondo;
 	private int aceler;
 	private float ilit = 500; 
@@ -57,6 +57,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture Barra1Texture;
 	private Texture Barra2Texture;
 	private Texture BolaTexture;
+	private Texture TRoca;
 	private Sprite boat;
 	private Sprite Barra1;
 	private Sprite Barra2;
@@ -98,9 +99,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 font = new BitmapFont();
 
 		//BACKGROUND
-		 board = new Texture(Gdx.files.internal("data/fondoMENU.png"));
-		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
-		 boardminit = new Texture(Gdx.files.internal("data/fondomini.png"));
+		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
+		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Juego1.png"));
+		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
@@ -118,12 +119,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
-		 
+		 TRoca = new Texture(Gdx.files.internal("data/Piedra1.png"));
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
-
 		 Troncos = new Array<Rectangle>();
-
 		 Cocodrilos = new Array<Rectangle>();
 
 	}
@@ -233,9 +232,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
-			 for(Rectangle roca: Rocas) {batch.draw(bInicio, roca.x, roca.y);}
-			 for(Rectangle tronco: Troncos) {batch.draw(bInicio, tronco.x, tronco.y);}
-			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(bInicio, cocodrilo.x, cocodrilo.y);}
+			 for(Rectangle roca: Rocas) {batch.draw(TRoca, roca.x, roca.y);}
+			 for(Rectangle tronco: Troncos) {batch.draw(TRoca, tronco.x, tronco.y);}
+			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(TRoca, cocodrilo.x, cocodrilo.y);}
 			batch.end();
 			
 			batch.begin();
@@ -319,10 +318,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	                    acceleration.y -= 200;
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)|| Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	                    acceleration.x += 140;
+	                    acceleration.x += 200;
+//	            	boat.setPosition(boat.getX() + 4, boat.getY());
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.A)|| Gdx.input.isKeyPressed(Keys.LEFT)) {
-	                    acceleration.x -= 140;
+	                    acceleration.x -= 200;
+//	            	boat.setPosition(boat.getX() - 4, boat.getY());
+
+	            	
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 	                stopBoat();
@@ -354,9 +357,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 			    
 //	   			MOVIMINETO DEL BARCO
 	        	if(vPunta > velocity.y)
-	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        		velocity.add(0, acceleration.y * deltaTime);
 	        	else if(acceleration.y < 0)
-	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+        		velocity.add(0, acceleration.y * deltaTime);
+	        	if(agilidad >= (int)velocity.x)
+	        		velocity.add(acceleration.x * deltaTime , 0);
+
+
+
 	        	
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
@@ -438,7 +446,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
-			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
+			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
