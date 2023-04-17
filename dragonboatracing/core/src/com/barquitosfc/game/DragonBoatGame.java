@@ -2,6 +2,7 @@ package com.barquitosfc.game;
 
 import java.util.Iterator;
 
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -35,13 +36,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
-<<<<<<< Updated upstream
-	private int vidas = 3;
-=======
-	private int vidas = 6;
->>>>>>> Stashed changes
+	private int vidas = 600;
 	private int vPunta = 300;
-	private int agilidad;
+	private int agilidad = 200;
 	private int contadorFondo;
 	private int aceler;
 	private float ilit = 500; 
@@ -61,6 +58,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Texture Barra1Texture;
 	private Texture Barra2Texture;
 	private Texture BolaTexture;
+	private Texture TRoca;
 	private Sprite boat;
 	private Sprite Barra1;
 	private Sprite Barra2;
@@ -70,7 +68,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-	public static final int WIDTH = 1920;
+	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas;
 	private Array<Rectangle> Troncos;
@@ -78,13 +76,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private long lastDropTimeRoca;
 	private long lastDropTimeTroncos;
 	private long lastDropTimeCocodrilos;
-	private Skin velocidadTienda;
-	private Skin vidasTienda;
-	private Skin agilidadTienda;
-	private Texture mas;
-	private Texture menos;
-	private SpriteDrawable spriteMas;
-	private SpriteDrawable spriteMenos;
 //Para el minijuego
 	private int speedx = 200; 
 	private int speedy = 200; 
@@ -109,9 +100,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 font = new BitmapFont();
 
 		//BACKGROUND
-		 board = new Texture(Gdx.files.internal("data/fondoMENU.png"));
-		 boardPlay = new Texture(Gdx.files.internal("data/fondoPlay.png"));
-		 boardminit = new Texture(Gdx.files.internal("data/fondomini.png"));
+		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
+		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Juego1.png"));
+		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
@@ -129,18 +120,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
-		 
+		 TRoca = new Texture(Gdx.files.internal("data/Piedra1.png"));
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
-
 		 Troncos = new Array<Rectangle>();
-
 		 Cocodrilos = new Array<Rectangle>();
-		 
-		 //Etiquetas
-		 velocidadTienda = new Skin(Gdx.files.internal(null));
-		 vidasTienda = new Skin(Gdx.files.internal(null));
-		 agilidadTienda = new Skin(Gdx.files.internal(null));
 
 	}
 
@@ -231,12 +215,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			camera.position.set(WIDTH /2, boat.getY() + 200 + boat.getHeight() / 2, 0);
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
-			//PINTAR EL FONDO
+
 			camera.update();
 			
+			//PINTAR EL FONDO
 			batch.begin();
 			batch.draw(boardPlay, 1920, 1080);
-			for(int i = 0; i < 20 ; i++) {
+			for(int i = 0; i < 100000 ; i++) {
 				contadorFondo=i;
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
@@ -245,44 +230,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			batch.draw(boatTexture,boat.getX(),boat.getY() );
 			batch.end();
+			
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
-			 for(Rectangle roca: Rocas) {
-			      batch.draw(bInicio, roca.x, roca.y);
-			 }
-			 for(Rectangle tronco: Troncos) {  
-				 batch.draw(bInicio, tronco.x, tronco.y);
-			 }
-			 for(Rectangle cocodrilo: Cocodrilos) {
-				 batch.draw(bInicio, cocodrilo.x, cocodrilo.y);
-			 }
+			 for(Rectangle roca: Rocas) {batch.draw(TRoca, roca.x, roca.y);}
+			 for(Rectangle tronco: Troncos) {batch.draw(TRoca, tronco.x, tronco.y);}
+			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(TRoca, cocodrilo.x, cocodrilo.y);}
 			batch.end();
 			
 			batch.begin();
-			font.draw(batch, "Y: " + acceleration.y +"POSBARCO: "+ velocity, 100, boat.getY()+100);
+			font.draw(batch, "Y: " + acceleration +"POSBARCO: "+ velocity, 100, boat.getY()+100);
 			batch.end();
-			
-			
-			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
-			if (boat.getY() < camera.position.y - HEIGHT / 4) {
-			    camera.position.y = boat.getY() + HEIGHT / 4;
-			}
-			if (boat.getY() > camera.position.y + HEIGHT / 4) {
-			    camera.position.y = boat.getY() - HEIGHT / 4;
-			}
 			
             handleInput();
             update(Gdx.graphics.getDeltaTime());
-		    
-			//Actualizar zonas para la aparicion de objetos 
-		    camera.update();
-		    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
-		    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
-		    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
-		    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
-		    
-
-			break;
+            break;
 			
 		case CONFIG:
 			/*Ventana ventana = new Ventana();
@@ -311,30 +273,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	        //Aqui las barras que contienen la cantidad de los atributos velocidad vida y agilidad comprables en la tienda
-	        
-	        Label velocidad = new Label("Velocidad",velocidadTienda);
-	        velocidad.setWidth(500);
-	        velocidad.setHeight(100);
-	        velocidad.setPosition(200, 1000);
-	        Label vidas = new Label("Vidas",vidasTienda);
-	        vidas.setWidth(500);
-	        vidas.setHeight(100);
-	        vidas.setPosition(200,  700);
-	        Label agilidad = new Label("Agilidad",agilidadTienda);
-	        agilidad.setWidth(500);
-	        agilidad.setHeight(100);
-	        agilidad.setPosition(200, 400);
-	       
-	        //Aqui los botones mas y menos para la compra de dichos atributos
-	        
-	        
-	        
-	        //Por ultimo el contador de dinero 
-	        
-			
-	        
-	        break;
+			break;
 			
 		case MINIJUEGO:
 			
@@ -347,8 +286,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			}
 	}
-	
-
 	@Override
 	public void dispose () {
 		batch.dispose();
@@ -379,13 +316,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
 	            	if(boat.getY()>(ilit)) 
-	                    	acceleration.y -= 2000;
+	                    acceleration.y -= 200;
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)|| Gdx.input.isKeyPressed(Keys.RIGHT)) {
-	                    acceleration.x += 140;
+	                    acceleration.x += 200;
+//	            	boat.setPosition(boat.getX() + 4, boat.getY());
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.A)|| Gdx.input.isKeyPressed(Keys.LEFT)) {
-	                    acceleration.x -= 140;
+	                    acceleration.x -= 200;
+//	            	boat.setPosition(boat.getX() - 4, boat.getY());
+
+	            	
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 	                stopBoat();
@@ -395,37 +336,36 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        }
 	     private void reset() {
 			 Bola.setX(WIDTH/2);
-			 Bola.setY(HEIGHT/2);	     }
+			 Bola.setY(HEIGHT/2);
+			 }
 	 		
 	        public void update(float deltaTime) {
+
+//				Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
+				if (boat.getY() < camera.position.y - HEIGHT / 4) {
+				    camera.position.y = boat.getY() + HEIGHT / 4;
+				}
+				if (boat.getY() > camera.position.y + HEIGHT / 4) {
+				    camera.position.y = boat.getY() - HEIGHT / 4;
+				}
+				
+//				Actualizar zonas para la aparicion de objetos 
+			    camera.update();
+			    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
+			    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
+			    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
+			    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
+			    
 //	   			MOVIMINETO DEL BARCO
-<<<<<<< Updated upstream
 	        	if(vPunta > velocity.y)
-	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+	        		velocity.add(0, acceleration.y * deltaTime);
 	        	else if(acceleration.y < 0)
-	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
-=======
-
-	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
-
-	        		
-	        	if(velocity.y > vPunta +1) {
-	        		acceleration.y = 0; 
-	        		velocity.y = vPunta;
-	        	}
-
-	        	if(velocity.x > agilidad) {
-	        		acceleration.x = 0; 
-	        		velocity.x = agilidad -1;
-	        	}
-	        	if(velocity.x < -agilidad) {
-	        		acceleration.x = 0; 
-	        		velocity.x = -agilidad + 1; 
-	        	}
+        		velocity.add(0, acceleration.y * deltaTime);
+	        	if(agilidad >= (int)velocity.x)
+	        		velocity.add(acceleration.x * deltaTime , 0);
 
 
 
->>>>>>> Stashed changes
 	        	
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
@@ -489,7 +429,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 	            
 	            
-	   		 final int tiempoDeEsperaEntreObstaculos = 500; // espera 100 milisegundos entre cada generaci�n de obst�culos
+	   		 final int tiempoDeEsperaEntreObstaculos = 1000; // espera 100 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos) {
 			     spawnRoca();
 			     lastDropTimeRoca = TimeUtils.millis(); // actualiza el tiempo de la �ltima generaci�n de rocas
@@ -507,45 +447,35 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
-<<<<<<< Updated upstream
-			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
-=======
-//			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
->>>>>>> Stashed changes
+			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
-				         velocity.y -= velocity.y/2;
 				      }
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
-			      tronco.y += 100 * Gdx.graphics.getDeltaTime();
+			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
-				         velocity.y -= velocity.y/2;
-
 				      }
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
-			      cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime();
-			      if(cocodrilo.x < 100) cocodrilo.x += 30* Gdx.graphics.getDeltaTime(); 
+			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
-				         velocity.y -= velocity.y/2;
 				      }
 			 }
 			 
-			 if(vidas == 0) 
-					gameState=GameState.MENU;
+			 if(vidas == 0) gameState=GameState.MENU;
 
 	        }
 	        public void stopBoat() {
