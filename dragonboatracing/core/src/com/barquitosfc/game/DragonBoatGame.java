@@ -35,7 +35,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
+<<<<<<< Updated upstream
 	private int vidas = 3;
+=======
+	private int vidas = 6;
+>>>>>>> Stashed changes
 	private int vPunta = 300;
 	private int agilidad;
 	private int contadorFondo;
@@ -232,7 +236,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			batch.begin();
 			batch.draw(boardPlay, 1920, 1080);
-			for(int i = 0; i < 100000 ; i++) {
+			for(int i = 0; i < 20 ; i++) {
 				contadorFondo=i;
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
@@ -255,7 +259,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			
 			batch.begin();
-			font.draw(batch, "Y: " + acceleration +"POSBARCO: "+ velocity, 100, boat.getY()+100);
+			font.draw(batch, "Y: " + acceleration.y +"POSBARCO: "+ velocity, 100, boat.getY()+100);
 			batch.end();
 			
 			
@@ -395,10 +399,33 @@ public class DragonBoatGame extends ApplicationAdapter {
 	 		
 	        public void update(float deltaTime) {
 //	   			MOVIMINETO DEL BARCO
+<<<<<<< Updated upstream
 	        	if(vPunta > velocity.y)
 	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
 	        	else if(acceleration.y < 0)
 	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+=======
+
+	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
+
+	        		
+	        	if(velocity.y > vPunta +1) {
+	        		acceleration.y = 0; 
+	        		velocity.y = vPunta;
+	        	}
+
+	        	if(velocity.x > agilidad) {
+	        		acceleration.x = 0; 
+	        		velocity.x = agilidad -1;
+	        	}
+	        	if(velocity.x < -agilidad) {
+	        		acceleration.x = 0; 
+	        		velocity.x = -agilidad + 1; 
+	        	}
+
+
+
+>>>>>>> Stashed changes
 	        	
 	            boat.setX(boat.getX() + velocity.x * deltaTime);
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
@@ -462,7 +489,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 	            
 	            
-	   		 final int tiempoDeEsperaEntreObstaculos = 1000; // espera 100 milisegundos entre cada generaci�n de obst�culos
+	   		 final int tiempoDeEsperaEntreObstaculos = 500; // espera 100 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos) {
 			     spawnRoca();
 			     lastDropTimeRoca = TimeUtils.millis(); // actualiza el tiempo de la �ltima generaci�n de rocas
@@ -480,31 +507,40 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
 			      Rectangle roca = iter.next();
+<<<<<<< Updated upstream
 			      roca.y -= 1000 * Gdx.graphics.getDeltaTime();
+=======
+//			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
+>>>>>>> Stashed changes
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
+				         velocity.y -= velocity.y/2;
 				      }
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
-			      tronco.y -= 200 * Gdx.graphics.getDeltaTime();
+			      tronco.y += 100 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
+				         velocity.y -= velocity.y/2;
+
 				      }
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
-			      cocodrilo.y -= 20 * Gdx.graphics.getDeltaTime();
+			      cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime();
+			      if(cocodrilo.x < 100) cocodrilo.x += 30* Gdx.graphics.getDeltaTime(); 
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				         vidas -= 1;
+				         velocity.y -= velocity.y/2;
 				      }
 			 }
 			 
