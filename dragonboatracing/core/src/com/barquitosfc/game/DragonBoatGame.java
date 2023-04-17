@@ -35,7 +35,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2();
 	private int dinero;
-	private int vidas = 3;
+	private int vidas = 6;
 	private int vPunta = 300;
 	private int agilidad;
 	private int contadorFondo;
@@ -215,9 +215,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			camera.position.set(WIDTH /2, boat.getY() + 200 + boat.getHeight() / 2, 0);
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
-			//PINTAR EL FONDO
+
 			camera.update();
 			
+			//PINTAR EL FONDO
 			batch.begin();
 			batch.draw(boardPlay, 1920, 1080);
 			for(int i = 0; i < 100000 ; i++) {
@@ -229,44 +230,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			batch.draw(boatTexture,boat.getX(),boat.getY() );
 			batch.end();
+			
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
-			 for(Rectangle roca: Rocas) {
-			      batch.draw(bInicio, roca.x, roca.y);
-			 }
-			 for(Rectangle tronco: Troncos) {  
-				 batch.draw(bInicio, tronco.x, tronco.y);
-			 }
-			 for(Rectangle cocodrilo: Cocodrilos) {
-				 batch.draw(bInicio, cocodrilo.x, cocodrilo.y);
-			 }
+			 for(Rectangle roca: Rocas) {batch.draw(bInicio, roca.x, roca.y);}
+			 for(Rectangle tronco: Troncos) {batch.draw(bInicio, tronco.x, tronco.y);}
+			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(bInicio, cocodrilo.x, cocodrilo.y);}
 			batch.end();
 			
 			batch.begin();
 			font.draw(batch, "Y: " + acceleration +"POSBARCO: "+ velocity, 100, boat.getY()+100);
 			batch.end();
 			
-			
-			// Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
-			if (boat.getY() < camera.position.y - HEIGHT / 4) {
-			    camera.position.y = boat.getY() + HEIGHT / 4;
-			}
-			if (boat.getY() > camera.position.y + HEIGHT / 4) {
-			    camera.position.y = boat.getY() - HEIGHT / 4;
-			}
-			
             handleInput();
             update(Gdx.graphics.getDeltaTime());
-		    
-			//Actualizar zonas para la aparicion de objetos 
-		    camera.update();
-		    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
-		    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
-		    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
-		    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
-		    
-
-			break;
+            break;
 			
 		case CONFIG:
 			/*Ventana ventana = new Ventana();
@@ -338,7 +316,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
 	            	if(boat.getY()>(ilit)) 
-	                    	acceleration.y -= 2000;
+	                    acceleration.y -= 200;
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.D)|| Gdx.input.isKeyPressed(Keys.RIGHT)) {
 	                    acceleration.x += 140;
@@ -354,9 +332,26 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        }
 	     private void reset() {
 			 Bola.setX(WIDTH/2);
-			 Bola.setY(HEIGHT/2);	     }
+			 Bola.setY(HEIGHT/2);
+			 }
 	 		
 	        public void update(float deltaTime) {
+
+//				Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
+				if (boat.getY() < camera.position.y - HEIGHT / 4) {
+				    camera.position.y = boat.getY() + HEIGHT / 4;
+				}
+				if (boat.getY() > camera.position.y + HEIGHT / 4) {
+				    camera.position.y = boat.getY() - HEIGHT / 4;
+				}
+				
+//				Actualizar zonas para la aparicion de objetos 
+			    camera.update();
+			    leftLimit = camera.position.x - Gdx.graphics.getWidth() / 2;
+			    rightLimit = camera.position.x + Gdx.graphics.getWidth() / 2;
+			    topLimit = camera.position.y + Gdx.graphics.getHeight() / 2;
+			    bottomLimit = camera.position.y - Gdx.graphics.getHeight() / 2;
+			    
 //	   			MOVIMINETO DEL BARCO
 	        	if(vPunta > velocity.y)
 	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
@@ -471,8 +466,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				      }
 			 }
 			 
-			 if(vidas == 0) 
-					gameState=GameState.MENU;
+			 if(vidas == 0) gameState=GameState.MENU;
 
 	        }
 	        public void stopBoat() {
