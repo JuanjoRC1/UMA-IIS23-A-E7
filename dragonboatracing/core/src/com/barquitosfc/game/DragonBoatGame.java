@@ -265,7 +265,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
 			batch.end();
 			 handleInputm();
-	         update(Gdx.graphics.getDeltaTime());
+	         updatemin(Gdx.graphics.getDeltaTime());
 			
 			break;
 			
@@ -510,12 +510,49 @@ public class DragonBoatGame extends ApplicationAdapter {
 	                    
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-	            	if(boat.getY()>(ilit)) 
+	            	
 	                    	velocity.y = -400;
 	            }
 
 	        }
+	        public void updatemin(float deltaTime) {
+
+
+	
+	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
+	       
+//	    		Bol
+	            Bola.setX(Bola.getX()+speedx*deltaTime);
+	            Bola.setY(Bola.getY()+speedy*deltaTime);
+	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
+	            Rectangle bar2 = Barra2.getBoundingRectangle(); 
+	            Rectangle bol=Bola.getBoundingRectangle();
+				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-400||bar1.overlaps(bol)||bar2.overlaps(bol))
+				{
+					speedx*=-1;
+					speedy *=-1;
+				}
+				if (Bola.getX() < 25||Bola.getX()>WIDTH) {
+					reset();
+					speedx*=-1;
+				}
+				if (Bola.getY() >700||Bola.getY()<0) {
+					speedy *=-1;
+				}
+// 		 LIMITES de la barra VERTICAL
+				if (Barra1.getY() <= 0) {
+				    
+				    velocity.y = +400; 
+	            }
+				if (Barra1.getY() >= 700) {
+				    
+				    velocity.y = -400; 
+	            }
+	            
+
+	       
+	        }
 		 
 		     
 
-	}
+}
