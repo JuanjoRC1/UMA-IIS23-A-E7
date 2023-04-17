@@ -112,6 +112,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Barra1.setX(WIDTH-1670);
 		 Barra2= new Sprite(Barra2Texture);
 		 Barra2.setY(HEIGHT/2);
+
 		 Barra2.setX(WIDTH-250);
 		 Bola= new Sprite(BolaTexture);
 		 Bola.setX(WIDTH/2);

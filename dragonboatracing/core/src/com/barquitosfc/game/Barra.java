@@ -33,7 +33,7 @@ public class Barra {
 		
 		// draw paddle
 		g.setColor(color);
-		g.fillRect(x, y, width, height);
+//		g.fillRect(x, y, width, height);
 		
 		// draw score
 		String scoreText = Integer.toString(score);
