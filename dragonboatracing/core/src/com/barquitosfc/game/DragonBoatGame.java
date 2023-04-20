@@ -32,9 +32,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
 	float leftLimit, rightLimit, topLimit, bottomLimit;
-	private Vector2 velocity = new Vector2();
+	private Vector2 velocity = new Vector2(0,0);
 	private Vector2 velocitybar = new Vector2();
-	private Vector2 acceleration = new Vector2();
+	private Vector2 acceleration = new Vector2(0,0);
 	private int dinero;
 	private int vidas = 600;
 	private int vPunta = 300;
@@ -223,7 +223,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			//PINTAR EL FONDO
 			batch.begin();
-			batch.draw(boardPlay, 1920, 1080);
 			for(int i = 0; i < 100000 ; i++) {
 				contadorFondo=i;
 				batch.draw(boardPlay,0,HEIGHT*i);
@@ -231,7 +230,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			
 			batch.begin();
-			batch.draw(boatTexture,boat.getX(),boat.getY() );
+//			batch.draw(boatTexture,boat.getX(),boat.getY());
+			boat.draw(batch);
 			batch.end();
 			
 //			PINTAR LOS OBSTACULOS
@@ -242,7 +242,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			
 			batch.begin();
-			font.draw(batch, "Y: " + acceleration +"POSBARCO: "+ velocity, 100, boat.getY()+100);
+			font.draw(batch, "Y: " + boat.getRotation() +"POSBARCO: "+ velocity, 100, boat.getY()+100);
 			batch.end();
 			
             handleInput();
@@ -259,7 +259,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
 			ScreenUtils.clear(0, 0, 0.2f, 1);		
 			batch.begin();
-			for(int i = 0; i < 500 ; i++) {
+			for(int i = 0; i < 100 ; i++) {
 				batch.draw(boardminit,0,HEIGHT*i);
 			}
 			
@@ -301,7 +301,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
 	 private void spawnTronco() {
-	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,64,64);
+	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,90,40);
 	      Troncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
@@ -315,7 +315,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	     public void handleInput() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.UP) ) {
 	                    acceleration.y += 200;
-	                    
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
 	            	if(boat.getY()>(ilit)) 
@@ -324,18 +323,24 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            if (Gdx.input.isKeyPressed(Keys.D)|| Gdx.input.isKeyPressed(Keys.RIGHT)) {
 	                    acceleration.x += 200;
 //	            	boat.setPosition(boat.getX() + 4, boat.getY());
+	                    if(boat.getRotation() > -10)
+	                    	boat.rotate(-1);
 	            }
+	            
 	            if (Gdx.input.isKeyPressed(Keys.A)|| Gdx.input.isKeyPressed(Keys.LEFT)) {
 	                    acceleration.x -= 200;
 //	            	boat.setPosition(boat.getX() - 4, boat.getY());
-
-	            	
+	                    if(boat.getRotation()< 10)
+	                    	boat.rotate(1);
 	            }
 	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 	                stopBoat();
 	            }
-
-
+	            if(!Gdx.input.isKeyPressed(Keys.ANY_KEY))
+	            if(boat.getRotation() <= 0)
+	            	boat.rotate(+1);
+	            else if(boat.getRotation() >= 0)
+	            	boat.rotate(-1);
 	        }
 	     private void reset() {
 			 Bola.setX(WIDTH/2);
@@ -412,7 +417,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 //			     MOVIMIENTO DEL BARCO
 				if(boat.getY() > (ilit)+1) {
-	                boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
+					boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
 	                acceleration.set(0, -6f);
 	            }else {
 	            	stopBoat();
@@ -430,8 +435,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}
-				
-//	 			 LIMITES DEL BARCO VERTICAL
+				//	 			 LIMITES DEL BARCO VERTICAL
 				if(ilit <  bottomLimit) ilit = bottomLimit; 
 				
 				if (boat.getY()<(ilit+10)) {
@@ -465,11 +469,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 				         vidas -= 1;
 				      }
 			   }
-//			 que el tronco vaya si nope 
-//			 es mas facil asi de la otra forma es mas dificil 
+ 
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
-			      tronco.y -= 100 * Gdx.graphics.getDeltaTime();
+			      tronco.y += 100 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
@@ -489,8 +492,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 }
 			 
 			 if(vidas == 0) gameState=GameState.MENU;
-
 	        }
+	        
 	        public void stopBoat() {
 	            // Establece la velocidad en cero
 	            velocity.set(0, 0);
@@ -498,24 +501,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            acceleration.set(0, 0);
 	        }
 
-	        public Vector2 getVelocity() {
-	            return velocity;
-	        }
-
-	        public Vector2 getAcceleration() {
-	            return acceleration;
-	        }
-
-	        public void setVelocity(Vector2 velocity) {
-	            this.velocity = velocity;
-	        }
-
-	        public void setAcceleration(Vector2 acceleration) {
-	            this.acceleration = acceleration;
-	        }
 	        //Para el minijuego
-	        
-	        
+
 	        //Controles
 	        public void handleInputm() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.UP) ) {
