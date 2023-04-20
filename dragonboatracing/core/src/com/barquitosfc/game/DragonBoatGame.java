@@ -118,7 +118,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Bola.setX(WIDTH/2);
 		 Bola.setY(HEIGHT/2);
 		 boat = new Sprite(boatTexture);
-		 boat.setPosition(WIDTH/2, HEIGHT/5);
+		 boat.setPosition(WIDTH/2, HEIGHT/7);
 		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
@@ -228,7 +228,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				batch.draw(boardPlay,0,HEIGHT*i);
 			}
 			batch.end();
-			
+			//PINTAR BARCO
 			batch.begin();
 //			batch.draw(boatTexture,boat.getX(),boat.getY());
 			boat.draw(batch);
@@ -242,7 +242,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			
 			batch.begin();
-			font.draw(batch, "Y: " + boat.getRotation() +"POSBARCO: "+ velocity, 100, boat.getY()+100);
+			font.draw(batch, "x: " + boat.getX() +"Y: "+ boat.getY(), 100, boat.getY()+100);
 			batch.end();
 			
             handleInput();
@@ -295,18 +295,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 		stage.dispose();
 		boatTexture.dispose();
 	}
+	// SPAWN DE OBSTACULOS
 	 private void spawnRoca() {
-	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,64,64);
+	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
 	      Rocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
 	 private void spawnTronco() {
-	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,90,40);
+	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),90,40);
 	      Troncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
 	 private void spawnCocodrilo() {
-	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),topLimit + 360,64,64);
+	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
@@ -445,17 +446,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 	            
 	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
-			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos) {
+			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<20) {
 			     spawnRoca();
-			     lastDropTimeRoca = TimeUtils.millis(); // actualiza el tiempo de la �ltima generaci�n de rocas
+			     
 			 }
-			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos) {
+			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos && Troncos.size<20) {
 			     spawnTronco();
-			     lastDropTimeTroncos = TimeUtils.millis(); // actualiza el tiempo de la �ltima generaci�n de troncos
+			    
 			 }
-			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos) {
+			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos && Cocodrilos.size<20) {
 			     spawnCocodrilo();
-			     lastDropTimeCocodrilos = TimeUtils.millis(); // actualiza el tiempo de la �ltima generaci�n de cocodrilos
+			  
 			 }
 			 
 			    Rectangle rect1 = boat.getBoundingRectangle(); 
