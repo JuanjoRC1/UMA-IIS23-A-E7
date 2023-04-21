@@ -36,7 +36,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2(0,0);
 	private int dinero;
-	private int vidas = 600;
+	private int vidas = 1;
 	private int vPunta = 300;
 	private int agilidad = 200;
 	private int contadorFondo;
@@ -101,7 +101,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
-		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Juego1.png"));
+		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Prueba.png"));
 		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
@@ -136,19 +136,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.begin();
-        batch.draw(board, 0, 0);
-        batch.end();
 		
 		switch(gameState) {
 		case MENU:
+
 			stage = new Stage();
 			table=new Table();
 			table.setPosition(260,HEIGHT/7);
 			table.setFillParent(true);
 			table.setHeight(200);
-			stage.addActor(table);
+			stage.addActor(table);	
+			table.clear();
+	        batch.begin();
+	        batch.draw(board, 0, 0);
+	        batch.end();
 			//Botones Inicio
 			Button buttonPlay= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
 //			TextButton buttonPlay= new TextButton("Inicio",getSkin());
@@ -338,9 +339,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	                stopBoat();
 	            }
 	            if(!Gdx.input.isKeyPressed(Keys.ANY_KEY))
-	            if(boat.getRotation() <= 0)
+	            if(boat.getRotation() < 0)
 	            	boat.rotate(+1);
-	            else if(boat.getRotation() >= 0)
+	            else if(boat.getRotation() > 0)
 	            	boat.rotate(-1);
 	        }
 	     private void reset() {
