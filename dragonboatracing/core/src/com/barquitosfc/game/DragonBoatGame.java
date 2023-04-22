@@ -36,30 +36,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2(0,0);
 	private int dinero;
-	private int vidas = 1;
-	private int vPunta = 300;
-	private int agilidad = 200;
 	private int contadorFondo;
 	private int aceler;
 	private float ilit = 500; 
 	private BitmapFont font;
-	private Texture bInicio;
-	private Texture bAjustes;
-	private Texture bTienda;
-	private Texture bSalir;
+	private Texture bInicio,bAjustes,bTienda,bSalir;
 	private Stage stage;
 	public static GameState gameState;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Texture board;
-	private Texture boardPlay;
-	private Texture boardminit;
-	private Texture boatTexture;
-	private Texture Barra1Texture;
-	private Texture Barra2Texture;
-	private Texture BolaTexture;
-	private Texture TRoca;
-	private Sprite boat;
+	private Texture board,boardPlay,boardminit,boatTexture,
+	Barra1Texture,Barra2Texture,BolaTexture,TRoca;
+	private Barco boat;
 	private Sprite Barra1;
 	private Sprite Barra2;
 	private Sprite Bola;
@@ -70,12 +58,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBSalir;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
-	private Array<Rectangle> Rocas;
-	private Array<Rectangle> Troncos;
-	private Array<Rectangle> Cocodrilos;
-	private long lastDropTimeRoca;
-	private long lastDropTimeTroncos;
-	private long lastDropTimeCocodrilos;
+	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
+	private long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos;
 //Para el minijuego
 	private int speedx = 200; 
 	private int speedy = 200; 
@@ -112,13 +96,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Barra1.setX(WIDTH-1670);
 		 Barra2= new Sprite(Barra2Texture);
 		 Barra2.setY(HEIGHT/2);
-
 		 Barra2.setX(WIDTH-250);
 		 Bola= new Sprite(BolaTexture);
 		 Bola.setX(WIDTH/2);
 		 Bola.setY(HEIGHT/2);
-		 boat = new Sprite(boatTexture);
+		 boat = new Barco(boatTexture);
 		 boat.setPosition(WIDTH/2, HEIGHT/7);
+		 boat.setScale(1f); 
+
 		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
@@ -233,6 +218,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 //			batch.draw(boatTexture,boat.getX(),boat.getY());
 			boat.draw(batch);
+			
 			batch.end();
 			
 //			PINTAR LOS OBSTACULOS
@@ -294,7 +280,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		stage.dispose();
-		boatTexture.dispose();
+		boat.getTexture().dispose();
 	}
 	// SPAWN DE OBSTACULOS
 	 private void spawnRoca() {
@@ -369,18 +355,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 //	   			MOVIMINETO DEL BARCO
 
 	        		velocity.add(acceleration.x * deltaTime, acceleration.y * deltaTime);
-	        	    if(velocity.y > vPunta +1) {
-				    	velocity.y = vPunta; 
+	        	    if(velocity.y > boat.getvPunta() +1) {
+				    	velocity.y = boat.getvPunta(); 
 				    	acceleration.y = 0;  
 				    }
 
-				    if(velocity.x > agilidad +1) {
-				    	velocity.x = agilidad; 
+				    if(velocity.x > boat.getAgilidad() +1) {
+				    	velocity.x = boat.getAgilidad(); 
 				    	acceleration.x = 0;  
 				    }
 				    
-				    if(velocity.x < -agilidad -1) {
-				    	velocity.x = -agilidad; 
+				    if(velocity.x < - boat.getAgilidad() -1) {
+				    	velocity.x = - boat.getAgilidad(); 
 				    	acceleration.x = 0; 
 				    }
 
@@ -468,7 +454,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
-				         vidas -= 1;
+				         boat.getVidas();
 				      }
 			   }
  
@@ -478,8 +464,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
-				         vidas -= 1;
-				      }
+				         boat.setVidas();
+				  }
 			   }
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
@@ -489,11 +475,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
-				         vidas -= 1;
+				         boat.setVidas();
 				      }
 			 }
 			 
-			 if(vidas == 0) gameState=GameState.MENU;
+			 if(boat.getVidas() == 0) gameState=GameState.MENU;
 	        }
 	        
 	        public void stopBoat() {
