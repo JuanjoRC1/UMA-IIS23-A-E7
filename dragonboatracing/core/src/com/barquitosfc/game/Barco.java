@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Barco extends Sprite{
-	private int vidas = 1;
+	private int vidas = 50;
 	private int vPunta = 300;
 	private int agilidad = 200;
 	

@@ -46,7 +46,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Texture board,boardPlay,boardminit,boatTexture,
-	Barra1Texture,Barra2Texture,BolaTexture,TRoca;
+	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
 	private Barco boat;
 	private Sprite Barra1;
 	private Sprite Barra2;
@@ -108,7 +108,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
-		 TRoca = new Texture(Gdx.files.internal("data/Piedra1.png"));
+		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
+		 TCoco = new Texture(Gdx.files.internal("data/Icoco.png"));
+		 TTronco = new Texture(Gdx.files.internal("data/Tronco.png"));
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
@@ -224,8 +226,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
 			 for(Rectangle roca: Rocas) {batch.draw(TRoca, roca.x, roca.y);}
-			 for(Rectangle tronco: Troncos) {batch.draw(TRoca, tronco.x, tronco.y);}
-			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(TRoca, cocodrilo.x, cocodrilo.y);}
+			 for(Rectangle tronco: Troncos) {batch.draw(TTronco, tronco.x, tronco.y);}
+			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(TCoco, cocodrilo.x, cocodrilo.y);}
 			batch.end();
 			
 			batch.begin();
@@ -433,15 +435,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 	            
 	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
-			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<20) {
+			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<15) {
 			     spawnRoca();
 			     
 			 }
-			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos && Troncos.size<20) {
+			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos && Troncos.size<14) {
 			     spawnTronco();
 			    
 			 }
-			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos && Cocodrilos.size<20) {
+			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos && Cocodrilos.size<15) {
 			     spawnCocodrilo();
 			  
 			 }
@@ -460,7 +462,7 @@ public class DragonBoatGame extends ApplicationAdapter {
  
 			 for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
 			      Rectangle tronco = iter.next();
-			      tronco.y += 100 * Gdx.graphics.getDeltaTime();
+			      tronco.y -= 100 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
