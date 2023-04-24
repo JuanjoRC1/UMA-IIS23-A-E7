@@ -159,8 +159,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
 		 siguiente = new Texture(Gdx.files.internal("data/bala.png"));
 		 anterior = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 mas = new Texture(Gdx.files.internal("data/bala.png"));
-		 menos = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 mas = new Texture(Gdx.files.internal("ui/Simbolo_Mas.png"));
+		 menos = new Texture(Gdx.files.internal("ui/Simbolo_Menos.png"));
 		 casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
 		 letreroVida = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 letreroVelocidad = new Texture(Gdx.files.internal("data/Piedra1.png"));
@@ -202,27 +202,27 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 TTronco = new Texture(Gdx.files.internal("data/Tronco.png"));
 		 spriteSiguiente = new SpriteDrawable(new Sprite(siguiente));
 		 spriteAnterior = new SpriteDrawable( new Sprite(anterior));
-		 barra0 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra2 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra3 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra4 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra5 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra6 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra7 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra8 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra9 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra10 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra11 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra12 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra13 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra14 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra15 = new Texture(Gdx.files.internal("data/Piedra1.png"));
-		 barra16 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra17 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra18 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra19 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 barra20 = new Texture(Gdx.files.internal("data/Piedra1.png"));
+		 barra0 = new Texture(Gdx.files.internal("data/Barra_Vacia.png"));
+		 barra1 = new Texture(Gdx.files.internal("data/Barra_Vida1.png"));
+		 barra2 = new Texture(Gdx.files.internal("data/Barra_Vida2.png"));
+		 barra3 = new Texture(Gdx.files.internal("data/Barra_Vida3.png"));
+		 barra4 = new Texture(Gdx.files.internal("data/Barra_Vida4.png"));
+		 barra5 = new Texture(Gdx.files.internal("data/Barra_Vida5.png"));
+		 barra6 = new Texture(Gdx.files.internal("data/Barra_Vida6.png"));
+		 barra7 = new Texture(Gdx.files.internal("data/Barra_Vida7.png"));
+		 barra8 = new Texture(Gdx.files.internal("data/Barra_Vida8.png"));
+		 barra9 = new Texture(Gdx.files.internal("data/Barra_Vida9.png"));
+		 barra10 = new Texture(Gdx.files.internal("data/Barra_Vida10.png"));
+		 barra11 = new Texture(Gdx.files.internal("data/Barra_Vida11.png"));
+		 barra12 = new Texture(Gdx.files.internal("data/Barra_Vida12.png"));
+		 barra13 = new Texture(Gdx.files.internal("data/Barra_Vida13.png"));
+		 barra14 = new Texture(Gdx.files.internal("data/Barra_Vida14.png"));
+		 barra15 = new Texture(Gdx.files.internal("data/Barra_Vida15.png"));
+		 barra16 = new Texture(Gdx.files.internal("data/Barra_Vida16.png"));
+		 barra17 = new Texture(Gdx.files.internal("data/Barra_Vida17.png"));
+		 barra18 = new Texture(Gdx.files.internal("data/Barra_Vida18.png"));
+		 barra19 = new Texture(Gdx.files.internal("data/Barra_Vida19.png"));
+		 barra20 = new Texture(Gdx.files.internal("data/Barra_Vida.png"));
 		 barco1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barco2 = new Texture(Gdx.files.internal("data/Piedra1.png"));
 		 barco3 = new Texture(Gdx.files.internal("data/Bola.jpg"));
@@ -479,8 +479,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        batch.begin();
 			batch.draw(fondoTienda,0,0);
 			batch.draw(barcosE, 700, 500, 500, 400);
-			batch.draw(velocidadB, 700, 303, 500, 40);
-			batch.draw(vidaB, 700, 153, 500, 40);
+			batch.draw(velocidadB, 700, 310, 500, 40);
+			batch.draw(vidaB, 700, 160, 500, 40);
 			batch.draw(letreroVida, 750, 210, 400, 40);
 			batch.draw(letreroVelocidad, 750, 360, 400, 40);
 			batch.draw(grifoCoin, 1750, 875, 150, 150);
@@ -548,7 +548,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			Button masVelocidad= new Button(new Button.ButtonStyle(spriteMas,spriteMas,spriteMas));
 			masVelocidad.setPosition(1250, 150);
-			masVelocidad.setSize(200,40);
+			masVelocidad.setSize(56,56);
 			masVelocidad.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(eleccionBarco==0 && vPunta<20 && 0<dinero) {
@@ -566,7 +566,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			Button masVida= new Button(new Button.ButtonStyle(spriteMas,spriteMas,spriteMas));
 			masVida.setPosition(1250, 0);
-			masVida.setSize(200,40);
+			masVida.setSize(56,56);
 			masVida.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(eleccionBarco==1 && vidas<20 && 0<dinero) {
@@ -584,8 +584,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			
 			Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenos,spriteMenos,spriteMenos));
-			menosVelocidad.setPosition(450, 150);
-			menosVelocidad.setSize(200,40);
+			menosVelocidad.setPosition(600, 150);
+			menosVelocidad.setSize(56,56);
 			menosVelocidad.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(0<vPunta){
@@ -599,8 +599,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(menosVelocidad);
 			
 			Button menosVida= new Button(new Button.ButtonStyle(spriteMenos,spriteMenos,spriteMenos));
-			menosVida.setPosition(450, 0);
-			menosVida.setSize(200,40);
+			menosVida.setPosition(600, 0);
+			menosVida.setSize(56,56);
 			menosVida.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(0<vidas) {
