@@ -35,7 +35,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocity = new Vector2(0,0);
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2(0,0);
-	private int dinero;
+	private int dinero = 12;
+	private int vidas= 5;
+	private int vPunta= 10;
+	private int agilidad = 2;
+	private int eleccionBarco=0;
+	private int dineroSeguridad;
+    private int barcoSeguridad;
+    private int vidaSeguridad;
+    private int velocidadSeguridad;
+	private int unidadesD;
+	private int decenasD;
+	private int unidadesVid;
+	private int decenasVid;
+	private int unidadesVel;
+	private int decenasVel;
 	private int contadorFondo;
 	private int aceler;
 	private float ilit = 500; 
@@ -47,22 +61,82 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Texture board,boardPlay,boardminit,boatTexture,
 	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
+	private Texture siguiente;
+	private Texture anterior;
+	private SpriteDrawable spriteSiguiente;
+	private SpriteDrawable spriteAnterior;
+	private Texture barraVida[] = new Texture[21];
+	private Texture barraVelocidad[] = new Texture[21];
+	private Texture barcosElec[] = new Texture[3];
+	private Texture unidadesA[] = new Texture[10];
+	private Texture decenasA[] = new Texture[10];
 	private Barco boat;
 	private Sprite Barra1;
 	private Sprite Barra2;
 	private Sprite Bola;
 	private Table table;
+	private Texture fondoTienda;
+	private Texture mas, menos, casa;
 	private SpriteDrawable spriteBInicio;
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
+	private SpriteDrawable spriteMas, spriteMenos, spriteBCasa;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
 	private long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos;
+	private Texture barra0;
+	private Texture barra1;
+	private Texture barra2;
+	private Texture barra3;
+	private Texture barra4;
+	private Texture barra5;
+	private Texture barra6;
+	private Texture barra7;
+	private Texture barra8;
+	private Texture barra9;
+	private Texture barra10;
+	private Texture barra11;
+	private Texture barra12;
+	private Texture barra13;
+	private Texture barra14;
+	private Texture barra15;
+	private Texture barra16;
+	private Texture barra17;
+	private Texture barra18;
+	private Texture barra19;
+	private Texture barra20;
+	private Texture barco1;
+	private Texture barco2;
+	private Texture barco3;
+	private Texture n0;
+	private Texture n1;
+	private Texture n2;
+	private Texture n3;
+	private Texture n4;
+	private Texture n5;
+	private Texture n6;
+	private Texture n7;
+	private Texture n8;
+	private Texture n9;	
+	private Texture velocidadB;
+	private Texture vidaB;
+	private Texture barcosE;
+    private Texture letreroVida;
+    private Texture letreroVelocidad;
+    private Texture unidadesB;
+    private Texture decenasB;
+    private Texture unidadesV;
+    private Texture decenasV;
+    private Texture unidadesVp;
+    private Texture decenasVp;
+    private Texture grifoCoin;
 //Para el minijuego
 	private int speedx = 200; 
 	private int speedy = 200; 
+
+
 	
 	@Override
 	public void create () {
@@ -81,6 +155,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
 		 bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
 		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
+		 siguiente = new Texture(Gdx.files.internal("data/bala.png"));
+		 anterior = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 mas = new Texture(Gdx.files.internal("data/bala.png"));
+		 menos = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
+		 letreroVida = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 letreroVelocidad = new Texture(Gdx.files.internal("data/Piedra1.png"));
+		 grifoCoin = new Texture(Gdx.files.internal("data/grifocoin.png"));
+
 		 font = new BitmapFont();
 
 		//BACKGROUND
@@ -91,6 +174,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
 		 BolaTexture= new Texture(Gdx.files.internal("data/bala.png"));
+		 fondoTienda = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 Barra1= new Sprite(Barra1Texture);
 		 Barra1.setY(HEIGHT/2);
 		 Barra1.setX(WIDTH-1670);
@@ -108,13 +192,119 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
+		 spriteMas = new SpriteDrawable(new Sprite(mas)); 
+		 spriteMenos = new SpriteDrawable(new Sprite(mas)); 
+		 spriteBCasa = new SpriteDrawable(new Sprite(mas)); 
 		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
 		 TCoco = new Texture(Gdx.files.internal("data/Icoco.png"));
 		 TTronco = new Texture(Gdx.files.internal("data/Tronco.png"));
+		 spriteSiguiente = new SpriteDrawable(new Sprite(siguiente));
+		 spriteAnterior = new SpriteDrawable( new Sprite(anterior));
+		 barra0 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra2 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra3 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra4 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra5 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra6 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra7 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra8 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra9 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra10 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra12 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra13 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra14 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra15 = new Texture(Gdx.files.internal("data/Piedra1.png"));
+		 barra16 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra17 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra18 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra19 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra20 = new Texture(Gdx.files.internal("data/Piedra1.png"));
+		 barco1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barco2 = new Texture(Gdx.files.internal("data/Piedra1.png"));
+		 barco3 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 n0 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 n1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 n2 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 n3 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 n4 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 n5 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 n6 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 n7 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 n8 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 n9 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
 		 Cocodrilos = new Array<Rectangle>();
+
+		 barraVelocidad[0] = barra0;
+		 barraVelocidad[1] = barra1;
+		 barraVelocidad[2] = barra2;
+		 barraVelocidad[3] = barra3;
+		 barraVelocidad[4] = barra4;
+		 barraVelocidad[5] = barra5;
+		 barraVelocidad[6] = barra6;
+		 barraVelocidad[7] = barra7;
+		 barraVelocidad[8] = barra8;
+		 barraVelocidad[9] = barra9;
+		 barraVelocidad[10] = barra10;
+		 barraVelocidad[11] = barra11;
+	     barraVelocidad[12] = barra12;
+	     barraVelocidad[13] = barra13;
+	     barraVelocidad[14] = barra14;
+	     barraVelocidad[15] = barra15;
+	     barraVelocidad[16] = barra16;
+	     barraVelocidad[17] = barra17;
+	     barraVelocidad[18] = barra18;
+	     barraVelocidad[19] = barra19;
+	     barraVelocidad[20] = barra20;
+
+		 barraVida[0] = barra0;
+		 barraVida[1] = barra1;
+		 barraVida[2] = barra2;
+		 barraVida[3] = barra3;
+		 barraVida[4] = barra4;
+		 barraVida[5] = barra5;
+		 barraVida[6] = barra6;
+		 barraVida[7] = barra7;
+		 barraVida[8] = barra8;
+		 barraVida[9] = barra9;
+		 barraVida[10] = barra10;
+		 barraVida[11] = barra11;
+	     barraVida[12] = barra12;
+	     barraVida[13] = barra13;
+	     barraVida[14] = barra14;
+	     barraVida[15] = barra15;
+	     barraVida[16] = barra16;
+	     barraVida[17] = barra17;
+	     barraVida[18] = barra18;
+	     barraVida[19] = barra19;
+	     barraVida[20] = barra20;
+	     barcosElec[0] = barco1;
+	     barcosElec[1] = barco2;
+	     barcosElec[2] = barco3;
+	     unidadesA[0] = n0;
+	     unidadesA[1] = n1;
+	     unidadesA[2] = n2;
+	     unidadesA[3] = n3;
+	     unidadesA[4] = n4;
+	     unidadesA[5] = n5;
+	     unidadesA[6] = n6;
+	     unidadesA[7] = n7;
+	     unidadesA[8] = n8;
+	     unidadesA[9] = n9;
+	     decenasA[0] = n0;
+	     decenasA[1] = n1;
+	     decenasA[2] = n2;
+	     decenasA[3] = n3;
+	     decenasA[4] = n4;
+	     decenasA[5] = n5;
+	     decenasA[6] = n6;
+	     decenasA[7] = n7;
+	     decenasA[8] = n8;
+	     decenasA[9] = n9;
 
 	}
 
@@ -265,6 +455,195 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			dineroSeguridad = dinero;
+	        barcoSeguridad = eleccionBarco;
+	        vidaSeguridad = vidas;
+	        velocidadSeguridad = vPunta;
+	        
+	        unidadesD =dinero%10;
+	        decenasD = dinero/10;
+	        unidadesVid =vidas%10;
+	        decenasVid = vidas/10;
+	        unidadesVel =vPunta%10;
+	        decenasVel = vPunta/10;
+	        
+	        velocidadB = barraVelocidad[vPunta];
+	        vidaB= barraVida[vidas];
+	        barcosE = barcosElec[eleccionBarco];
+	        unidadesB = unidadesA[unidadesD];
+	        decenasB = decenasA[decenasD];
+	        unidadesV = unidadesA[unidadesVid];
+	        decenasV = decenasA[decenasVid];
+	        unidadesVp = unidadesA[unidadesVel];
+	        decenasVp = decenasA[decenasVel];
+	        
+	        batch.begin();
+			batch.draw(fondoTienda,0,0);
+			batch.draw(barcosE, 700, 500, 500, 400);
+			batch.draw(velocidadB, 700, 303, 500, 40);
+			batch.draw(vidaB, 700, 153, 500, 40);
+			batch.draw(letreroVida, 750, 210, 400, 40);
+			batch.draw(letreroVelocidad, 750, 360, 400, 40);
+			batch.draw(grifoCoin, 1750, 875, 150, 150);
+			batch.draw(unidadesB, 1740, 940, 40, 40);
+			batch.draw(decenasB, 1690, 940, 40, 40);
+			batch.draw(unidadesV, 1210, 210, 40, 40);
+			batch.draw(decenasV, 1160, 210, 40, 40);
+			batch.draw(unidadesVp, 1210, 360, 40, 40);
+			batch.draw(decenasVp, 1160, 360, 40, 40);
+			
+			batch.end();
+			
+			stage = new Stage();
+			table=new Table();
+			table.setPosition(0,HEIGHT/7);
+			table.setFillParent(true);
+			table.setHeight(200);
+			stage.addActor(table);
+			
+			Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
+			siguienteBarco.setPosition(1325, 500);
+			siguienteBarco.setSize(200,40);
+			siguienteBarco.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					if( eleccionBarco<2){
+					eleccionBarco++;
+					if(eleccionBarco==1) {
+						vidas=10;
+						vPunta = 5;
+					}else if(eleccionBarco==2) {
+						vidas= 5;
+						vPunta= 5;
+					}
+					}
+					return false;
+					
+				}
+			});
+			table.addActor(siguienteBarco);
+			
+			Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
+			anteriorBarco.setPosition(350, 500);
+			anteriorBarco.setSize(200,40);
+			anteriorBarco.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					if( 0<eleccionBarco){
+					eleccionBarco--;
+					if(eleccionBarco==1) {
+						vidas=10;
+						vPunta=5;
+					}else if(eleccionBarco==0) {
+						vidas= 5;
+						vPunta = 10;
+					}
+					}
+					return false;
+					
+				}
+			});
+			table.addActor(anteriorBarco);
+			
+			Button masVelocidad= new Button(new Button.ButtonStyle(spriteMas,spriteMas,spriteMas));
+			masVelocidad.setPosition(1250, 150);
+			masVelocidad.setSize(200,40);
+			masVelocidad.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					if(eleccionBarco==0 && vPunta<20 && 0<dinero) {
+						vPunta++;
+						dinero--;
+					}else if((eleccionBarco==1 || eleccionBarco==2) && vPunta<15 && 0<dinero) {
+						vPunta++;
+						dinero--;
+					}
+					return false;
+					
+				}
+			});
+			table.addActor(masVelocidad);
+			
+			Button masVida= new Button(new Button.ButtonStyle(spriteMas,spriteMas,spriteMas));
+			masVida.setPosition(1250, 0);
+			masVida.setSize(200,40);
+			masVida.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					if(eleccionBarco==1 && vidas<20 && 0<dinero) {
+					vidas++;
+					dinero--;
+					}else if((eleccionBarco ==0 || eleccionBarco==2) && vidas<15 && 0<dinero) {
+					vidas++;
+					dinero--;
+					}
+					return false;
+					
+				}
+			});
+			table.addActor(masVida);
+			
+			
+			Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenos,spriteMenos,spriteMenos));
+			menosVelocidad.setPosition(450, 150);
+			menosVelocidad.setSize(200,40);
+			menosVelocidad.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					if(0<vPunta){
+					vPunta--;
+					dinero++;
+					}
+					return false;
+					
+				}
+			});
+			table.addActor(menosVelocidad);
+			
+			Button menosVida= new Button(new Button.ButtonStyle(spriteMenos,spriteMenos,spriteMenos));
+			menosVida.setPosition(450, 0);
+			menosVida.setSize(200,40);
+			menosVida.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					if(0<vidas) {
+					vidas--;
+					dinero++;
+					}
+					return false;
+					
+				}
+			});
+			table.addActor(menosVida);
+			
+			Button volverMenu= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
+			volverMenu.setPosition(120, 730);
+			volverMenu.setSize(100,100);
+			volverMenu.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					gameState=GameState.MENU;
+					eleccionBarco= barcoSeguridad;
+					vidas=vidaSeguridad;
+					vPunta = velocidadSeguridad;
+					dinero = dineroSeguridad;
+					return false;
+					
+				}
+			});
+			table.addActor(volverMenu);
+			
+			Button confirmar= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
+			confirmar.setPosition(1700, 0);
+			confirmar.setSize(100,100);
+			confirmar.addListener(new InputListener() {
+				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+					gameState=GameState.MENU;
+					return false;
+					
+				}
+			});
+			table.addActor(confirmar);
+			
+			
+			stage.act(Gdx.graphics.getDeltaTime());
+			stage.draw();
+			Gdx.input.setInputProcessor(stage);
+
 			break;
 			
 		case MINIJUEGO:
