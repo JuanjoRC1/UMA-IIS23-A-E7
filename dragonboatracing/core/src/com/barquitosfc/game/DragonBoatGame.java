@@ -40,10 +40,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private int vPunta= 10;
 	private int agilidad = 2;
 	private int eleccionBarco=0;
-	private int dineroSeguridad;
-    private int barcoSeguridad;
-    private int vidaSeguridad;
-    private int velocidadSeguridad;
+	private int dineroSeguridad = dinero;
+    private int barcoSeguridad = eleccionBarco;    
+    private int vidaSeguridad = vidas;
+    private int velocidadSeguridad = vPunta;
 	private int unidadesD;
 	private int decenasD;
 	private int unidadesVid;
@@ -132,6 +132,8 @@ public class DragonBoatGame extends ApplicationAdapter {
     private Texture unidadesVp;
     private Texture decenasVp;
     private Texture grifoCoin;
+   
+    
 //Para el minijuego
 	private int speedx = 200; 
 	private int speedy = 200; 
@@ -174,7 +176,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
 		 BolaTexture= new Texture(Gdx.files.internal("data/bala.png"));
-		 fondoTienda = new Texture(Gdx.files.internal("fondos/fondomini.png"));
+		 fondoTienda = new Texture(Gdx.files.internal("fondos/fondo_Juego1.png"));
 		 Barra1= new Sprite(Barra1Texture);
 		 Barra1.setY(HEIGHT/2);
 		 Barra1.setX(WIDTH-1670);
@@ -193,8 +195,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
 		 spriteMas = new SpriteDrawable(new Sprite(mas)); 
-		 spriteMenos = new SpriteDrawable(new Sprite(mas)); 
-		 spriteBCasa = new SpriteDrawable(new Sprite(mas)); 
+		 spriteMenos = new SpriteDrawable(new Sprite(menos)); 
+		 spriteBCasa = new SpriteDrawable(new Sprite(casa)); 
 		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
 		 TCoco = new Texture(Gdx.files.internal("data/Icoco.png"));
 		 TTronco = new Texture(Gdx.files.internal("data/Tronco.png"));
@@ -211,6 +213,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 barra8 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barra9 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barra10 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 barra11 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barra12 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barra13 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barra14 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
@@ -455,11 +458,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-			dineroSeguridad = dinero;
-	        barcoSeguridad = eleccionBarco;
-	        vidaSeguridad = vidas;
-	        velocidadSeguridad = vPunta;
 	        
 	        unidadesD =dinero%10;
 	        decenasD = dinero/10;
@@ -512,9 +510,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					if(eleccionBarco==1) {
 						vidas=10;
 						vPunta = 5;
+						dinero = dineroSeguridad;
 					}else if(eleccionBarco==2) {
 						vidas= 5;
 						vPunta= 5;
+						dinero = dineroSeguridad;
 					}
 					}
 					return false;
@@ -533,9 +533,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					if(eleccionBarco==1) {
 						vidas=10;
 						vPunta=5;
+						dinero = dineroSeguridad;
 					}else if(eleccionBarco==0) {
 						vidas= 5;
 						vPunta = 10;
+						dinero = dineroSeguridad;
 					}
 					}
 					return false;
@@ -639,7 +641,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(confirmar);
 			
-			
+			batch.begin();
+			font.draw(batch, "" + dinero, 50, 900);
+			font.draw(batch, "" + vPunta, 50, 500);
+			font.draw(batch, "" + vidas, 50, 700);
+			batch.end();
 			stage.act(Gdx.graphics.getDeltaTime());
 			stage.draw();
 			Gdx.input.setInputProcessor(stage);
