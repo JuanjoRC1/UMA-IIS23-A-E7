@@ -82,12 +82,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Sprite Bola;
 	private Table table;
 	private Texture fondoTienda;
-	private Texture mas, menos, casa;
+	private Texture masR, menosR,masM,menosM, casa;
 	private SpriteDrawable spriteBInicio;
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-	private SpriteDrawable spriteMas, spriteMenos, spriteBCasa,spriteBConfirmar;
+	private SpriteDrawable spriteMasR, spriteMenosR,spriteMasM,spriteMenosM, spriteBCasa,spriteBConfirmar;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
@@ -187,8 +187,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
 		 siguiente = new Texture(Gdx.files.internal("data/Flecha_Derecha.png"));
 		 anterior = new Texture(Gdx.files.internal("data/Flecha_Izquierda.png"));
-		 mas = new Texture(Gdx.files.internal("ui/Simbolo_Mas.png"));
-		 menos = new Texture(Gdx.files.internal("ui/Simbolo_Menos.png"));
+		 masR = new Texture(Gdx.files.internal("ui/Simbolo_Mas.png"));
+		 menosR = new Texture(Gdx.files.internal("ui/Simbolo_Menos.png"));
+		 masM = new Texture(Gdx.files.internal("ui/Boton_Mas_Morado.png"));
+		 menosM = new Texture(Gdx.files.internal("ui/Boton_Menos_Morado.png"));
 		 confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
 		 casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
 		 letreroVida = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
@@ -223,8 +225,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
-		 spriteMas = new SpriteDrawable(new Sprite(mas)); 
-		 spriteMenos = new SpriteDrawable(new Sprite(menos)); 
+		 spriteMasR = new SpriteDrawable(new Sprite(masR)); 
+		 spriteMenosR = new SpriteDrawable(new Sprite(menosR)); 
+		 spriteMasM = new SpriteDrawable(new Sprite(masM)); 
+		 spriteMenosM = new SpriteDrawable(new Sprite(menosM)); 
 		 spriteBCasa = new SpriteDrawable(new Sprite(casa));
 		 spriteBConfirmar = new SpriteDrawable(new Sprite(confirmar));
 		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
@@ -280,16 +284,16 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 barco1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 barco2 = new Texture(Gdx.files.internal("data/Piedra1.png"));
 		 barco3 = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 n0 = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 n1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 n2 = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 n3 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 n4 = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 n5 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 n6 = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 n7 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-		 n8 = new Texture(Gdx.files.internal("data/Bola.jpg"));
-		 n9 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+		 n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
+		 n1 = new Texture(Gdx.files.internal("data/Numero1.png"));
+		 n2 = new Texture(Gdx.files.internal("data/Numero2.png"));
+		 n3 = new Texture(Gdx.files.internal("data/Numero3.png"));
+		 n4 = new Texture(Gdx.files.internal("data/Numero4.png"));
+		 n5 = new Texture(Gdx.files.internal("data/Numero5.png"));
+		 n6 = new Texture(Gdx.files.internal("data/Numero6.png"));
+		 n7 = new Texture(Gdx.files.internal("data/Numero7.png"));
+		 n8 = new Texture(Gdx.files.internal("data/Numero8.png"));
+		 n9 = new Texture(Gdx.files.internal("data/Numero9.png"));
 
 		 //Obstaculos 
 		 Rocas = new Array<Rectangle>();
@@ -597,7 +601,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(anteriorBarco);
 			
-			Button masVelocidad= new Button(new Button.ButtonStyle(spriteMas,spriteMas,spriteMas));
+			Button masVelocidad= new Button(new Button.ButtonStyle(spriteMasM,spriteMasM,spriteMasM));
 			masVelocidad.setPosition(1250, 150);
 			masVelocidad.setSize(56,56);
 			masVelocidad.addListener(new InputListener() {
@@ -621,7 +625,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(masVelocidad);
 			
-			Button masVida= new Button(new Button.ButtonStyle(spriteMas,spriteMas,spriteMas));
+			Button masVida= new Button(new Button.ButtonStyle(spriteMasR,spriteMasR,spriteMasR));
 			masVida.setPosition(1250, 0);
 			masVida.setSize(56,56);
 			masVida.addListener(new InputListener() {
@@ -646,20 +650,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(masVida);
 			
 			
-			Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenos,spriteMenos,spriteMenos));
+			Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenosM,spriteMenosM,spriteMenosM));
 			menosVelocidad.setPosition(600, 150);
 			menosVelocidad.setSize(56,56);
 			menosVelocidad.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(0<vPunta1){
+					if(eleccionBarco==0 && 0<vPunta1 && 0<vPuntaS){
 					vPunta1--;
 					vPuntaS--;
 					dinero++;
-					}else if(0<vPunta2) {
+					}else if(eleccionBarco==1 && 0<vPunta2 && 0<vPuntaS) {
 						vPunta2--;
 						vPuntaS--;
 						dinero++;
-					}else if(0<vPunta3) {
+					}else if(eleccionBarco==2 && 0<vPunta3 && 0<vPuntaS) {
 						vPunta3--;
 						vPuntaS--;
 						dinero++;
@@ -670,20 +674,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(menosVelocidad);
 			
-			Button menosVida= new Button(new Button.ButtonStyle(spriteMenos,spriteMenos,spriteMenos));
+			Button menosVida= new Button(new Button.ButtonStyle(spriteMenosR,spriteMenosR,spriteMenosR));
 			menosVida.setPosition(600, 0);
 			menosVida.setSize(56,56);
 			menosVida.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(0<vidas1) {
+					if(eleccionBarco==0 && 0<vidas1 && 0<vPuntaS) {
 					vidas1--;
 					vidasS--;
 					dinero++;
-					}else if(0<vidas2) {
+					}else if(eleccionBarco==1 && 0<vidas2 && 0<vPuntaS) {
 					vidas2--;
 					vidasS--;
 					dinero++;
-					}else if(0<vidas3) {
+					}else if(eleccionBarco==2 && 0<vidas3 && 0<vPuntaS) {
 					vidas3--;
 					vidasS--;
 					dinero++;
@@ -695,7 +699,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(menosVida);
 			
 			Button volverMenu= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
-			volverMenu.setPosition(120, 730);
+			volverMenu.setPosition(40, 770);
 			volverMenu.setSize(100,100);
 			volverMenu.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -710,7 +714,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(volverMenu);
 			
 			Button confirmar= new Button(new Button.ButtonStyle(spriteBConfirmar,spriteBConfirmar,spriteBConfirmar));
-			confirmar.setPosition(1700, 0);
+			confirmar.setPosition(1650, 0);
 			confirmar.setSize(100,100);
 			confirmar.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -721,11 +725,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(confirmar);
 			
-			batch.begin();
-			font.draw(batch, "" + dinero, 50, 900);
-			font.draw(batch, "" + vPuntaS, 50, 500);
-			font.draw(batch, "" + vidasS, 50, 700);
-			batch.end();
+	
 			stage.act(Gdx.graphics.getDeltaTime());
 			stage.draw();
 			Gdx.input.setInputProcessor(stage);
