@@ -556,15 +556,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(eleccionBarco==0 && vPunta1<20 && 0<dinero) {
 						vPunta1++;
-						vPuntaS=vPunta1;
+						vPuntaS++;
 						dinero--;
 					}else if((eleccionBarco==1) && vPunta2<15 && 0<dinero) {
 						vPunta2++;
-						vPuntaS=vPunta2;
+						vPuntaS++;
 						dinero--;
 					}else if(eleccionBarco==2 && vPunta3<15 &&0<dinero) {
 						vPunta3++;
-						vPuntaS=vPunta3;
+						vPuntaS++;
 						dinero--;
 					}
 					return false;
@@ -580,15 +580,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(eleccionBarco==1 && vidas2<20 && 0<dinero) {
 					vidas2++;
-					vidasS = vidas2;
+					vidasS++;
 					dinero--;
 					}else if((eleccionBarco ==0) && vidas1<15 && 0<dinero) {
 					vidas1++;
-					vidasS = vidas1;
+					vidasS++;
 					dinero--;
 					}else if(eleccionBarco==2 && vidas3<15 && 0<dinero) {
 						vidas3++;
-						vidasS = vidas3;
+						vidasS++;
 						dinero--;
 					}
 					return false;
@@ -605,12 +605,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(0<vPunta1){
 					vPunta1--;
+					vPuntaS--;
 					dinero++;
 					}else if(0<vPunta2) {
 						vPunta2--;
+						vPuntaS--;
 						dinero++;
 					}else if(0<vPunta3) {
 						vPunta3--;
+						vPuntaS--;
 						dinero++;
 					}
 					return false;
@@ -626,15 +629,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if(0<vidas1) {
 					vidas1--;
-					vidasS = vidas1;
+					vidasS--;
 					dinero++;
 					}else if(0<vidas2) {
 					vidas2--;
-					vidasS = vidas2;
+					vidasS--;
 					dinero++;
 					}else if(0<vidas3) {
 					vidas3--;
-					vidasS = vidas3;
+					vidasS--;
 					dinero++;
 					}
 					return false;
