@@ -164,8 +164,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
 		 bTienda= new Texture(Gdx.files.internal("ui/Boton_TIENDA.png"));
 		 bSalir= new Texture(Gdx.files.internal("ui/Boton_SALIR.png"));
-		 siguiente = new Texture(Gdx.files.internal("data/bala.png"));
-		 anterior = new Texture(Gdx.files.internal("data/Bola.jpg"));
+		 siguiente = new Texture(Gdx.files.internal("data/Flecha_Derecha.png"));
+		 anterior = new Texture(Gdx.files.internal("data/Flecha_Izquierda.png"));
 		 mas = new Texture(Gdx.files.internal("ui/Simbolo_Mas.png"));
 		 menos = new Texture(Gdx.files.internal("ui/Simbolo_Menos.png"));
 		 confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
@@ -184,7 +184,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
 		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
 		 BolaTexture= new Texture(Gdx.files.internal("data/bala.png"));
-		 fondoTienda = new Texture(Gdx.files.internal("fondos/fondo_Juego1.png"));
+		 fondoTienda = new Texture(Gdx.files.internal("fondos/FONDO_TIENDA.png"));
 		 Barra1= new Sprite(Barra1Texture);
 		 Barra1.setY(HEIGHT/2);
 		 Barra1.setX(WIDTH-1670);
@@ -488,12 +488,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        
 	        batch.begin();
 			batch.draw(fondoTienda,0,0);
-			batch.draw(barcosE, 700, 500, 500, 400);
+			batch.draw(barcosE, 775, 600, 400, 300);
 			batch.draw(velocidadB, 700, 310, 500, 40);
 			batch.draw(vidaB, 700, 160, 500, 40);
 			batch.draw(letreroVida, 750, 210, 400, 40);
 			batch.draw(letreroVelocidad, 750, 360, 400, 40);
-			batch.draw(grifoCoin, 1750, 875, 150, 150);
+			batch.draw(grifoCoin, 1800, 935, 45, 45);
 			batch.draw(unidadesB, 1740, 940, 40, 40);
 			batch.draw(decenasB, 1690, 940, 40, 40);
 			batch.draw(unidadesV, 1210, 210, 40, 40);
@@ -511,8 +511,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			stage.addActor(table);
 			
 			Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
-			siguienteBarco.setPosition(1325, 500);
-			siguienteBarco.setSize(200,40);
+			siguienteBarco.setPosition(1220, 580);
+			siguienteBarco.setSize(70,70);
 			siguienteBarco.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if( eleccionBarco<2){
@@ -532,8 +532,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			table.addActor(siguienteBarco);
 			
 			Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
-			anteriorBarco.setPosition(350, 500);
-			anteriorBarco.setSize(200,40);
+			anteriorBarco.setPosition(660, 580);
+			anteriorBarco.setSize(70,70);
 			anteriorBarco.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					if( 0<eleccionBarco){
