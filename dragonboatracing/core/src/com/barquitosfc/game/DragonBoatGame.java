@@ -493,7 +493,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			/*Ventana ventana = new Ventana();
 			Thread t1= new Thread();
 			t1.start();*/
-			table=new Table();
+			Assetsmini.load();
+			/*table=new Table();
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
@@ -509,7 +510,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			 handleInputm();
 	         updatemin(Gdx.graphics.getDeltaTime());
-			
+			*/
 			break;
 			
 		case SHOP:
