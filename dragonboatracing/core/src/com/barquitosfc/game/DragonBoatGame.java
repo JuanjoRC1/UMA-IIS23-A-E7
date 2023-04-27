@@ -36,14 +36,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2(0,0);
 	private int dinero = 12;
-	private int vidas= 5;
-	private int vPunta= 10;
+	private int vidas1= 5;
+	private int vPunta1= 10;
+	private int vidas2= 10;
+	private int vPunta2= 5;
+	private int vidas3= 5;
+	private int vPunta3= 5;
+	private int vidasS=vidas1;
+	private int vPuntaS=vPunta1;
 	private int agilidad = 2;
 	private int eleccionBarco=0;
 	private int dineroSeguridad = dinero;
     private int barcoSeguridad = eleccionBarco;    
-    private int vidaSeguridad = vidas;
-    private int velocidadSeguridad = vPunta;
+    private int vidaSeguridad1 = vidas1;
+    private int velocidadSeguridad1 = vPunta1;
 	private int unidadesD;
 	private int decenasD;
 	private int unidadesVid;
@@ -461,13 +467,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        
 	        unidadesD =dinero%10;
 	        decenasD = dinero/10;
-	        unidadesVid =vidas%10;
-	        decenasVid = vidas/10;
-	        unidadesVel =vPunta%10;
-	        decenasVel = vPunta/10;
+	        unidadesVid =vidasS%10;
+	        decenasVid = vidasS/10;
+	        unidadesVel =vPuntaS%10;
+	        decenasVel = vPuntaS/10;
+	       
 	        
-	        velocidadB = barraVelocidad[vPunta];
-	        vidaB= barraVida[vidas];
+	        velocidadB = barraVelocidad[vPuntaS];
+	        vidaB= barraVida[vidasS];
 	        barcosE = barcosElec[eleccionBarco];
 	        unidadesB = unidadesA[unidadesD];
 	        decenasB = decenasA[decenasD];
@@ -508,13 +515,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					if( eleccionBarco<2){
 					eleccionBarco++;
 					if(eleccionBarco==1) {
-						vidas=10;
-						vPunta = 5;
-						dinero = dineroSeguridad;
+						vidasS=vidas2;
+						vPuntaS = vPunta2;
 					}else if(eleccionBarco==2) {
-						vidas= 5;
-						vPunta= 5;
-						dinero = dineroSeguridad;
+						vidasS= vidas3;
+						vPuntaS= vPunta3;
 					}
 					}
 					return false;
@@ -531,13 +536,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					if( 0<eleccionBarco){
 					eleccionBarco--;
 					if(eleccionBarco==1) {
-						vidas=10;
-						vPunta=5;
-						dinero = dineroSeguridad;
+						vidasS=vidas2;
+						vPuntaS=vPunta2;
 					}else if(eleccionBarco==0) {
-						vidas= 5;
-						vPunta = 10;
-						dinero = dineroSeguridad;
+						vidasS= vidas1;
+						vPuntaS = vPunta1;
 					}
 					}
 					return false;
@@ -551,11 +554,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 			masVelocidad.setSize(56,56);
 			masVelocidad.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(eleccionBarco==0 && vPunta<20 && 0<dinero) {
-						vPunta++;
+					if(eleccionBarco==0 && vPunta1<20 && 0<dinero) {
+						vPunta1++;
+						vPuntaS=vPunta1;
 						dinero--;
-					}else if((eleccionBarco==1 || eleccionBarco==2) && vPunta<15 && 0<dinero) {
-						vPunta++;
+					}else if((eleccionBarco==1) && vPunta2<15 && 0<dinero) {
+						vPunta2++;
+						vPuntaS=vPunta2;
+						dinero--;
+					}else if(eleccionBarco==2 && vPunta3<15 &&0<dinero) {
+						vPunta3++;
+						vPuntaS=vPunta3;
 						dinero--;
 					}
 					return false;
@@ -569,12 +578,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 			masVida.setSize(56,56);
 			masVida.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(eleccionBarco==1 && vidas<20 && 0<dinero) {
-					vidas++;
+					if(eleccionBarco==1 && vidas2<20 && 0<dinero) {
+					vidas2++;
+					vidasS = vidas2;
 					dinero--;
-					}else if((eleccionBarco ==0 || eleccionBarco==2) && vidas<15 && 0<dinero) {
-					vidas++;
+					}else if((eleccionBarco ==0) && vidas1<15 && 0<dinero) {
+					vidas1++;
+					vidasS = vidas1;
 					dinero--;
+					}else if(eleccionBarco==2 && vidas3<15 && 0<dinero) {
+						vidas3++;
+						vidasS = vidas3;
+						dinero--;
 					}
 					return false;
 					
@@ -588,9 +603,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 			menosVelocidad.setSize(56,56);
 			menosVelocidad.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(0<vPunta){
-					vPunta--;
+					if(0<vPunta1){
+					vPunta1--;
 					dinero++;
+					}else if(0<vPunta2) {
+						vPunta2--;
+						dinero++;
+					}else if(0<vPunta3) {
+						vPunta3--;
+						dinero++;
 					}
 					return false;
 					
@@ -603,8 +624,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 			menosVida.setSize(56,56);
 			menosVida.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(0<vidas) {
-					vidas--;
+					if(0<vidas1) {
+					vidas1--;
+					vidasS = vidas1;
+					dinero++;
+					}else if(0<vidas2) {
+					vidas2--;
+					vidasS = vidas2;
+					dinero++;
+					}else if(0<vidas3) {
+					vidas3--;
+					vidasS = vidas3;
 					dinero++;
 					}
 					return false;
@@ -618,10 +648,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			volverMenu.setSize(100,100);
 			volverMenu.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					gameState=GameState.MENU;
 					eleccionBarco= barcoSeguridad;
-					vidas=vidaSeguridad;
-					vPunta = velocidadSeguridad;
+					vidasS=vidaSeguridad1;
+					vPuntaS = velocidadSeguridad1;
 					dinero = dineroSeguridad;
 					return false;
 					
@@ -643,8 +672,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			batch.begin();
 			font.draw(batch, "" + dinero, 50, 900);
-			font.draw(batch, "" + vPunta, 50, 500);
-			font.draw(batch, "" + vidas, 50, 700);
+			font.draw(batch, "" + vPuntaS, 50, 500);
+			font.draw(batch, "" + vidasS, 50, 700);
 			batch.end();
 			stage.act(Gdx.graphics.getDeltaTime());
 			stage.draw();
