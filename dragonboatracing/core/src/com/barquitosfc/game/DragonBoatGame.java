@@ -87,7 +87,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-	private SpriteDrawable spriteMas, spriteMenos, spriteBCasa;
+	private SpriteDrawable spriteMas, spriteMenos, spriteBCasa,spriteBConfirmar;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
@@ -137,6 +137,7 @@ public class DragonBoatGame extends ApplicationAdapter {
     private Texture decenasV;
     private Texture unidadesVp;
     private Texture decenasVp;
+    private Texture confirmar;
     private Texture grifoCoin;
    
     
@@ -167,6 +168,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 anterior = new Texture(Gdx.files.internal("data/Bola.jpg"));
 		 mas = new Texture(Gdx.files.internal("ui/Simbolo_Mas.png"));
 		 menos = new Texture(Gdx.files.internal("ui/Simbolo_Menos.png"));
+		 confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
 		 casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
 		 letreroVida = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
 		 letreroVelocidad = new Texture(Gdx.files.internal("data/Piedra1.png"));
@@ -202,7 +204,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
 		 spriteMas = new SpriteDrawable(new Sprite(mas)); 
 		 spriteMenos = new SpriteDrawable(new Sprite(menos)); 
-		 spriteBCasa = new SpriteDrawable(new Sprite(casa)); 
+		 spriteBCasa = new SpriteDrawable(new Sprite(casa));
+		 spriteBConfirmar = new SpriteDrawable(new Sprite(confirmar));
 		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
 		 TCoco = new Texture(Gdx.files.internal("data/Icoco.png"));
 		 TTronco = new Texture(Gdx.files.internal("data/Tronco.png"));
@@ -661,7 +664,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(volverMenu);
 			
-			Button confirmar= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
+			Button confirmar= new Button(new Button.ButtonStyle(spriteBConfirmar,spriteBConfirmar,spriteBConfirmar));
 			confirmar.setPosition(1700, 0);
 			confirmar.setSize(100,100);
 			confirmar.addListener(new InputListener() {
