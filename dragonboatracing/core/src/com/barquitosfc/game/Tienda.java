@@ -483,7 +483,8 @@ public class Tienda {
 		confirmar.setSize(100,100);
 		confirmar.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				   gameState=GameState.MENU;
+				DragonBoatGame cambio= new DragonBoatGame(eleccionBarco,vidasS,vPuntaS,dinero);
+				cambio.gameState=DragonBoatGame.GameState.MENU;
 				return false;
 				
 			}

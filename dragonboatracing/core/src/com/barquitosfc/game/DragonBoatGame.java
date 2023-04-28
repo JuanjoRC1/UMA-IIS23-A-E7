@@ -38,27 +38,24 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private Vector2 velocitybar = new Vector2();
 	private Vector2 acceleration = new Vector2(0,0);
 	private int aceler;
+	private int barcoDef,vidas,vPunta,dinero;
 	private float ilit = 500; 
+	private Barco boat;
 	private BitmapFont font;
 	private Texture bInicio,bAjustes,bTienda,bSalir;
+	private Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
 	private Stage stage;
+	private Table table;
 	public   static GameState gameState;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
-
-
-	private Barco boat;
 	private Sprite Barra1;
 	private Sprite Barra2;
 	private Sprite Bola;
-	private Table table;
-
 	private SpriteDrawable spriteBInicio;
 	private SpriteDrawable spriteBAjustes;
 	private SpriteDrawable spriteBTienda;
 	private SpriteDrawable spriteBSalir;
-
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
@@ -70,8 +67,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 //Para el minijuego
 	private int speedx = 200; 
 	private int speedy = 200; 
-
-
+	public DragonBoatGame() {
+		this(0,0,0,0);
+	}
+	public DragonBoatGame(int eleccionBarco,int vidasS,int vPuntaS,int dinero) {
+		this.barcoDef=eleccionBarco;
+		this.vidas=vidasS;
+		this.vPunta=vPuntaS;
+		this.dinero=dinero;
+	}
 	
 	@Override
 	public void create () {
@@ -213,7 +217,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-
+			
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
