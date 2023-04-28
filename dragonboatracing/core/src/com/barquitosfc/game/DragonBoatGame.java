@@ -66,7 +66,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 //Para el minijuego
 	private int speedx = 200; 
 	private int speedy = 200; 
-
+	public DragonBoatGame() {
+		this(0,0,0,0);
+	}
 	public DragonBoatGame(int eleccionBarco,int vidasS,int vPuntaS,int dinero) {
 		this.barcoDef=eleccionBarco;
 		this.vidas=vidasS;
