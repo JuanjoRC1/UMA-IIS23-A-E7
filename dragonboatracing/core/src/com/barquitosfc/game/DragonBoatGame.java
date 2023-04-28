@@ -62,11 +62,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	private BitmapFont font;
 	private Texture bInicio,bAjustes,bTienda,bSalir;
 	private Stage stage;
-	public static GameState gameState;
+	public   static GameState gameState;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Texture board,boardPlay,boardminit,boatTexture,
-	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
+	private Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
 	private Texture siguiente;
 	private Texture anterior;
 	private SpriteDrawable spriteSiguiente;
@@ -92,6 +91,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public static final int HEIGHT	=1080;
 	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
 	private long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos;
+	private Tienda tienda;
 	private Texture barra0;
 	private Texture barra1;
 	private Texture barra2;
@@ -220,11 +220,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 boat = new Barco(boatTexture);
 		 boat.setPosition(WIDTH/2, HEIGHT/7);
 		 boat.setScale(1f); 
-
-		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));// sprite cuando esta sin apretar, apretado y con el raton encima
+		 
+		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));
 		 spriteBAjustes= new SpriteDrawable(new Sprite(bAjustes));
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
+		 
+		 //Tienda?
+		
 		 spriteMasR = new SpriteDrawable(new Sprite(masR)); 
 		 spriteMenosR = new SpriteDrawable(new Sprite(menosR)); 
 		 spriteMasM = new SpriteDrawable(new Sprite(masM)); 
@@ -490,9 +493,6 @@ public class DragonBoatGame extends ApplicationAdapter {
             break;
 			
 		case CONFIG:
-			/*Ventana ventana = new Ventana();
-			Thread t1= new Thread();
-			t1.start();*/
 			Assetsmini.load();
 			/*table=new Table();
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
@@ -514,6 +514,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case SHOP:
+			// METODO PARA HACER LA TIENDA EN UNA SOLA LINEAAA
+			//tienda= new Tienda(table,batch,stage,gameState);
+			
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -843,7 +846,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
 	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
 	       
-//	    		Bol
+//	    		Bola?
 	            Bola.setX(Bola.getX()+speedx*deltaTime);
 	            Bola.setY(Bola.getY()+speedy*deltaTime);
 	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
@@ -861,16 +864,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				if (Bola.getY() >700||Bola.getY()<0) {
 					speedy *=-1;
 				}
-/*	 		 LIMITES de la barra VERTICAL
-				if (Barra1.getY() < 0) {
-				    Barra1.setY(0);
-				    velocity.y = 0; 
-	            }
-				if (Barra1.getY() > 700) {
-				    Barra1.setY(700);
-				    velocity.y = 0; 
-	            }*/
-	            
+
 //			     MOVIMIENTO DEL BARCO
 				if(boat.getY() > (ilit)+1) {
 					boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
@@ -900,7 +894,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 	            
 	            
-	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
+	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 400 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<15) {
 			     spawnRoca();
 			     
