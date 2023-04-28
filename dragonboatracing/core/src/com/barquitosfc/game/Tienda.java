@@ -483,7 +483,7 @@ public class Tienda {
 		confirmar.setSize(100,100);
 		confirmar.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				final GameState  gameState=GameState.MENU;
+				   gameState=GameState.MENU;
 				return false;
 				
 			}
