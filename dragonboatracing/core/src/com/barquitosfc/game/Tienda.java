@@ -117,6 +117,8 @@ public class Tienda {
     private Texture decenasVp;
     private Texture confirmar;
     private Texture grifoCoin;
+
+    
     public void inicializar() {
     	siguiente = new Texture(Gdx.files.internal("data/Flecha_Derecha.png"));
    	 	anterior = new Texture(Gdx.files.internal("data/Flecha_Izquierda.png"));
@@ -261,14 +263,18 @@ public class Tienda {
         decenasA[7] = n7;
         decenasA[8] = n8;
         decenasA[9] = n9;
+        
+        
    	 
     }
     
 	 
 	 
-	public Tienda(Table table,SpriteBatch batch,Stage stage,GameState gameState) {
+	public Tienda() {
 		this.inicializar();
-		this.iniciar(table,batch,stage,gameState);
+		
+		
+		
 		
 	}
 	public void iniciar(Table table,SpriteBatch batch,Stage stage,GameState gameState) {
@@ -477,7 +483,7 @@ public class Tienda {
 		confirmar.setSize(100,100);
 		confirmar.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				gameState=GameState.MENU;
+				final GameState  gameState=GameState.MENU;
 				return false;
 				
 			}

@@ -15,12 +15,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.barquitosfc.game.DragonBoatGame.GameState;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -227,7 +228,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
 		 
 		 //Tienda?
-		
+		 
+		 tienda= new Tienda();
 		 spriteMasR = new SpriteDrawable(new Sprite(masR)); 
 		 spriteMenosR = new SpriteDrawable(new Sprite(menosR)); 
 		 spriteMasM = new SpriteDrawable(new Sprite(masM)); 
@@ -515,224 +517,225 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 		case SHOP:
 			// METODO PARA HACER LA TIENDA EN UNA SOLA LINEAAA
-			//tienda= new Tienda(table,batch,stage,gameState);
 			
-			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
-			Gdx.gl.glClearColor(1, 1, 1, 1);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-	        
-	        unidadesD =dinero%10;
-	        decenasD = dinero/10;
-	        unidadesVid =vidasS%10;
-	        decenasVid = vidasS/10;
-	        unidadesVel =vPuntaS%10;
-	        decenasVel = vPuntaS/10;
-	       
-	        
-	        velocidadB = barraVelocidad[vPuntaS];
-	        vidaB= barraVida[vidasS];
-	        barcosE = barcosElec[eleccionBarco];
-	        unidadesB = unidadesA[unidadesD];
-	        decenasB = decenasA[decenasD];
-	        unidadesV = unidadesA[unidadesVid];
-	        decenasV = decenasA[decenasVid];
-	        unidadesVp = unidadesA[unidadesVel];
-	        decenasVp = decenasA[decenasVel];
-	        
-	        batch.begin();
-			batch.draw(fondoTienda,0,0);
-			batch.draw(barcosE, 775, 600, 400, 300);
-			batch.draw(velocidadB, 700, 310, 500, 40);
-			batch.draw(vidaB, 700, 160, 500, 40);
-			batch.draw(letreroVida, 750, 210, 400, 40);
-			batch.draw(letreroVelocidad, 750, 360, 400, 40);
-			batch.draw(grifoCoin, 1800, 935, 45, 45);
-			batch.draw(unidadesB, 1740, 940, 40, 40);
-			batch.draw(decenasB, 1690, 940, 40, 40);
-			batch.draw(unidadesV, 1210, 210, 40, 40);
-			batch.draw(decenasV, 1160, 210, 40, 40);
-			batch.draw(unidadesVp, 1210, 360, 40, 40);
-			batch.draw(decenasVp, 1160, 360, 40, 40);
+			tienda.iniciar(table,batch,stage,gameState);
 			
-			batch.end();
-			
-			stage = new Stage();
-			table=new Table();
-			table.setPosition(0,HEIGHT/7);
-			table.setFillParent(true);
-			table.setHeight(200);
-			stage.addActor(table);
-			
-			Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
-			siguienteBarco.setPosition(1220, 580);
-			siguienteBarco.setSize(70,70);
-			siguienteBarco.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if( eleccionBarco<2){
-					eleccionBarco++;
-					if(eleccionBarco==1) {
-						vidasS=vidas2;
-						vPuntaS = vPunta2;
-					}else if(eleccionBarco==2) {
-						vidasS= vidas3;
-						vPuntaS= vPunta3;
-					}
-					}
-					return false;
-					
-				}
-			});
-			table.addActor(siguienteBarco);
-			
-			Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
-			anteriorBarco.setPosition(660, 580);
-			anteriorBarco.setSize(70,70);
-			anteriorBarco.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if( 0<eleccionBarco){
-					eleccionBarco--;
-					if(eleccionBarco==1) {
-						vidasS=vidas2;
-						vPuntaS=vPunta2;
-					}else if(eleccionBarco==0) {
-						vidasS= vidas1;
-						vPuntaS = vPunta1;
-					}
-					}
-					return false;
-					
-				}
-			});
-			table.addActor(anteriorBarco);
-			
-			Button masVelocidad= new Button(new Button.ButtonStyle(spriteMasM,spriteMasM,spriteMasM));
-			masVelocidad.setPosition(1250, 150);
-			masVelocidad.setSize(56,56);
-			masVelocidad.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(eleccionBarco==0 && vPunta1<20 && 0<dinero) {
-						vPunta1++;
-						vPuntaS++;
-						dinero--;
-					}else if((eleccionBarco==1) && vPunta2<15 && 0<dinero) {
-						vPunta2++;
-						vPuntaS++;
-						dinero--;
-					}else if(eleccionBarco==2 && vPunta3<15 &&0<dinero) {
-						vPunta3++;
-						vPuntaS++;
-						dinero--;
-					}
-					return false;
-					
-				}
-			});
-			table.addActor(masVelocidad);
-			
-			Button masVida= new Button(new Button.ButtonStyle(spriteMasR,spriteMasR,spriteMasR));
-			masVida.setPosition(1250, 0);
-			masVida.setSize(56,56);
-			masVida.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(eleccionBarco==1 && vidas2<20 && 0<dinero) {
-					vidas2++;
-					vidasS++;
-					dinero--;
-					}else if((eleccionBarco ==0) && vidas1<15 && 0<dinero) {
-					vidas1++;
-					vidasS++;
-					dinero--;
-					}else if(eleccionBarco==2 && vidas3<15 && 0<dinero) {
-						vidas3++;
-						vidasS++;
-						dinero--;
-					}
-					return false;
-					
-				}
-			});
-			table.addActor(masVida);
-			
-			
-			Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenosM,spriteMenosM,spriteMenosM));
-			menosVelocidad.setPosition(600, 150);
-			menosVelocidad.setSize(56,56);
-			menosVelocidad.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(eleccionBarco==0 && 0<vPunta1 && 0<vPuntaS){
-					vPunta1--;
-					vPuntaS--;
-					dinero++;
-					}else if(eleccionBarco==1 && 0<vPunta2 && 0<vPuntaS) {
-						vPunta2--;
-						vPuntaS--;
-						dinero++;
-					}else if(eleccionBarco==2 && 0<vPunta3 && 0<vPuntaS) {
-						vPunta3--;
-						vPuntaS--;
-						dinero++;
-					}
-					return false;
-					
-				}
-			});
-			table.addActor(menosVelocidad);
-			
-			Button menosVida= new Button(new Button.ButtonStyle(spriteMenosR,spriteMenosR,spriteMenosR));
-			menosVida.setPosition(600, 0);
-			menosVida.setSize(56,56);
-			menosVida.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					if(eleccionBarco==0 && 0<vidas1 && 0<vPuntaS) {
-					vidas1--;
-					vidasS--;
-					dinero++;
-					}else if(eleccionBarco==1 && 0<vidas2 && 0<vPuntaS) {
-					vidas2--;
-					vidasS--;
-					dinero++;
-					}else if(eleccionBarco==2 && 0<vidas3 && 0<vPuntaS) {
-					vidas3--;
-					vidasS--;
-					dinero++;
-					}
-					return false;
-					
-				}
-			});
-			table.addActor(menosVida);
-			
-			Button volverMenu= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
-			volverMenu.setPosition(40, 770);
-			volverMenu.setSize(100,100);
-			volverMenu.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					eleccionBarco= barcoSeguridad;
-					vidasS=vidaSeguridad1;
-					vPuntaS = velocidadSeguridad1;
-					dinero = dineroSeguridad;
-					return false;
-					
-				}
-			});
-			table.addActor(volverMenu);
-			
-			Button confirmar= new Button(new Button.ButtonStyle(spriteBConfirmar,spriteBConfirmar,spriteBConfirmar));
-			confirmar.setPosition(1650, 0);
-			confirmar.setSize(100,100);
-			confirmar.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					gameState=GameState.MENU;
-					return false;
-					
-				}
-			});
-			table.addActor(confirmar);
-			
-	
-			stage.act(Gdx.graphics.getDeltaTime());
-			stage.draw();
-			Gdx.input.setInputProcessor(stage);
+//			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
+//			Gdx.gl.glClearColor(1, 1, 1, 1);
+//	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//	        
+//	        unidadesD =dinero%10;
+//	        decenasD = dinero/10;
+//	        unidadesVid =vidasS%10;
+//	        decenasVid = vidasS/10;
+//	        unidadesVel =vPuntaS%10;
+//	        decenasVel = vPuntaS/10;
+//	       
+//	        
+//	        velocidadB = barraVelocidad[vPuntaS];
+//	        vidaB= barraVida[vidasS];
+//	        barcosE = barcosElec[eleccionBarco];
+//	        unidadesB = unidadesA[unidadesD];
+//	        decenasB = decenasA[decenasD];
+//	        unidadesV = unidadesA[unidadesVid];
+//	        decenasV = decenasA[decenasVid];
+//	        unidadesVp = unidadesA[unidadesVel];
+//	        decenasVp = decenasA[decenasVel];
+//	        
+//	        batch.begin();
+//			batch.draw(fondoTienda,0,0);
+//			batch.draw(barcosE, 775, 600, 400, 300);
+//			batch.draw(velocidadB, 700, 310, 500, 40);
+//			batch.draw(vidaB, 700, 160, 500, 40);
+//			batch.draw(letreroVida, 750, 210, 400, 40);
+//			batch.draw(letreroVelocidad, 750, 360, 400, 40);
+//			batch.draw(grifoCoin, 1800, 935, 45, 45);
+//			batch.draw(unidadesB, 1740, 940, 40, 40);
+//			batch.draw(decenasB, 1690, 940, 40, 40);
+//			batch.draw(unidadesV, 1210, 210, 40, 40);
+//			batch.draw(decenasV, 1160, 210, 40, 40);
+//			batch.draw(unidadesVp, 1210, 360, 40, 40);
+//			batch.draw(decenasVp, 1160, 360, 40, 40);
+//			
+//			batch.end();
+//			
+//			stage = new Stage();
+//			table=new Table();
+//			table.setPosition(0,HEIGHT/7);
+//			table.setFillParent(true);
+//			table.setHeight(200);
+//			stage.addActor(table);
+//			
+//			Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
+//			siguienteBarco.setPosition(1220, 580);
+//			siguienteBarco.setSize(70,70);
+//			siguienteBarco.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					if( eleccionBarco<2){
+//					eleccionBarco++;
+//					if(eleccionBarco==1) {
+//						vidasS=vidas2;
+//						vPuntaS = vPunta2;
+//					}else if(eleccionBarco==2) {
+//						vidasS= vidas3;
+//						vPuntaS= vPunta3;
+//					}
+//					}
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(siguienteBarco);
+//			
+//			Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
+//			anteriorBarco.setPosition(660, 580);
+//			anteriorBarco.setSize(70,70);
+//			anteriorBarco.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					if( 0<eleccionBarco){
+//					eleccionBarco--;
+//					if(eleccionBarco==1) {
+//						vidasS=vidas2;
+//						vPuntaS=vPunta2;
+//					}else if(eleccionBarco==0) {
+//						vidasS= vidas1;
+//						vPuntaS = vPunta1;
+//					}
+//					}
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(anteriorBarco);
+//			
+//			Button masVelocidad= new Button(new Button.ButtonStyle(spriteMasM,spriteMasM,spriteMasM));
+//			masVelocidad.setPosition(1250, 150);
+//			masVelocidad.setSize(56,56);
+//			masVelocidad.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					if(eleccionBarco==0 && vPunta1<20 && 0<dinero) {
+//						vPunta1++;
+//						vPuntaS++;
+//						dinero--;
+//					}else if((eleccionBarco==1) && vPunta2<15 && 0<dinero) {
+//						vPunta2++;
+//						vPuntaS++;
+//						dinero--;
+//					}else if(eleccionBarco==2 && vPunta3<15 &&0<dinero) {
+//						vPunta3++;
+//						vPuntaS++;
+//						dinero--;
+//					}
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(masVelocidad);
+//			
+//			Button masVida= new Button(new Button.ButtonStyle(spriteMasR,spriteMasR,spriteMasR));
+//			masVida.setPosition(1250, 0);
+//			masVida.setSize(56,56);
+//			masVida.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					if(eleccionBarco==1 && vidas2<20 && 0<dinero) {
+//					vidas2++;
+//					vidasS++;
+//					dinero--;
+//					}else if((eleccionBarco ==0) && vidas1<15 && 0<dinero) {
+//					vidas1++;
+//					vidasS++;
+//					dinero--;
+//					}else if(eleccionBarco==2 && vidas3<15 && 0<dinero) {
+//						vidas3++;
+//						vidasS++;
+//						dinero--;
+//					}
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(masVida);
+//			
+//			
+//			Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenosM,spriteMenosM,spriteMenosM));
+//			menosVelocidad.setPosition(600, 150);
+//			menosVelocidad.setSize(56,56);
+//			menosVelocidad.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					if(eleccionBarco==0 && 0<vPunta1 && 0<vPuntaS){
+//					vPunta1--;
+//					vPuntaS--;
+//					dinero++;
+//					}else if(eleccionBarco==1 && 0<vPunta2 && 0<vPuntaS) {
+//						vPunta2--;
+//						vPuntaS--;
+//						dinero++;
+//					}else if(eleccionBarco==2 && 0<vPunta3 && 0<vPuntaS) {
+//						vPunta3--;
+//						vPuntaS--;
+//						dinero++;
+//					}
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(menosVelocidad);
+//			
+//			Button menosVida= new Button(new Button.ButtonStyle(spriteMenosR,spriteMenosR,spriteMenosR));
+//			menosVida.setPosition(600, 0);
+//			menosVida.setSize(56,56);
+//			menosVida.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					if(eleccionBarco==0 && 0<vidas1 && 0<vPuntaS) {
+//					vidas1--;
+//					vidasS--;
+//					dinero++;
+//					}else if(eleccionBarco==1 && 0<vidas2 && 0<vPuntaS) {
+//					vidas2--;
+//					vidasS--;
+//					dinero++;
+//					}else if(eleccionBarco==2 && 0<vidas3 && 0<vPuntaS) {
+//					vidas3--;
+//					vidasS--;
+//					dinero++;
+//					}
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(menosVida);
+//			
+//			Button volverMenu= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
+//			volverMenu.setPosition(40, 770);
+//			volverMenu.setSize(100,100);
+//			volverMenu.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					eleccionBarco= barcoSeguridad;
+//					vidasS=vidaSeguridad1;
+//					vPuntaS = velocidadSeguridad1;
+//					dinero = dineroSeguridad;
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(volverMenu);
+//			
+//			Button confirmar= new Button(new Button.ButtonStyle(spriteBConfirmar,spriteBConfirmar,spriteBConfirmar));
+//			confirmar.setPosition(1650, 0);
+//			confirmar.setSize(100,100);
+//			confirmar.addListener(new InputListener() {
+//				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//					gameState=GameState.MENU;
+//					return false;
+//					
+//				}
+//			});
+//			table.addActor(confirmar);
+//			
+//	
+//			stage.act(Gdx.graphics.getDeltaTime());
+//			stage.draw();
+//			Gdx.input.setInputProcessor(stage);
 
 			break;
 			
