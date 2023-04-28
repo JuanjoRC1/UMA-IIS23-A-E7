@@ -5,43 +5,44 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 
 public class Assetsmini {
-	 public static BitmapFont font;
-	    private static final GlyphLayout glyphLayout = new GlyphLayout();
 
-	    public static Animation<AtlasRegion> bird;
+    public static BitmapFont font;
+    private static final GlyphLayout glyphLayout = new GlyphLayout();
 
-	    public static TextureRegion background;
-	    public static TextureRegion gameOver;
-	    public static TextureRegion getReady;
-	    public static TextureRegion tap;
-	    public static TextureRegion downPipe;
-	    public static TextureRegion upPipe;
+    public static Animation<AtlasRegion> bird;
 
-	    public static void load() {
-	        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/atlasmp.txt"));
+    public static TextureRegion background;
+    public static TextureRegion gameOver;
+    public static TextureRegion getReady;
+    public static TextureRegion tap;
+    public static TextureRegion downPipe;
+    public static TextureRegion upPipe;
 
-	        background = atlas.findRegion("fondofladefi");
-	        gameOver = atlas.findRegion("gameOver");
-	        getReady = atlas.findRegion("getReady");
-	        tap = atlas.findRegion("tap");
-	        downPipe = atlas.findRegion("chrumtuberia");
-	        upPipe = atlas.findRegion("chrumtuberia");
+    public static void load() {
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/atlasmini.txt"));
 
-	        bird = new Animation<>(.3f,
-	                atlas.findRegion("f2 (1)"),
-	                atlas.findRegion("f2 (1)"),
-	                atlas.findRegion("f2 (1)"));
+        background = atlas.findRegion("fondoflao");
+        gameOver = atlas.findRegion("fin");
+        getReady = atlas.findRegion("fin");
+        tap = atlas.findRegion("fin");
+        downPipe = atlas.findRegion("palochino(abajo)");
+        upPipe = atlas.findRegion("palochino");
 
-	        // Use default libGDX font
-	        font = new BitmapFont();
-	        font.getData().scale(7f);
-	    }
+        bird = new Animation<>(.3f,
+                atlas.findRegion("dragonflappy"),
+                atlas.findRegion("dragonflappypos2"),
+                atlas.findRegion("dragonflappy"));
 
-	    /**
-	     *Obtener el tamaño del texto
-	     */
-	    public static float getTextWidth(String text) {
-	        glyphLayout.setText(font, text);
-	        return glyphLayout.width;
-	    }
-	}
+        // Use default libGDX font
+        font = new BitmapFont();
+        font.getData().scale(7f);
+    }
+
+    /**
+     * Get the text width in order to center in the screen
+     */
+    public static float getTextWidth(String text) {
+        glyphLayout.setText(font, text);
+        return glyphLayout.width;
+    }
+}
