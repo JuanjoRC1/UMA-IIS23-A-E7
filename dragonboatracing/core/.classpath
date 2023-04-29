@@ -6,18 +6,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7/">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7/"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-<<<<<<< Updated upstream
-	<classpathentry kind="lib" path="C:/Users/Windows 10/Documents/GitHub/UMA-IIS23-A-E7/dragonboatracing/lib/mockito-core-5.3.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/pepea/Documents/GitHub/UMA-IIS23-A-E7/dragonboatracing/libreriamin/gdx-box2d-1.9.2.jar"/>
-=======
-	<classpathentry exported="true" kind="lib" path="C:/Users/Windows 10/Documents/GitHub/UMA-IIS23-A-E7/dragonboatracing/lib/mockito-core-5.3.1-javadoc.jar"/>
->>>>>>> Stashed changes
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

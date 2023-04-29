@@ -15,15 +15,12 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.barquitosfc.game.DragonBoatGame.GameState;
-import com.barquitosfc.game.minigame.Screens.Screens;
-import com.barquitosfc.game.minigame.flappy.GameScreen;
-
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -222,7 +219,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-			
+
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
@@ -265,11 +262,10 @@ public class DragonBoatGame extends ApplicationAdapter {
             break;
 			
 		case CONFIG:
-			Assetsmini.load();
-			Mainminijuego mini = new Mainminijuego();
-			mini.create();
-			
-			/*table=new Table();
+			/*Ventana ventana = new Ventana();
+			Thread t1= new Thread();
+			t1.start();*/
+			table=new Table();
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
@@ -285,14 +281,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			 handleInputm();
 	         updatemin(Gdx.graphics.getDeltaTime());
-			*/
+			
 			break;
 			
 		case SHOP:
-			// METODO PARA HACER LA TIENDA EN UNA SOLA LINEAAA
-			
 			tienda.iniciar(table,batch,stage);
-
 			break;
 			
 		case MINIJUEGO:
@@ -313,19 +306,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 		boat.getTexture().dispose();
 	}
 	// SPAWN DE OBSTACULOS
-	 protected void spawnRoca(Array<Rectangle> ArrayRocas) {
+	 private void spawnRoca() {
 	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
-	      ArrayRocas.add(roca);
+	      Rocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
-	 protected void spawnTronco(Array<Rectangle> ArrayTroncos) {
+	 private void spawnTronco() {
 	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),90,40);
-	      ArrayTroncos.add(tronco);
+	      Troncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
-	 protected void spawnCocodrilo(Array<Rectangle> ArrayCocodrilos) {
+	 private void spawnCocodrilo() {
 	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
-	      ArrayCocodrilos.add(cocodrilo);
+	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
 
@@ -360,7 +353,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            else if(boat.getRotation() > 0)
 	            	boat.rotate(-1);
 	        }
-	     protected void reset() {
+	     private void reset() {
 			 Bola.setX(WIDTH/2);
 			 Bola.setY(HEIGHT/2);
 			 }
@@ -405,7 +398,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            boat.setY(boat.getY() + velocity.y * deltaTime);
 	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
 	       
-//	    		Bola?
+//	    		Bol
 	            Bola.setX(Bola.getX()+speedx*deltaTime);
 	            Bola.setY(Bola.getY()+speedy*deltaTime);
 	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
@@ -423,7 +416,16 @@ public class DragonBoatGame extends ApplicationAdapter {
 				if (Bola.getY() >700||Bola.getY()<0) {
 					speedy *=-1;
 				}
-
+/*	 		 LIMITES de la barra VERTICAL
+				if (Barra1.getY() < 0) {
+				    Barra1.setY(0);
+				    velocity.y = 0; 
+	            }
+				if (Barra1.getY() > 700) {
+				    Barra1.setY(700);
+				    velocity.y = 0; 
+	            }*/
+	            
 //			     MOVIMIENTO DEL BARCO
 				if(boat.getY() > (ilit)+1) {
 					boat.setY(boat.getY() + aceler * Gdx.graphics.getDeltaTime());
@@ -453,17 +455,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 	            
 	            
-	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 400 milisegundos entre cada generaci�n de obst�culos
+	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<15) {
-			     spawnRoca(Rocas);
+			     spawnRoca();
 			     
 			 }
 			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos && Troncos.size<14) {
-			     spawnTronco(Troncos);
+			     spawnTronco();
 			    
 			 }
 			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos && Cocodrilos.size<15) {
-			     spawnCocodrilo(Cocodrilos);
+			     spawnCocodrilo();
 			  
 			 }
 			 
