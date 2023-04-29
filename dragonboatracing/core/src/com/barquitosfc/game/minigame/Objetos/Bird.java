@@ -1,7 +1,7 @@
 package com.barquitosfc.game.minigame.Objetos;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.physics.box2d.Body;
 
 public class Bird {
     public static float JUMP_SPEED = 5;
