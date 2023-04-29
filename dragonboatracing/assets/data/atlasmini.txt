@@ -1,0 +1,48 @@
+
+atlasmini.png
+size: 2009, 1564
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+dragonflappy
+  rotate: false
+  xy: 472, 2
+  size: 112, 120
+  orig: 112, 120
+  offset: 0, 0
+  index: -1
+dragonflappypos2
+  rotate: false
+  xy: 350, 2
+  size: 120, 120
+  orig: 120, 120
+  offset: 0, 0
+  index: -1
+fin
+  rotate: false
+  xy: 2, 62
+  size: 346, 60
+  orig: 346, 60
+  offset: 0, 0
+  index: -1
+fondoflao
+  rotate: false
+  xy: 2, 124
+  size: 1920, 1438
+  orig: 1920, 1438
+  offset: 0, 0
+  index: -1
+palochino
+  rotate: false
+  xy: 1924, 998
+  size: 83, 564
+  orig: 83, 564
+  offset: 0, 0
+  index: -1
+palochino(abajo)
+  rotate: false
+  xy: 1924, 432
+  size: 83, 564
+  orig: 83, 564
+  offset: 0, 0
+  index: -1

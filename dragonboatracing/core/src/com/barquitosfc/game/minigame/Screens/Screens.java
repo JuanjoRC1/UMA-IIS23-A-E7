@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.barquitosfc.game.DragonBoatGame;
 import com.barquitosfc.game.Mainminijuego;
 
 
@@ -23,8 +24,8 @@ public abstract class Screens extends InputAdapter implements Screen {
     public SpriteBatch spriteBatch;
     public Stage stage;
     
-    public Screens(Mainminijuego game ) {
-    	this.game=game;
+    public Screens(Mainminijuego dragonBoatGame ) {
+    	this.game=dragonBoatGame;
     	stage= new Stage(new StretchViewport(SCREEN_WIDTH,SCREEN_HEIGHT));
     	oCam= new OrthographicCamera(SCREEN_WIDTH,SCREEN_HEIGHT);
     	oCam.position.set(SCREEN_WIDTH / 2f, SCREEN_HEIGHT / 2f, 0);
