@@ -129,7 +129,7 @@ public class Tienda {
    	 	confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
    	 	casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
    	 	letreroVida = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-   	 	letreroVelocidad = new Texture(Gdx.files.internal("data/Piedra1.png"));
+   	 	letreroVelocidad = new Texture(Gdx.files.internal("data/Cartel_Velocidad.png"));
    	 	grifoCoin = new Texture(Gdx.files.internal("data/grifocoin.png"));
    	 	fondoTienda = new Texture(Gdx.files.internal("fondos/FONDO_TIENDA.png"));
    	 	spriteMasR = new SpriteDrawable(new Sprite(masR)); 
@@ -306,7 +306,7 @@ public class Tienda {
 		batch.draw(velocidadB, 700, 310, 500, 40);
 		batch.draw(vidaB, 700, 160, 500, 40);
 		batch.draw(letreroVida, 750, 210, 400, 40);
-		batch.draw(letreroVelocidad, 750, 360, 400, 40);
+		batch.draw(letreroVelocidad, 740, 365, 400, 30);
 		batch.draw(grifoCoin, 1800, 935, 45, 45);
 		batch.draw(unidadesB, 1740, 940, 40, 40);
 		batch.draw(decenasB, 1690, 940, 40, 40);
@@ -319,13 +319,13 @@ public class Tienda {
 		
 		stage = new Stage();
 		table=new Table();
-		table.setPosition(0,HEIGHT/7);
+		table.setPosition(0,0);
 		table.setFillParent(true);
 		table.setHeight(200);
 		stage.addActor(table);
 		
 		Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
-		siguienteBarco.setPosition(1220, 580);
+		siguienteBarco.setPosition(1220, 680);
 		siguienteBarco.setSize(70,70);
 		siguienteBarco.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -346,7 +346,7 @@ public class Tienda {
 		table.addActor(siguienteBarco);
 		
 		Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
-		anteriorBarco.setPosition(660, 580);
+		anteriorBarco.setPosition(660, 680);
 		anteriorBarco.setSize(70,70);
 		anteriorBarco.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -367,7 +367,7 @@ public class Tienda {
 		table.addActor(anteriorBarco);
 		
 		Button masVelocidad= new Button(new Button.ButtonStyle(spriteMasM,spriteMasM,spriteMasM));
-		masVelocidad.setPosition(1250, 150);
+		masVelocidad.setPosition(1250, 300);
 		masVelocidad.setSize(56,56);
 		masVelocidad.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -391,7 +391,7 @@ public class Tienda {
 		table.addActor(masVelocidad);
 		
 		Button masVida= new Button(new Button.ButtonStyle(spriteMasR,spriteMasR,spriteMasR));
-		masVida.setPosition(1250, 0);
+		masVida.setPosition(1250, 150);
 		masVida.setSize(56,56);
 		masVida.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -416,7 +416,7 @@ public class Tienda {
 		
 		
 		Button menosVelocidad= new Button(new Button.ButtonStyle(spriteMenosM,spriteMenosM,spriteMenosM));
-		menosVelocidad.setPosition(600, 150);
+		menosVelocidad.setPosition(600, 300);
 		menosVelocidad.setSize(56,56);
 		menosVelocidad.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -440,7 +440,7 @@ public class Tienda {
 		table.addActor(menosVelocidad);
 		
 		Button menosVida= new Button(new Button.ButtonStyle(spriteMenosR,spriteMenosR,spriteMenosR));
-		menosVida.setPosition(600, 0);
+		menosVida.setPosition(600, 150);
 		menosVida.setSize(56,56);
 		menosVida.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -464,7 +464,7 @@ public class Tienda {
 		table.addActor(menosVida);
 		
 		Button volverMenu= new Button(new Button.ButtonStyle(spriteBCasa,spriteBCasa,spriteBCasa));
-		volverMenu.setPosition(120, 730);
+		volverMenu.setPosition(50, 920);
 		volverMenu.setSize(100,100);
 		volverMenu.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -479,7 +479,7 @@ public class Tienda {
 		table.addActor(volverMenu);
 		
 		Button confirmar= new Button(new Button.ButtonStyle(spriteBConfirmar,spriteBConfirmar,spriteBConfirmar));
-		confirmar.setPosition(1700, 0);
+		confirmar.setPosition(1700, 100);
 		confirmar.setSize(100,100);
 		confirmar.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -491,11 +491,7 @@ public class Tienda {
 		});
 		table.addActor(confirmar);
 		
-		batch.begin();
-		font.draw(batch, "" + dinero, 50, 900);
-		font.draw(batch, "" + vPuntaS, 50, 500);
-		font.draw(batch, "" + vidasS, 50, 700);
-		batch.end();
+		
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		Gdx.input.setInputProcessor(stage);
