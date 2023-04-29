@@ -128,7 +128,7 @@ public class Tienda {
    	 	menosM = new Texture(Gdx.files.internal("ui/Boton_Menos_Morado.png"));
    	 	confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
    	 	casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
-   	 	letreroVida = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
+   	 	letreroVida = new Texture(Gdx.files.internal("data/Cartel_Vida.png"));
    	 	letreroVelocidad = new Texture(Gdx.files.internal("data/Cartel_Velocidad.png"));
    	 	grifoCoin = new Texture(Gdx.files.internal("data/grifocoin.png"));
    	 	fondoTienda = new Texture(Gdx.files.internal("fondos/FONDO_TIENDA.png"));
@@ -305,7 +305,7 @@ public class Tienda {
 		batch.draw(barcosE, 775, 600, 400, 300);
 		batch.draw(velocidadB, 700, 310, 500, 40);
 		batch.draw(vidaB, 700, 160, 500, 40);
-		batch.draw(letreroVida, 750, 210, 400, 40);
+		batch.draw(letreroVida, 750, 210, 400, 30);
 		batch.draw(letreroVelocidad, 740, 365, 400, 30);
 		batch.draw(grifoCoin, 1800, 935, 45, 45);
 		batch.draw(unidadesB, 1740, 940, 40, 40);
