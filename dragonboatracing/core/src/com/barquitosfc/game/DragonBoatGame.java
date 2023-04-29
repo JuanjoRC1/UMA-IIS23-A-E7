@@ -34,39 +34,39 @@ public class DragonBoatGame extends ApplicationAdapter {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
 	float leftLimit, rightLimit, topLimit, bottomLimit;
-	private Vector2 velocity = new Vector2(0,0);
-	private Vector2 velocitybar = new Vector2();
-	private Vector2 acceleration = new Vector2(0,0);
-	private int aceler;
-	private int barcoDef,vidas,vPunta,dinero;
-	private float ilit = 500; 
-	private Barco boat;
-	private BitmapFont font;
-	private Texture bInicio,bAjustes,bTienda,bSalir;
-	private Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
-	private Stage stage;
-	private Table table;
+	protected Vector2 velocity = new Vector2(0,0);
+	protected Vector2 velocitybar = new Vector2();
+	protected Vector2 acceleration = new Vector2(0,0);
+	protected int aceler;
+	protected int barcoDef,vidas,vPunta,dinero;
+	protected float ilit = 500; 
+	protected Barco boat;
+	protected BitmapFont font;
+	protected Texture bInicio,bAjustes,bTienda,bSalir;
+	protected Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
+	protected Stage stage;
+	protected Table table;
 	public   static GameState gameState;
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Sprite Barra1;
-	private Sprite Barra2;
-	private Sprite Bola;
-	private SpriteDrawable spriteBInicio;
-	private SpriteDrawable spriteBAjustes;
-	private SpriteDrawable spriteBTienda;
-	private SpriteDrawable spriteBSalir;
+	protected OrthographicCamera camera;
+	protected SpriteBatch batch;
+	protected Sprite Barra1;
+	protected Sprite Barra2;
+	protected Sprite Bola;
+	protected SpriteDrawable spriteBInicio;
+	protected SpriteDrawable spriteBAjustes;
+	protected SpriteDrawable spriteBTienda;
+	protected SpriteDrawable spriteBSalir;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
-	private Array<Rectangle> Rocas,Troncos,Cocodrilos;
-	private long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos;
-	private Tienda tienda;
+	protected Array<Rectangle> Rocas,Troncos,Cocodrilos;
+	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos;
+	protected Tienda tienda;
 
    
     
 //Para el minijuego
-	private int speedx = 200; 
-	private int speedy = 200; 
+	protected int speedx = 200; 
+	protected int speedy = 200; 
 	public DragonBoatGame() {
 		this(0,0,0,0);
 	}
@@ -308,17 +308,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 		boat.getTexture().dispose();
 	}
 	// SPAWN DE OBSTACULOS
-	 private void spawnRoca(Array<Rectangle> ArrayRocas) {
+	 protected void spawnRoca(Array<Rectangle> ArrayRocas) {
 	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
 	      ArrayRocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
-	 private void spawnTronco(Array<Rectangle> ArrayTroncos) {
+	 protected void spawnTronco(Array<Rectangle> ArrayTroncos) {
 	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),90,40);
 	      ArrayTroncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
-	 private void spawnCocodrilo(Array<Rectangle> ArrayCocodrilos) {
+	 protected void spawnCocodrilo(Array<Rectangle> ArrayCocodrilos) {
 	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
 	      ArrayCocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
@@ -355,7 +355,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            else if(boat.getRotation() > 0)
 	            	boat.rotate(-1);
 	        }
-	     private void reset() {
+	     protected void reset() {
 			 Bola.setX(WIDTH/2);
 			 Bola.setY(HEIGHT/2);
 			 }

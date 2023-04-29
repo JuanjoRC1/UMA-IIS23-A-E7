@@ -1,6 +1,5 @@
 
-testImplementation 'junit:junit:4.13.2'
-testImplementation 'org.mockito:mockito-core:3.12.4'
+
 
 buildscript {
     
@@ -8,7 +7,6 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         google()
@@ -17,6 +15,8 @@ buildscript {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.1.16'
         classpath 'org.gretty:gretty:3.0.7'
         
+
+
 
     }
 }
@@ -80,6 +80,7 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'org.mockito:mockito-core:3.12.4'
     }
 }
