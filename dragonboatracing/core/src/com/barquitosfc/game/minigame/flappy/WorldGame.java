@@ -16,11 +16,13 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.barquitosfc.game.minigame.Objetos.Counter;
 import com.barquitosfc.game.minigame.Objetos.Pipe;
 import com.barquitosfc.game.minigame.Screens.Screens;
+import com.barquitosfc.game.minigame.Objetos.Bird;
 
 
-public class WorldGame<Bird> {
+public class WorldGame {
     final float WIDTH = Screens.WORLD_WIDTH;
     final float HEIGHT = Screens.WORLD_HEIGHT;
 

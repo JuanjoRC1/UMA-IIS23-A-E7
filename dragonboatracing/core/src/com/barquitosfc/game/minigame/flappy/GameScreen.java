@@ -5,9 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.barquitosfc.game.Assetsmini;
 import com.barquitosfc.game.Mainminijuego;
+import com.barquitosfc.game.minigame.Screens.Screens;
 
-
-public class GameScreen extends com.barquitosfc.game.minigame.Screens.Screens{
+public class GameScreen extends Screens{
 	 static final int STATE_READY = 0;
 	    static final int STATE_RUNNING = 1;
 	    static final int STATE_GAME_OVER = 2;
