@@ -100,7 +100,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
-		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Prueba.png"));
+		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
