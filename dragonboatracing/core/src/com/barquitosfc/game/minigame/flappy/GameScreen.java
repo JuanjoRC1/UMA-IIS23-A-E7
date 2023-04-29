@@ -50,11 +50,6 @@ public class GameScreen extends com.barquitosfc.game.minigame.Screens.Screens{
 		
 	}
 
-	@Override
-	public void draw(float delta) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void update(float delta) {
@@ -118,8 +113,8 @@ public class GameScreen extends com.barquitosfc.game.minigame.Screens.Screens{
 
 
 	        spriteBatch.begin();
-	        float width = Assets.getTextWidth(oWorld.score + "");
-	        Assets.font.draw(spriteBatch, oWorld.score + "", SCREEN_WIDTH / 2f - width / 2f, 700);
+	        float width = Assetsmini.getTextWidth(oWorld.score + "");
+	        Assetsmini.font.draw(spriteBatch, oWorld.score + "", SCREEN_WIDTH / 2f - width / 2f, 700);
 	        spriteBatch.end();
 	    }
 		
