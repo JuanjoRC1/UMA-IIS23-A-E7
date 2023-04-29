@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.barquitosfc.game.minigame.Objetos.Pipe;
 import com.barquitosfc.game.minigame.Screens.Screens;
 
 
