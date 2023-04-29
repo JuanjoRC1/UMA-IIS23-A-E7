@@ -100,7 +100,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
-		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Prueba.png"));
+		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
 		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
@@ -308,19 +308,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 		boat.getTexture().dispose();
 	}
 	// SPAWN DE OBSTACULOS
-	 private void spawnRoca() {
+	 private void spawnRoca(Array<Rectangle> ArrayRocas) {
 	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
-	      Rocas.add(roca);
+	      ArrayRocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
-	 private void spawnTronco() {
+	 private void spawnTronco(Array<Rectangle> ArrayTroncos) {
 	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),90,40);
-	      Troncos.add(tronco);
+	      ArrayTroncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
-	 private void spawnCocodrilo() {
+	 private void spawnCocodrilo(Array<Rectangle> ArrayCocodrilos) {
 	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
-	      Cocodrilos.add(cocodrilo);
+	      ArrayCocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
 
@@ -450,15 +450,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 400 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<15) {
-			     spawnRoca();
+			     spawnRoca(Rocas);
 			     
 			 }
 			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos && Troncos.size<14) {
-			     spawnTronco();
+			     spawnTronco(Troncos);
 			    
 			 }
 			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos && Cocodrilos.size<15) {
-			     spawnCocodrilo();
+			     spawnCocodrilo(Cocodrilos);
 			  
 			 }
 			 
