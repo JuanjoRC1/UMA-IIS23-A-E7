@@ -286,7 +286,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case SHOP:
 			// METODO PARA HACER LA TIENDA EN UNA SOLA LINEAAA
 			
-			tienda.iniciar(table,batch,stage,gameState);
+			tienda.iniciar(table,batch,stage);
 
 			break;
 			
