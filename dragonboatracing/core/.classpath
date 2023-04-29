@@ -13,5 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Windows 10/Documents/GitHub/UMA-IIS23-A-E7/dragonboatracing/lib/mockito-core-5.3.1-javadoc.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>
