@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.barquitosfc.game.DragonBoatGame.GameState;
+import com.barquitosfc.game.minigame.Screens.Screens;
 import com.barquitosfc.game.minigame.flappy.GameScreen;
 
 import java.awt.Color;
@@ -128,6 +129,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 //TIENDA
 		 tienda= new Tienda();
 		 tienda.inicializar();
+		 
+		 
+
+		
 		 
 		 //Obstaculos
 		 
@@ -263,7 +268,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			Assetsmini.load();
 			Mainminijuego mini = new Mainminijuego();
 			mini.create();
-		
+			
 			/*table=new Table();
 			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 			Gdx.gl.glClearColor(0, 0, 0, 1);

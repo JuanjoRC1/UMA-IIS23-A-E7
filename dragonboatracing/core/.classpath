@@ -13,7 +13,9 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+<<<<<<< Updated upstream
 	<classpathentry kind="lib" path="C:/Users/Windows 10/Documents/GitHub/UMA-IIS23-A-E7/dragonboatracing/lib/mockito-core-5.3.1-javadoc.jar"/>
 	<classpathentry kind="lib" path="C:/Users/pepea/Documents/GitHub/UMA-IIS23-A-E7/dragonboatracing/libreriamin/gdx-box2d-1.9.2.jar"/>
+>>>>>>> Stashed changes
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

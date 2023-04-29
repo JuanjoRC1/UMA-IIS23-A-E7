@@ -17,7 +17,7 @@ import com.barquitosfc.game.DragonBoatGame.GameState;
 import junit.framework.TestCase;
 
 import static org.junit.Assert.*;
-import  org.mockito.Mockito; 	
+import  org.mockito.*; 	
 
 public class Pruebas extends TestCase{
 	
