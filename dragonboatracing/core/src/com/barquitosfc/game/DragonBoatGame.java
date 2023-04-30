@@ -331,7 +331,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            else if(juego.jugador.getRotation() > 0)
 	            	juego.jugador.rotate(-1);
 	        }
-	     private void reset() {
+	     protected void reset() {
 			 Bola.setX(WIDTH/2);
 			 Bola.setY(HEIGHT/2);
 			 }

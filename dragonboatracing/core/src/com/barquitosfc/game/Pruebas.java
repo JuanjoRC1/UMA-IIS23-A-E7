@@ -3,7 +3,9 @@ package com.barquitosfc.game;
 import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,7 +20,9 @@ import com.barquitosfc.game.DragonBoatGame.GameState;
 import junit.framework.TestCase;
 
 import static org.junit.Assert.*;
-//import  org.mockito.*; 	
+
+
+	
 
 public class Pruebas extends TestCase{
 	
@@ -27,9 +31,10 @@ public class Pruebas extends TestCase{
 	protected Table table;
 	protected SpriteBatch batch;
 
-
-
 	
+	public static final int WIDTH=1920;
+	public static final int HEIGHT	=1080;
+	public Barco jugador; 
 
 	
 	public void testSpawnRoca() {
@@ -56,6 +61,7 @@ public class Pruebas extends TestCase{
 	
 	}
 	
+
 
 	
 }
