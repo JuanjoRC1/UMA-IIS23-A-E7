@@ -47,7 +47,7 @@ public class Juego {
 
 		// Genera el mapa Hay que mejorar
 		batch.begin();
-		for(int i = 0; i < 4 ; i++) {
+		for(int i = 0; i < 100000 ; i++) {
 			batch.draw(boardPlay,0,HEIGHT*i);
 		}
 		batch.end();
@@ -57,6 +57,24 @@ public class Juego {
 		jugador.draw(batch);
 		batch.end();
 		
+	}
+	
+
+	
+	public int Carril(int i) {
+		int ladoIz = 0; 
+		if (i ==1)
+			ladoIz = 140; 
+		 
+		 return ladoIz; 
+		
+	}
+	
+	public int Carril2(int i) {
+		int ladoDer = 0;
+		if(i == 1)
+			ladoDer =160; 
+		return ladoDer; 
 	}
 	
 

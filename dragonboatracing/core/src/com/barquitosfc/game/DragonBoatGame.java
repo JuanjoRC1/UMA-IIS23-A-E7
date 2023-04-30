@@ -458,17 +458,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 //				  LIMITES DEL BARCO HORIZONTAL
 				
-				if (juego.jugador.getX() < 0) {
-					juego.jugador.setX(1);
+				if (juego.jugador.getX() < juego.Carril(1)) {
+					juego.jugador.setX(juego.Carril(1));
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}
-				if (juego.jugador.getX() > WIDTH - 64) {
-					juego.jugador.setX(WIDTH-65);
+				if (juego.jugador.getX() > WIDTH - juego.Carril2(1)) {
+					juego.jugador.setX(WIDTH-juego.Carril2(1));
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}
-				//	 			 LIMITES DEL BARCO VERTICAL
+				//	LIMITES DEL BARCO VERTICAL
 				if(ilit <  bottomLimit) ilit = bottomLimit; 
 				
 				if (juego.jugador.getY()<(ilit+10)) {
@@ -524,7 +524,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 				      }
 			 }
 			 
-			 if(juego.jugador.getVidas() == 0) gameState=GameState.MENU;
+//			 if(juego.jugador.getVidas() == 0) {
+//				 juego.inicializar();
+//				 juego.iniciar(table, batch, stage);
+//				
+//				 juego.jugador.setVidas(1);
+//			 }
 	        }
 	        
 	        public void stopBoat() {

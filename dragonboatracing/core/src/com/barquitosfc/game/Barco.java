@@ -22,6 +22,9 @@ public class Barco extends Sprite{
 	public int getVidas() {
 		return vidas;
 	}
+	public void setVidas(int i) {
+		vidas =i ; 
+	}
 	public void setVidas() {
 		vidas -= 1;
 	}
