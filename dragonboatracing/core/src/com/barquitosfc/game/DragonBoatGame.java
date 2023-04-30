@@ -306,17 +306,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 		boat.getTexture().dispose();
 	}
 	// SPAWN DE OBSTACULOS
-	 private void spawnRoca() {
+	 protected void spawnRoca(Array<Rectangle> Rocas) {
 	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
 	      Rocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
-	 private void spawnTronco() {
+	 protected void spawnTronco(Array<Rectangle>Troncos) {
 	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),90,40);
 	      Troncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
-	 private void spawnCocodrilo() {
+	 protected void spawnCocodrilo(Array<Rectangle> Cocodrilos) {
 	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
@@ -457,15 +457,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
 			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<15) {
-			     spawnRoca();
+			     spawnRoca(Rocas);
 			     
 			 }
 			 if (TimeUtils.millis() - lastDropTimeTroncos > tiempoDeEsperaEntreObstaculos && Troncos.size<14) {
-			     spawnTronco();
+			     spawnTronco(Troncos);
 			    
 			 }
 			 if (TimeUtils.millis() - lastDropTimeCocodrilos > tiempoDeEsperaEntreObstaculos && Cocodrilos.size<15) {
-			     spawnCocodrilo();
+			     spawnCocodrilo(Cocodrilos);
 			  
 			 }
 			 

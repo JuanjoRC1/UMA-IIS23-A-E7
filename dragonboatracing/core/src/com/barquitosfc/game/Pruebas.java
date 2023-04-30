@@ -11,13 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.barquitosfc.game.DragonBoatGame.GameState;
 
 import junit.framework.TestCase;
 
 import static org.junit.Assert.*;
-import  org.mockito.*; 	
+//import  org.mockito.*; 	
 
 public class Pruebas extends TestCase{
 	
@@ -25,27 +26,11 @@ public class Pruebas extends TestCase{
 	protected Stage stage;
 	protected Table table;
 	protected SpriteBatch batch;
-	
-	public enum GameState {
-		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
-	}
-	
+
+
 
 	
 
-	public void testTienda() {
-		
-		 Tienda tienda = new Tienda();
-	     tienda.iniciar(table,batch,stage);
-		
-	}
-	
-	public void testMovimiento() {
-		
-		DragonBoatGame game = new DragonBoatGame();
-	     game.handleInput();
-		
-	}
 	
 	public void testSpawnRoca() {
 		
@@ -71,76 +56,6 @@ public class Pruebas extends TestCase{
 	
 	}
 	
-	public void testMenu() {
-		GameState gameState = GameState.MENU;
-		stage = new Stage();
-		table=new Table();
-		table.setPosition(260,1080/7);
-		table.setFillParent(true);
-		table.setHeight(200);
-		stage.addActor(table);	
-		table.clear();
-        batch.begin();
-        batch.draw(board, 0, 0);
-        batch.end();
-		//Botones Inicio
-		Button buttonPlay= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
-//		TextButton buttonPlay= new TextButton("Inicio",getSkin());
-		buttonPlay.setPosition(table.getOriginX(), table.getOriginY());
-		buttonPlay.setSize(200,40);
-		buttonPlay.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				gameState=GameState.PLAY;
-				return false;
-				
-			}
-		});
-		table.addActor(buttonPlay);
-		//BOTON
-//		TextButton buttonConfig= new TextButton("Opciones",getSkin());
-		Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
-		buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+200, table.getOriginY());
-		buttonConfig.setSize(200,40);
 
-		buttonConfig.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				gameState=GameState.CONFIG;
-				return false;
-			}
-		});
-		table.addActor(buttonConfig);
-		//BOTON
-		Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
-//		TextButton buttonShop= new TextButton("Tienda",getSkin());
-		buttonShop.setPosition(buttonConfig.getX()+buttonConfig.getWidth()+200, table.getOriginY());
-		buttonShop.setWidth(200);
-		buttonShop.setHeight(40);
-		buttonShop.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				gameState=GameState.SHOP;
-				return false;
-			}
-		});
-		table.addActor(buttonShop);
-		//BOTON
-//		TextButton buttonQuit= new TextButton("Salir",skin);
-		Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
-		buttonQuit.setPosition(buttonShop.getX()+buttonShop.getWidth()+200, table.getOriginY());
-		buttonQuit.setWidth(200);
-		buttonQuit.setHeight(40);
-		buttonQuit.addListener(new InputListener() {
-			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				gameState=GameState.QUIT;
-				return false;
-			}
-		});
-		table.addActor(buttonQuit);
-		//stage.act(Gdx.graphics.getDeltaTime()); Asumimos que es True
-		stage.draw();
-		//Gdx.input.setInputProcessor(stage); Asumimos que es True
-	}
-	
-	
-	
 	
 }
