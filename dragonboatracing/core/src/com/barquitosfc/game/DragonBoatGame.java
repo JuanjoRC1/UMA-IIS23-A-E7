@@ -31,22 +31,25 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public enum GameState {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
-	float leftLimit, rightLimit, topLimit, bottomLimit;
+	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini,gravity;
 	protected Vector2 velocity = new Vector2(0,0);
 	protected Vector2 velocitybar = new Vector2();
 	protected Vector2 acceleration = new Vector2(0,0);
+	protected Texture fondofla;
 	protected int aceler;
 	protected int barcoDef,vidas,vPunta,dinero;
 	protected float ilit = 500; 
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
-	protected Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco;
+	protected Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco,Tuboabt,Tuboart;
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
 	protected OrthographicCamera camera;
+	protected OrthographicCamera camfla;
 	protected SpriteBatch batch;
+	protected Sprite Bird;
 	protected Sprite Barra1;
 	protected Sprite Barra2;
 	protected Sprite Bola;
@@ -57,9 +60,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	protected Array<Rectangle> Rocas,Troncos,Cocodrilos;
-	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos;
+	protected Array<Rectangle> Tuboar,Tuboab;
+	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos,lastDropTimeTuboab,lastDropTimeTuboar;
 	protected Tienda tienda;
 	protected Juego juego;
+	protected minijuego minijuego;
 
    
     
@@ -130,10 +135,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 juego = new Juego();
 		 juego.inicializar(); 
 		 
-		 
-
-		
-		 
+		 //minijuego
+			camfla = new OrthographicCamera();
+			leftLimitmini = camfla.position.x - Gdx.graphics.getWidth() / 2;
+			rightLimitmini = camfla.position.x + Gdx.graphics.getWidth() / 2;
+			topLimitmini = camfla.position.y + Gdx.graphics.getHeight() / 2;
+			bottomLimitmini = camfla.position.y - Gdx.graphics.getHeight() / 2;
+			camfla.setToOrtho(false,WIDTH,HEIGHT);
+			
+			camfla.update();
+		 minijuego=new minijuego();
+		 minijuego.inicializar();
+		 Tuboart = new Texture(Gdx.files.internal("data/Roca.png"));
+		 Tuboabt = new Texture(Gdx.files.internal("data/Icoco.png"));
+		 Tuboar = new Array<Rectangle>();
+		 Tuboab = new Array<Rectangle>();
 		 //Obstaculos
 		 
 		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
@@ -242,23 +258,34 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case CONFIG:
 			/*Ventana ventana = new Ventana();
 			Thread t1= new Thread();
-			t1.start();*/
-			table=new Table();
-			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
-			Gdx.gl.glClearColor(0, 0, 0, 1);
-	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
-			ScreenUtils.clear(0, 0, 0.2f, 1);		
-			batch.begin();
-			for(int i = 0; i < 100 ; i++) {
-				batch.draw(boardminit,0,HEIGHT*i);
-			}
 			
-			batch.draw(BolaTexture,Bola.getX(),Bola.getY() );
-			batch.draw(Barra1Texture, Barra1.getX(),Barra1.getY());
-			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
+			t1.start();*/
+			minijuego.iniciar(table, batch);
+			batch.begin();
+			for(Rectangle tuboar: Tuboar) {batch.draw(TRoca, tuboar.x, tuboar.y);}
+			 for(Rectangle tuboab: Tuboab) {batch.draw(TTronco, tuboab.x, tuboab.y);}
 			batch.end();
-			 handleInputm();
-	         updatemin(Gdx.graphics.getDeltaTime());
+			batch.begin();
+			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
+			batch.end();
+//			  handleInputflapi();
+			updateflapi(Gdx.graphics.getDeltaTime()*250);
+//			table=new Table();
+//			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
+//			Gdx.gl.glClearColor(0, 0, 0, 1);
+//	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
+//			ScreenUtils.clear(0, 0, 0.2f, 1);		
+//			batch.begin();
+//			for(int i = 0; i < 100 ; i++) {
+//				batch.draw(boardminit,0,HEIGHT*i);
+//			}
+//			
+//			batch.draw(BolaTexture,Bola.getX(),Bola.getY() );
+//			batch.draw(Barra1Texture, Barra1.getX(),Barra1.getY());
+//			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
+//			batch.end();
+//			 handleInputm();
+//	         updatemin(Gdx.graphics.getDeltaTime());
 			
 			break;
 			
@@ -336,6 +363,23 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 Bola.setY(HEIGHT/2);
 			 }
 	 		
+	     public void updateflapi(float deltaTime) {
+	    	 		gravity=(float) 0.992;
+//					camfla.position.x = minijuego.jugador.getX();
+//					camfla.update();
+				    leftLimitmini = camfla.position.x - Gdx.graphics.getWidth() / 2;
+				    rightLimitmini = camfla.position.x + Gdx.graphics.getWidth() / 2;
+				    topLimitmini = camfla.position.y + Gdx.graphics.getHeight() / 2;
+				    bottomLimitmini = camfla.position.y - Gdx.graphics.getHeight() / 2;
+
+				    minijuego.jugador.setX(minijuego.jugador.getX() +  deltaTime);
+				    minijuego.jugador.setY((minijuego.jugador.getY()*gravity +  deltaTime));
+				    final int tiempoDeEsperaEntreObstaculos = 5; // espera 100 milisegundos entre cada generaci�n de obst�culos
+					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculos && Tuboab.size<15) {
+					     spawntuboab(Tuboab);
+					     
+					 }
+	     }
 	        public void update(float deltaTime) {
 
 //				Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
@@ -492,6 +536,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	        //Para el minijuego
 
+	        //Obstaculos
+	        protected void spawntuboab(Array<Rectangle> Tuboab) {
+	  	      Rectangle tuboab = new Rectangle((MathUtils.random(rightLimitmini+360, rightLimitmini+WIDTH)),MathUtils.random(0, WIDTH-64),64,64);
+	  	      Tuboab.add(tuboab);
+	  	      lastDropTimeTuboab = TimeUtils.millis();
+	  	   }
+	        protected void spawntuboar(Array<Rectangle> Tuboar) {
+	        	 Rectangle tuboar = new Rectangle((MathUtils.random(rightLimitmini+360, rightLimitmini+WIDTH)),MathUtils.random(0, WIDTH-64),64,64);
+		  	      Tuboar.add(tuboar);
+		  	      lastDropTimeTuboar = TimeUtils.millis();
+		  	   }
 	        //Controles
 	        public void handleInputm() { 
 	            if (Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.UP) ) {
