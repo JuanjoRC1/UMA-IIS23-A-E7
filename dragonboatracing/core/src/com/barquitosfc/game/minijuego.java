@@ -1,6 +1,8 @@
 package com.barquitosfc.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,9 +16,11 @@ public class minijuego {
 	public static final int HEIGHT	=1080;
 	public Bird jugador; 
 	public Texture pajarote, boardPlay,fin; 
-	
+	public Sound bum;
+	public Music poropom;
 	public void inicializar() {
-		
+		bum =  Gdx.audio.newSound(Gdx.files.internal(null));
+		poropom =  Gdx.audio.newMusic(Gdx.files.internal(null));
 		pajarote = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
 		boardPlay = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
 		fin= new Texture(Gdx.files.internal("minijuego/fin.png"));
@@ -25,7 +29,7 @@ public class minijuego {
 		jugador.setPosition(WIDTH/4, HEIGHT/2);
 	}
 	
-	public void iniciar(Table table,SpriteBatch batch) {
+	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -34,7 +38,7 @@ public class minijuego {
 		//			Nueva camara que sigue al barco
 		OrthographicCamera camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1080, HEIGHT);
-		camera.position.set(jugador.getX()/ 2 +500,WIDTH /2,  0);
+		camera.position.set(jugador.getX() +500,WIDTH /2,  0);
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		
@@ -43,7 +47,7 @@ public class minijuego {
 
 		// Genera el mapa Hay que mejorar
 		batch.begin();
-		for(int i = 0; i < 4 ; i++) {
+		for(int i = 0; i < 1000 ; i++) {
 			batch.draw(boardPlay,WIDTH*i,425);
 		}
 		batch.end();

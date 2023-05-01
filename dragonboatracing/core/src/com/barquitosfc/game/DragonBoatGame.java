@@ -31,11 +31,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public enum GameState {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
-	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini,gravity;
+	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini;
 	protected Vector2 velocity = new Vector2(0,0);
 	protected Vector2 velocitybar = new Vector2();
 	protected Vector2 acceleration = new Vector2(0,0);
 	protected Texture fondofla;
+	protected  float gravity=(float) -1.1;
 	protected int aceler;
 	protected int barcoDef,vidas,vPunta,dinero;
 	protected float ilit = 500; 
@@ -261,7 +262,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			Thread t1= new Thread();
 			
 			t1.start();*/
-			minijuego.iniciar(table, batch);
+			minijuego.iniciar(table, batch,stage);
 			batch.begin();
 			for(Rectangle tuboar: Tuboar) {batch.draw(Tuboart, tuboar.x, tuboar.y);}
 			// for(Rectangle tuboab: Tuboab) {batch.draw(Tuboabt, tuboab.x, tuboab.y);}
@@ -269,7 +270,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
 			batch.end();
-			  handleInputflapi();
+			//  handleInputflapi();
 			updateflapi(Gdx.graphics.getDeltaTime()*250);
 //			table=new Table();
 //			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
@@ -365,28 +366,42 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 }
 	 		
 	     public void updateflapi(float deltaTime) {
-	    	 		gravity=(float) 0.992;
+	    	 		
 //					camfla.position.x = minijuego.jugador.getX();
-//					camfla.update();
-				    leftLimitmini = camfla.position.x - Gdx.graphics.getWidth() / 2;
-				    rightLimitmini = camfla.position.x + Gdx.graphics.getWidth() / 2;
-				    topLimitmini = camfla.position.y + Gdx.graphics.getHeight() / 2;
-				    bottomLimitmini = camfla.position.y - Gdx.graphics.getHeight() / 2;
-
+//					
+	    	 		camfla.update();
+				    leftLimitmini = camfla.position.x - 1920 / 2;
+				    rightLimitmini = camfla.position.x + 1920 / 2;
+				    topLimitmini = camfla.position.y + 1080 / 2;
+				    bottomLimitmini = camfla.position.y - 1080 / 2;
+//					movimiento del pajaro
 				    minijuego.jugador.setX(minijuego.jugador.getX() +  deltaTime);
-				    minijuego.jugador.setY((minijuego.jugador.getY()*gravity +  deltaTime));
+				    minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
+				    if(Gdx.input.isKeyPressed(Keys.A)) {
+				    	minijuego.jugador.setY(minijuego.jugador.getY()+10);
+				    }
 				    final int tiempoDeEsperaEntreObstaculosmini = 1000; // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
 					     spawntuboab(Tuboab,Tuboar);
 					     //spawntuboar(Tuboar);
 					     
 					 }
+					 Rectangle drag= minijuego.jugador.getBoundingRectangle();
+					 for (Iterator<Rectangle> iter = Tuboab.iterator(); iter.hasNext(); ) {
+						 Iterator<Rectangle> iterar = Tuboar.iterator();
+					      Rectangle Tuboab = iter.next();
+					      Rectangle Tuboar = iterar.next();
+//					      roca.y -= 100 * Gdx.graphics.getDeltaTime();
+//				      if(Tuboab.overlaps(drag)||Tuboar.overlaps(drag)) {
+//					    	  gameState=GameState.QUIT;
+//						      }
+					   }
 	     }
-	     public void handleInputflapi() { 
-	    	 if (Gdx.input.isKeyPressed(Keys.SPACE) ) {
-                 gravity = (float) 1.01;
-	     }
-	     }
+//	     public void handleInputflapi() { 
+//	    	 if (Gdx.input.isKeyPressed(Keys.G) ) {
+//                 gravity = (float) 1.01;
+//	     }
+	   //  }
 	        public void update(float deltaTime) {
 
 //				Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
@@ -550,14 +565,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	        //Obstaculos
 	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar) {
-	  	      Rectangle tuboab = new Rectangle((leftLimitmini+1925),MathUtils.random(topLimitmini, bottomLimitmini-64),83,564);
-	  	    Rectangle tuboar = new Rectangle((tuboab.getX()),(tuboab.getY()+30),83,564);
+	        	float y=MathUtils.random(500, 900);
+	  	      Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+900,y,83,564);
+	  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+900,y,83,564);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();
 	  	   }
 	        protected void spawntuboar(Array<Rectangle> Tuboar) {
-	        	 Rectangle tuboar = new Rectangle((MathUtils.random(rightLimitmini+360, rightLimitmini+WIDTH)),MathUtils.random(0, WIDTH-64),83,564);
+	        	 Rectangle tuboar = new Rectangle((rightLimitmini+360),MathUtils.random(0, HEIGHT-64),83,564);
 		  	      Tuboar.add(tuboar);
 		  	      lastDropTimeTuboar = TimeUtils.millis();
 		  	   }
