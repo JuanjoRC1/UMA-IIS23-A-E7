@@ -17,10 +17,10 @@ public class minijuego {
 	public Bird jugador; 
 	public Texture pajarote, boardPlay,fin; 
 	public Sound bum;
-	public Music poropom;
+	public Music omega;
 	public void inicializar() {
-		bum =  Gdx.audio.newSound(Gdx.files.internal(null));
-		poropom =  Gdx.audio.newMusic(Gdx.files.internal(null));
+		bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/tumuerto.mp3"));
+		omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
 		pajarote = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
 		boardPlay = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
 		fin= new Texture(Gdx.files.internal("minijuego/fin.png"));
@@ -30,6 +30,7 @@ public class minijuego {
 	}
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
+		omega.play();
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
