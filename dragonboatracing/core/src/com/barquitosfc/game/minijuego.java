@@ -30,6 +30,8 @@ public class minijuego {
 	}
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
+		omega.setLooping(true);
+		omega.setVolume(10);
 		omega.play();
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -50,6 +52,9 @@ public class minijuego {
 		batch.begin();
 		for(int i = 0; i < 1000 ; i++) {
 			batch.draw(boardPlay,WIDTH*i,425);
+			omega.setLooping(true);
+			omega.setVolume(10);
+			omega.play();
 		}
 		batch.end();
 		

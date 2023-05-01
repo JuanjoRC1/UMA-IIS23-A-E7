@@ -7,6 +7,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +33,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public enum GameState {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
+	public Sound bum;
+	public Music omega;
 	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini;
 	protected Vector2 velocity = new Vector2(0,0);
 	protected Vector2 velocitybar = new Vector2();
@@ -151,7 +155,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			camfla.update();
 		 minijuego=new minijuego();
 		 minijuego.inicializar();
-		
+		 bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/tumuerto.mp3"));
+		 omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
 		 //Obstaculos
 		 
 		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
@@ -368,7 +373,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	     public void updateflapi(float deltaTime) {
 	    	 		
 //					camfla.position.x = minijuego.jugador.getX();
-//					
+				
+				omega.play();
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
@@ -392,9 +398,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 					      Rectangle Tuboab = iter.next();
 					      Rectangle Tuboar = iterar.next();
 //					      roca.y -= 100 * Gdx.graphics.getDeltaTime();
-//				      if(Tuboab.overlaps(drag)||Tuboar.overlaps(drag)) {
-//					    	  gameState=GameState.QUIT;
-//						      }
+				      if(Tuboab.overlaps(drag)) {
+				    		 bum.play();
+				    		 try {
+				    			    Thread.sleep(1500); // 5000 milisegundos son equivalentes a 5 segundos
+				    			} catch (InterruptedException e) {
+				    			    e.printStackTrace();
+				    			}
+					    	  gameState=GameState.QUIT;
+					      }
 					   }
 	     }
 //	     public void handleInputflapi() { 
