@@ -185,9 +185,9 @@ public class Tienda {
    	 	barraV18 = new Texture(Gdx.files.internal("data/Barra_Velocidad18.png"));
    	 	barraV19 = new Texture(Gdx.files.internal("data/Barra_Velocidad19.png"));
    	 	barraV20 = new Texture(Gdx.files.internal("data/Barra_Velocidad20.png"));
-   	 	barco1 = new Texture(Gdx.files.internal("data/churumpinpon.jpg"));
-   	 	barco2 = new Texture(Gdx.files.internal("data/Piedra1.png"));
-   	 	barco3 = new Texture(Gdx.files.internal("data/Bola.jpg"));
+   	 	barco1 = new Texture(Gdx.files.internal("data/Protitpo_Barco1.png"));
+   	 	barco2 = new Texture(Gdx.files.internal("data/Protitpo_Barco2.png"));
+   	 	barco3 = new Texture(Gdx.files.internal("data/Protitpo_Barco3.png"));
    	 	n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
    	 	n1 = new Texture(Gdx.files.internal("data/Numero1.png"));
    	 	n2 = new Texture(Gdx.files.internal("data/Numero2.png"));
@@ -305,7 +305,7 @@ public class Tienda {
 		batch.draw(barcosE, 775, 600, 400, 300);
 		batch.draw(velocidadB, 700, 310, 500, 40);
 		batch.draw(vidaB, 700, 160, 500, 40);
-		batch.draw(letreroVida, 750, 210, 400, 30);
+		batch.draw(letreroVida, 840, 215, 200, 30);
 		batch.draw(letreroVelocidad, 740, 365, 400, 30);
 		batch.draw(grifoCoin, 1800, 935, 45, 45);
 		batch.draw(unidadesB, 1740, 940, 40, 40);
@@ -325,7 +325,7 @@ public class Tienda {
 		stage.addActor(table);
 		
 		Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
-		siguienteBarco.setPosition(1220, 680);
+		siguienteBarco.setPosition(1220, 710);
 		siguienteBarco.setSize(70,70);
 		siguienteBarco.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -346,7 +346,7 @@ public class Tienda {
 		table.addActor(siguienteBarco);
 		
 		Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
-		anteriorBarco.setPosition(660, 680);
+		anteriorBarco.setPosition(660, 710);
 		anteriorBarco.setSize(70,70);
 		anteriorBarco.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -420,15 +420,15 @@ public class Tienda {
 		menosVelocidad.setSize(56,56);
 		menosVelocidad.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				if(0<vPunta1){
+				if(eleccionBarco==0 && 0<vPunta1){
 				vPunta1--;
 				vPuntaS--;
 				dinero++;
-				}else if(0<vPunta2) {
+				}else if(eleccionBarco==1 && 0<vPunta2) {
 					vPunta2--;
 					vPuntaS--;
 					dinero++;
-				}else if(0<vPunta3) {
+				}else if(eleccionBarco==2 && 0<vPunta3) {
 					vPunta3--;
 					vPuntaS--;
 					dinero++;
@@ -444,15 +444,15 @@ public class Tienda {
 		menosVida.setSize(56,56);
 		menosVida.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				if(0<vidas1) {
+				if(eleccionBarco==0 &&0<vidas1) {
 				vidas1--;
 				vidasS--;
 				dinero++;
-				}else if(0<vidas2) {
+				}else if(eleccionBarco==1 && 0<vidas2) {
 				vidas2--;
 				vidasS--;
 				dinero++;
-				}else if(0<vidas3) {
+				}else if(eleccionBarco==2 && 0<vidas3) {
 				vidas3--;
 				vidasS--;
 				dinero++;
