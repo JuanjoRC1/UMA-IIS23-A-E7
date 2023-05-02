@@ -40,7 +40,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Vector2 velocitybar = new Vector2();
 	protected Vector2 acceleration = new Vector2(0,0);
 	protected Texture fondofla;
-	protected  float gravity=(float) -1.1;
+	protected  float gravity=(float) -1.4;
 	protected int aceler;
 	protected int barcoDef,vidas,vPunta,dinero;
 	protected float ilit = 500; 
@@ -386,9 +386,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    minijuego.jugador.setX(minijuego.jugador.getX() +  deltaTime);
 				    minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
 				    if(Gdx.input.isKeyPressed(Keys.SPACE)) {
-				    	minijuego.jugador.setY(minijuego.jugador.getY()+5);
+				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
 				    }
-				    final int tiempoDeEsperaEntreObstaculosmini = 1000; // espera 100 milisegundos entre cada generaci�n de obst�culos
+				    if(minijuego.jugador.getY()==1080) {
+				    	  minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
+
+				    }
+				    final int tiempoDeEsperaEntreObstaculosmini = 1250; // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
 					     spawntuboab(Tuboab,Tuboar);
 					     //spawntuboar(Tuboar);
@@ -415,7 +419,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    		batch.draw(fin, camfla.position.x, camfla.position.y);
 				    		batch.end();
 				    		 try {
-				    			    Thread.sleep(1500); // 5000 milisegundos son equivalentes a 5 segundos
+				    			    Thread.sleep(1300); // 5000 milisegundos son equivalentes a 5 segundos
 				    			} catch (InterruptedException e) {
 				    			    e.printStackTrace();
 				    			}
