@@ -8,22 +8,22 @@ public class Carril {
 	
 	public Carril(int numero) {
 		if(numero == 1) {
-			lateral1 = 140; 
-			lateral2 = 550;
+			lateral1 = 130; 
+			lateral2 = 530;
 			puntoSpawn = 345; 
 		}
 		else if(numero == 2) {
 			lateral1 = 550; 
-			lateral2 = 910;
+			lateral2 = 1920/2-20;
 			puntoSpawn = 755; 
 		}
 		else if (numero == 3) {
-			lateral1 = 910;
-			lateral2 = 1320; 
+			lateral1 = 1920/2;
+			lateral2 = 1920/2 +390; 
 			puntoSpawn = 1165; 
 		}
-		else if (numero == 4) {
-			lateral1= 1320; 
+		else {
+			lateral1= 1920/2 +410; 
 			lateral2 = 1730; 
 			puntoSpawn = 1575; 
 		}
