@@ -416,7 +416,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				      if(Tuboab.overlaps(drag)||Tuboar.overlaps(drag)) {
 				    		 bum.play();
 				    		batch.begin();
-				    		batch.draw(fin, camfla.position.x, camfla.position.y);
+				    		batch.draw(fin, minijuego.jugador.getX()+500, camfla.position.y);
 				    		batch.end();
 				    		 try {
 				    			    Thread.sleep(1300); // 5000 milisegundos son equivalentes a 5 segundos
@@ -595,7 +595,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	        //Obstaculos
 	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar) {
-	        	float y=MathUtils.random(900, 1700);
+	        	float y=MathUtils.random(900, 1000);
 	  	     
 	  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,83,564);
 	  	  Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-900,83,564);
