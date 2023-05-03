@@ -158,11 +158,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 minijuego.inicializar();
 		 bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/tumuerto.mp3"));
 		 omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
+		 
+		 
 		 //Obstaculos
 		 
-		 TRoca = new Texture(Gdx.files.internal("data/Roca.png"));
-		 TCoco = new Texture(Gdx.files.internal("data/Icoco.png"));
-		 TTronco = new Texture(Gdx.files.internal("data/Tronco.png")); 
+		 TRoca = new Texture(Gdx.files.internal("data/Rocap.png"));
+		 TCoco = new Texture(Gdx.files.internal("data/Icocop.png"));
+		 TTronco = new Texture(Gdx.files.internal("data/Troncop.png")); 
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
 		 Cocodrilos = new Array<Rectangle>();
@@ -321,17 +323,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 	}
 	// SPAWN DE OBSTACULOS
 	 protected void spawnRoca(Array<Rectangle> Rocas) {
-	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
+	      Rectangle roca = new Rectangle(MathUtils.random(0, WIDTH-64),
+	    		  (MathUtils.random(topLimit+360, topLimit+HEIGHT)),52,49);
 	      Rocas.add(roca);
 	      lastDropTimeRoca = TimeUtils.millis();
 	   }
 	 protected void spawnTronco(Array<Rectangle>Troncos) {
-	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),90,40);
+	      Rectangle tronco = new Rectangle(MathUtils.random(0, WIDTH-64),
+	    		  (MathUtils.random(topLimit+360, topLimit+HEIGHT)),18,51);
 	      Troncos.add(tronco);
 	      lastDropTimeTroncos = TimeUtils.millis();
 	   }
 	 protected void spawnCocodrilo(Array<Rectangle> Cocodrilos) {
-	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),(MathUtils.random(topLimit+360, topLimit+HEIGHT)),64,64);
+	      Rectangle cocodrilo = new Rectangle(MathUtils.random(0, WIDTH-64),
+	    		  (MathUtils.random(topLimit+360, topLimit+HEIGHT)),78,22);
 	      Cocodrilos.add(cocodrilo);
 	      lastDropTimeCocodrilos = TimeUtils.millis();
 	   }
@@ -367,6 +372,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            else if(juego.jugador.getRotation() > 0)
 	            	juego.jugador.rotate(-1);
 	        }
+	     
 	     protected void reset() {
 			 Bola.setX(WIDTH/2);
 			 Bola.setY(HEIGHT/2);
@@ -597,8 +603,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar) {
 	        	float y=MathUtils.random(900, 1000);
 	  	     
-	  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,83,564);
-	  	  Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-900,83,564);
+		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,83,564);
+		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-900,83,564);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();

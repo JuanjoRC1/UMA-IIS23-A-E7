@@ -21,7 +21,7 @@ public class Juego {
 	
 	public void inicializar() {
 		
-		mainBarco = new Texture(Gdx.files.internal("data/boat.jpeg"));
+		mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		
 		
