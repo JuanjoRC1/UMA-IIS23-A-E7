@@ -1,5 +1,7 @@
 package com.barquitosfc.game;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,15 +20,20 @@ public class Juego {
 	public static final int HEIGHT	=1080;
 	public Barco jugador; 
 	public Texture mainBarco, boardPlay; 
+	public Carril C1;
+	public Carril C2;
 	
 	public void inicializar() {
 		
 		mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		
+		Random random = new Random();
+		int carril = random.nextInt(4);
+		C1 = new Carril(carril); 
+		jugador = new Barco(mainBarco,carril); 
+		jugador.setPosition(C1.getPuntoSpawn(), HEIGHT/7);
 		
-		jugador = new Barco(mainBarco); 
-		jugador.setPosition(WIDTH/2, HEIGHT/7);
 	}
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
@@ -61,19 +68,17 @@ public class Juego {
 	
 
 	
-	public int Carril(int i) {
+	public int Carril(Carril i) {
 		int ladoIz = 0; 
-		if (i ==1)
-			ladoIz = 140; 
+		ladoIz = i.getLateral1();
 		 
 		 return ladoIz; 
 		
 	}
 	
-	public int Carril2(int i) {
+	public int Carril2(Carril i) {
 		int ladoDer = 0;
-		if(i == 1)
-			ladoDer =160; 
+		ladoDer = i.getLateral2();
 		return ladoDer; 
 	}
 	

@@ -516,13 +516,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 //				  LIMITES DEL BARCO HORIZONTAL
 				
-				if (juego.jugador.getX() < juego.Carril(1)) {
-					juego.jugador.setX(juego.Carril(1));
+				if (juego.jugador.getX() < juego.Carril(juego.C1)) {
+					juego.jugador.setX(juego.Carril(juego.C1));
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}
-				if (juego.jugador.getX() > WIDTH - juego.Carril2(1)) {
-					juego.jugador.setX(WIDTH-juego.Carril2(1));
+				if (juego.jugador.getX() >  juego.Carril2(juego.C1)) {
+					juego.jugador.setX(juego.Carril2(juego.C1));
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}

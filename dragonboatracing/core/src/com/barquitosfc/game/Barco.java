@@ -8,11 +8,13 @@ public class Barco extends Sprite{
 	private int vidas = 1;
 	private int vPunta = 300;
 	private int agilidad = 200;
+	private int carril ;
 	
 	
-	public Barco(Texture boatTexture) {
+	public Barco(Texture boatTexture, int i ) {
 		super(boatTexture);
 		setTexture(boatTexture);
+		carril = i; 
 	}
 
 	public void draw2(SpriteBatch batch) {
