@@ -190,8 +190,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//Botones Inicio
 			Button buttonPlay= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
 //			TextButton buttonPlay= new TextButton("Inicio",getSkin());
-			buttonPlay.setPosition(table.getOriginX(), table.getOriginY());
-			buttonPlay.setSize(200,40);
+			buttonPlay.setPosition(table.getOriginX()-200, table.getOriginY());
+			buttonPlay.setSize(300,40);
 			buttonPlay.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 					gameState=GameState.PLAY;
@@ -203,8 +203,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
 			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
-			buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+100, table.getOriginY());
-			buttonConfig.setSize(200,40);
+			buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+200, table.getOriginY());
+			buttonConfig.setSize(300,40);
 
 			buttonConfig.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -370,7 +370,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	    	 		
 //					camfla.position.x = minijuego.jugador.getX();
 				
-				omega.play();
+			//	omega.play();
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
