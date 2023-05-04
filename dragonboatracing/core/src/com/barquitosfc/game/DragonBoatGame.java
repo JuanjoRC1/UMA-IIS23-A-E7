@@ -34,6 +34,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
 	}
 	public Sound bum;
+	public int ct;
 	public Music omega;
 	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini;
 	protected Vector2 velocity = new Vector2(0,0);
@@ -70,12 +71,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Tienda tienda;
 	protected Juego juego;
 	protected minijuego minijuego;
+	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
 
    
     
 //Para el minijuego
 	protected int speedx = 200; 
-	protected int speedy = 200; 
+	protected int speedy = 200;
+	private Sound jump; 
 	public DragonBoatGame() {
 		this(0,0,0,0);
 	}
@@ -141,6 +144,16 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 juego.inicializar(); 
 		 
 		 //minijuego
+			n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
+	   	 	n1 = new Texture(Gdx.files.internal("data/Numero1.png"));
+	   	 	n2 = new Texture(Gdx.files.internal("data/Numero2.png"));
+	   	 	n3 = new Texture(Gdx.files.internal("data/Numero3.png"));
+	   	 	n4 = new Texture(Gdx.files.internal("data/Numero4.png"));
+	   	 	n5 = new Texture(Gdx.files.internal("data/Numero5.png"));
+	   	 	n6 = new Texture(Gdx.files.internal("data/Numero6.png"));
+	   	 	n7 = new Texture(Gdx.files.internal("data/Numero7.png"));
+	   	 	n8 = new Texture(Gdx.files.internal("data/Numero8.png"));
+	   	 	n9 = new Texture(Gdx.files.internal("data/Numero9.png"));
 		 Tuboart = new Texture(Gdx.files.internal("minijuego/palochino.png"));
 		 Tuboabt = new Texture(Gdx.files.internal("minijuego/palochino(abajo).png"));
 		 fin = new Texture(Gdx.files.internal("minijuego/fin.png"));
@@ -156,7 +169,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			camfla.update();
 		 minijuego=new minijuego();
 		 minijuego.inicializar();
-		 bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/tumuerto.mp3"));
+		 bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
+		 jump =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
 		 omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
 		 
 		 
@@ -270,15 +284,23 @@ public class DragonBoatGame extends ApplicationAdapter {
 			Thread t1= new Thread();
 			
 			t1.start();*/
+			 
+			float pos=minijuego.jugador.getX()+1500;
 			minijuego.iniciar(table, batch,stage);
 			batch.begin();
-			for(Rectangle tuboar: Tuboar) {batch.draw(Tuboart, tuboar.x, tuboar.y);}
+			for(Rectangle tuboar: Tuboar) {batch.draw(Tuboart, tuboar.x, tuboar.y);
+			 
+			}
 			for(Rectangle tuboab: Tuboab) {batch.draw(Tuboabt, tuboab.x, tuboab.y);}
+			if(minijuego.jugador.getX()==pos) {
+				 ct++;
+			 }
 			// for(Rectangle tuboab: Tuboab) {batch.draw(Tuboabt, tuboab.x, tuboab.y);}
 			batch.end();
 			batch.begin();
 			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
 			batch.end();
+			
 			//  handleInputflapi();
 			updateflapi(Gdx.graphics.getDeltaTime()*250);
 //			table=new Table();
@@ -390,15 +412,33 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    bottomLimitmini = camfla.position.y - 1080 / 2;
 //					movimiento del pajaro
 				    minijuego.jugador.setX(minijuego.jugador.getX() +  deltaTime);
-				    minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
-				    if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+				    if(minijuego.jugador.getY()>450) minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
+				   
+				   
+				    if(Gdx.input.isKeyPressed(Keys.SPACE)&&minijuego.jugador.getY()<1450) {
+				    	jump.play();
 				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
+				    }
+				    final int tiempoDeEsperaEntreObstaculosmini = 1250;
+				  
+				    if(TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini&&minijuego.jugador.getX()>1986) {
+				    	
+				    	ct++;
 				    }
 				    if(minijuego.jugador.getY()==1080) {
 				    	  minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
 
 				    }
-				    final int tiempoDeEsperaEntreObstaculosmini = 1250; // espera 100 milisegundos entre cada generaci�n de obst�culos
+				    batch.begin();
+				    font = new BitmapFont(Gdx.files.internal("minijuego/fuente.ttf"));
+			        font.getData().scale(7f);
+					font.draw(batch, "La posicion es "+minijuego.jugador.getY(),minijuego.jugador.getX(), 1080);
+					batch.end();
+				    batch.begin();
+				    
+					font.draw(batch, "La puntuacion es "+ct, minijuego.jugador.getX(), 1080/2);
+					batch.end();
+				   // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
 					     spawntuboab(Tuboab,Tuboar);
 					     //spawntuboar(Tuboar);
