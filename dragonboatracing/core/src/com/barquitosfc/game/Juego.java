@@ -18,21 +18,35 @@ public class Juego {
 
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
-	public Barco jugador; 
-	public Texture mainBarco, boardPlay; 
-	public Carril C1;
-	public Carril C2;
+	public Barco jugador,IA1,IA2,IA3; 
+	public Texture mainBarco, boardPlay,TIA1,TIA2,TIA3;
+	public Carril C1, C2,C3,C4;
 	
 	public void inicializar() {
-		
+		TIA1=TIA2=TIA3= new Texture(Gdx.files.internal("data/boatp.jpg"));
 		mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		
 		Random random = new Random();
-		int carril = random.nextInt(4);
-		C1 = new Carril(carril); 
-		jugador = new Barco(mainBarco,carril); 
-		jugador.setPosition(C1.getPuntoSpawn(), HEIGHT/7);
+		
+
+		C2 = new Carril(2); 
+		C1= new Carril(1);
+
+		C3= new Carril(3);
+		C4= new Carril(4);
+		jugador = new Barco(mainBarco,2); 
+		jugador.setPosition(C2.getPuntoSpawn(), HEIGHT/7);
+
+		IA1= new Barco(TIA1,1);
+		IA1.setPosition(C1.getPuntoSpawn(), HEIGHT / 7);
+		
+		IA2= new Barco(TIA2,3);
+		IA2.setPosition(C3.getPuntoSpawn(), HEIGHT / 7);
+		
+		IA3= new Barco(TIA3,3);
+		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT / 7);
+		
 		
 	}
 	
@@ -54,7 +68,7 @@ public class Juego {
 
 		// Genera el mapa Hay que mejorar
 		batch.begin();
-		for(int i = 0; i < 100000 ; i++) {
+		for(int i = 0; i < 20 ; i++) {
 			batch.draw(boardPlay,0,HEIGHT*i);
 		}
 		batch.end();
@@ -64,14 +78,60 @@ public class Juego {
 		jugador.draw(batch);
 		batch.end();
 		
-	}
+		batch.begin();
+		IA1.draw(batch);
+		batch.end();
+		
+		batch.begin();
+		IA2.draw(batch);
+		batch.end();
+		
+		batch.begin();
+		IA3.draw(batch);
+		batch.end();
+		
 	
-
+	
+	//LIMITES DE LAS IAS
+		
+			//IA1
+		if (IA1.getX() < Carril(C1)+IA1.getWidth()) {
+			IA1.setX(Carril(C1));
+		}
+		if (IA1.getX() >  Carril2(C1)-IA1.getWidth()) {
+			IA1.setX(Carril2(C1));
+		}
+			//IA2
+		if (IA2.getX() < Carril(C3)+IA2.getWidth()) {
+			IA2.setX(Carril(C3));
+		}
+		if (IA2.getX() >  Carril2(C3)-IA2.getWidth()) {
+			IA2.setX(Carril2(C3));
+		}
+		
+			//IA3
+		if (IA3.getX() < Carril(C4)+IA3.getWidth()) {
+			IA3.setX(Carril(C4));
+		}
+		if (IA3.getX() >  Carril2(C4)-IA3.getWidth()) {
+			IA3.setX(Carril2(C4));
+		}
+		
+		Random random = new Random();
+	//MOVIEMIENTO VERTICAL  DE LAS IAS	
+		//IA1
+		IA1.setY(IA1.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
+		//IA1
+		IA2.setY(IA2.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
+		//IA1
+		IA3.setY(IA3.getY()+(random.nextInt(4)+ 80*Gdx.graphics.getDeltaTime()));
+		
+		
+	}
 	
 	public int Carril(Carril i) {
 		int ladoIz = 0; 
 		ladoIz = i.getLateral1();
-		 
 		 return ladoIz; 
 		
 	}
