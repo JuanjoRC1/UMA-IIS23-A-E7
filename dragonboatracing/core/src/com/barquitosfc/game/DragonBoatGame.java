@@ -1,7 +1,7 @@
 package com.barquitosfc.game;
 
 import java.util.Iterator;
-
+import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -141,7 +141,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 
 		 // Juego 
 		 juego = new Juego();
-		 juego.inicializar(); 
+		 
 		 
 		 //minijuego
 			n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
@@ -270,7 +270,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 for(Rectangle tronco: Troncos) {batch.draw(TTronco, tronco.x, tronco.y);}
 			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(TCoco, cocodrilo.x, cocodrilo.y);}
 			batch.end();
-			
+			actualizarIA();
 			batch.begin();
 			
 			font.draw(batch, "x: " + juego.jugador.getX() +"Y: "+ juego.jugador.getY(), 100, juego.jugador.getY()+100);
@@ -598,7 +598,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 	            
 	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
-			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<15) {
+			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<50) {
 			     spawnRoca(Rocas);
 			     
 			 }
@@ -724,7 +724,192 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	       
 	        }
-		 
+	        
+	        
+	        public void actualizarIA() {
+	        	Rectangle rect1 = juego.IA1.getBoundingRectangle();
+	        	Rectangle rect2 = juego.IA2.getBoundingRectangle();
+	        	Rectangle rect3 = juego.IA3.getBoundingRectangle();
+	        	
+	    		//IA1
+	    		for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
+	    		      Rectangle roca = iter.next();
+	    		      if ( juego.IA1.getX() <= (roca.x+roca.width)  && juego.IA1.getX()>= roca.x && roca.y-juego.IA1.getY()<300 ) {
+	    		    	  if ((roca.x+(roca.width/2)-juego.IA1.getX()+(juego.IA1.getWidth()/2))>roca.x-juego.IA1.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA1.setX(juego.IA1.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA1.getX() == (roca.x+roca.width)  && juego.IA1.getX()== roca.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA1.setX(juego.IA1.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA1.getX() == (roca.x+roca.width)  && juego.IA1.getX()== roca.x );
+	    		    	  }
+	    		      }
+	    		      if(roca.overlaps(rect1)) {
+	    			         iter.remove();
+	    			         juego.IA1.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
+	    		      Rectangle tronco = iter.next();
+	    		      if ( juego.IA1.getX() <= (tronco.x+tronco.width)  && juego.IA1.getX()>= tronco.x && tronco.y-juego.IA1.getY()<300 ) {
+	    		    	  if ((tronco.x+(tronco.width/2)-juego.IA1.getX()+(juego.IA1.getWidth()/2))>tronco.x-juego.IA1.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA1.setX(juego.IA1.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA1.getX() == (tronco.x+tronco.width)  && juego.IA1.getX()== tronco.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA1.setX(juego.IA1.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA1.getX() == (tronco.x+tronco.width)  && juego.IA1.getX()== tronco.x );
+	    		    	  }
+	    		      }
+	    		      if(tronco.overlaps(rect1)) {
+	    			         iter.remove();
+	    			         juego.IA1.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
+	    		      Rectangle cocodrilo = iter.next();
+	    		      if ( juego.IA1.getX() <= (cocodrilo.x+cocodrilo.width)  && juego.IA1.getX()>= cocodrilo.x && cocodrilo.y-juego.IA1.getY()<300 ) {
+	    		    	  if ((cocodrilo.x+(cocodrilo.width/2)-juego.IA1.getX()+(juego.IA1.getWidth()/2))>cocodrilo.x-juego.IA1.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA1.setX(juego.IA1.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA1.getX() == (cocodrilo.x+cocodrilo.width)  && juego.IA1.getX()== cocodrilo.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA1.setX(juego.IA1.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA1.getX() == (cocodrilo.x+cocodrilo.width)  && juego.IA1.getX()== cocodrilo.x );
+	    		    	  }
+	    		      }
+	    		      if(cocodrilo.overlaps(rect1)) {
+	    			         iter.remove();
+	    			         juego.IA1.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		
+	    		//IA2
+	    		
+	    		for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
+	    		      Rectangle roca = iter.next();
+	    		      if ( juego.IA2.getX() <= (roca.x+roca.width)  && juego.IA2.getX()>= roca.x && roca.y-juego.IA2.getY()<300 ) {
+	    		    	  if ((roca.x+(roca.width/2)-juego.IA2.getX()+(juego.IA2.getWidth()/2))>roca.x-juego.IA2.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA2.setX(juego.IA2.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA2.getX() == (roca.x+roca.width)  && juego.IA2.getX()== roca.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA2.setX(juego.IA2.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA2.getX() == (roca.x+roca.width)  && juego.IA2.getX()== roca.x );
+	    		    	  }
+	    		      }
+	    		      if(roca.overlaps(rect2)) {
+	    			         iter.remove();
+	    			         juego.IA2.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
+	    		      Rectangle tronco = iter.next();
+	    		      if ( juego.IA2.getX() <= (tronco.x+tronco.width)  && juego.IA2.getX()>= tronco.x && tronco.y-juego.IA2.getY()<300 ) {
+	    		    	  if ((tronco.x+(tronco.width/2)-juego.IA2.getX()+(juego.IA2.getWidth()/2))>tronco.x-juego.IA2.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA2.setX(juego.IA2.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA2.getX() == (tronco.x+tronco.width)  && juego.IA2.getX()== tronco.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA2.setX(juego.IA2.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA2.getX() == (tronco.x+tronco.width)  && juego.IA2.getX()== tronco.x );
+	    		    	  }
+	    		      }
+	    		      if(tronco.overlaps(rect2)) {
+	    			         iter.remove();
+	    			         juego.IA2.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
+	    		      Rectangle cocodrilo = iter.next();
+	    		      if ( juego.IA2.getX() <= (cocodrilo.x+cocodrilo.width)  && juego.IA2.getX()>= cocodrilo.x && cocodrilo.y-juego.IA2.getY()<300 ) {
+	    		    	  if ((cocodrilo.x+(cocodrilo.width/2)-juego.IA2.getX()+(juego.IA2.getWidth()/2))>cocodrilo.x-juego.IA2.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA2.setX(juego.IA2.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA2.getX() == (cocodrilo.x+cocodrilo.width)  && juego.IA2.getX()== cocodrilo.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA2.setX(juego.IA2.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA2.getX() == (cocodrilo.x+cocodrilo.width)  && juego.IA2.getX()== cocodrilo.x );
+	    		    	  }
+	    		      }
+	    		      if(cocodrilo.overlaps(rect2)) {
+	    			         iter.remove();
+	    			         juego.IA2.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		
+	    		//IA3
+	    		
+	    		for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
+	    		      Rectangle roca = iter.next();
+	    		      if ( juego.IA3.getX() <= (roca.x+roca.width)  && juego.IA3.getX()>= roca.x && roca.y-juego.IA3.getY()<300 ) {
+	    		    	  if ((roca.x+(roca.width/2)-juego.IA3.getX()+(juego.IA3.getWidth()/2))>roca.x-juego.IA3.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA3.setX(juego.IA3.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA3.getX() == (roca.x+roca.width)  && juego.IA3.getX()== roca.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA3.setX(juego.IA3.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA3.getX() == (roca.x+roca.width)  && juego.IA3.getX()== roca.x );
+	    		    	  }
+	    		      }
+	    		      if(roca.overlaps(rect3)) {
+	    			         iter.remove();
+	    			         juego.IA3.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		for (Iterator<Rectangle> iter = Troncos.iterator(); iter.hasNext(); ) {
+	    		      Rectangle tronco = iter.next();
+	    		      if ( juego.IA3.getX() <= (tronco.x+tronco.width)  && juego.IA3.getX()>= tronco.x && tronco.y-juego.IA3.getY()<300 ) {
+	    		    	  if ((tronco.x+tronco.width-juego.IA3.getX()+(juego.IA3.getWidth()/2))>tronco.x-juego.IA3.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA3.setX(juego.IA3.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA3.getX() == (tronco.x+tronco.width)  && juego.IA3.getX()== tronco.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA3.setX(juego.IA3.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA3.getX() == (tronco.x+tronco.width)  && juego.IA3.getX()== tronco.x );
+	    		    	  }
+	    		      }
+	    		      if(tronco.overlaps(rect3)) {
+	    			         iter.remove();
+	    			         juego.IA3.getVidas();
+	    			      }
+	    		   }
+	    		
+	    		for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
+	    		      Rectangle cocodrilo = iter.next();
+	    		      if ( juego.IA3.getX() <= (cocodrilo.x+cocodrilo.width)  && juego.IA3.getX()>= cocodrilo.x && cocodrilo.y-juego.IA3.getY()<300 ) {
+	    		    	  if ((cocodrilo.x+cocodrilo.width-juego.IA3.getX()+(juego.IA3.getWidth()/2))>cocodrilo.x-juego.IA3.getX()) {// COMPARA LOS CENTROS?
+	    		    		  do {
+	    		    			  juego.IA3.setX(juego.IA3.getX()+100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA3.getX() == (cocodrilo.x+cocodrilo.width)  && juego.IA3.getX()== cocodrilo.x );
+	    		    	  } else {
+	    		    		  do {
+	    		    			  juego.IA3.setX(juego.IA3.getX()-100*Gdx.graphics.getDeltaTime());
+	    		    		  } while ( juego.IA3.getX() == (cocodrilo.x+cocodrilo.width)  && juego.IA3.getX()== cocodrilo.x );
+	    		    	  }
+	    		      }
+	    		      if(cocodrilo.overlaps(rect3)) {
+	    			         iter.remove();
+	    			         juego.IA3.getVidas();
+	    			      }
+	    		   }
+	    		
+	    	}
 		     
 
 	}

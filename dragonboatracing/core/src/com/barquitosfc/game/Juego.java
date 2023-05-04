@@ -1,5 +1,6 @@
 package com.barquitosfc.game;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -8,9 +9,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Juego {
@@ -21,18 +24,19 @@ public class Juego {
 	public Barco jugador,IA1,IA2,IA3; 
 	public Texture mainBarco, boardPlay,TIA1,TIA2,TIA3;
 	public Carril C1, C2,C3,C4;
+
 	
-	public void inicializar() {
+	public  Juego() {
 		TIA1=TIA2=TIA3= new Texture(Gdx.files.internal("data/boatp.jpg"));
 		mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		
-		Random random = new Random();
+
 		
 
-		C2 = new Carril(2); 
+		
 		C1= new Carril(1);
-
+		C2 = new Carril(2); 
 		C3= new Carril(3);
 		C4= new Carril(4);
 		jugador = new Barco(mainBarco,2); 
@@ -46,6 +50,7 @@ public class Juego {
 		
 		IA3= new Barco(TIA3,3);
 		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT / 7);
+		
 		
 		
 	}
@@ -120,14 +125,17 @@ public class Juego {
 		Random random = new Random();
 	//MOVIEMIENTO VERTICAL  DE LAS IAS	
 		//IA1
-		IA1.setY(IA1.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
+		IA1.setY(IA1.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
 		//IA1
-		IA2.setY(IA2.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
+		IA2.setY(IA2.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
 		//IA1
-		IA3.setY(IA3.getY()+(random.nextInt(4)+ 80*Gdx.graphics.getDeltaTime()));
+		IA3.setY(IA3.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
 		
 		
 	}
+		
+	
+	
 	
 	public int Carril(Carril i) {
 		int ladoIz = 0; 
