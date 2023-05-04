@@ -203,7 +203,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
 			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
-			buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+200, table.getOriginY());
+			buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+100, table.getOriginY());
 			buttonConfig.setSize(200,40);
 
 			buttonConfig.addListener(new InputListener() {
@@ -217,7 +217,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
 //			TextButton buttonShop= new TextButton("Tienda",getSkin());
 			buttonShop.setPosition(buttonConfig.getX()+buttonConfig.getWidth()+200, table.getOriginY());
-			buttonShop.setWidth(200);
+			buttonShop.setWidth(300);
 			buttonShop.setHeight(40);
 			buttonShop.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -230,7 +230,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 //			TextButton buttonQuit= new TextButton("Salir",skin);
 			Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
 			buttonQuit.setPosition(buttonShop.getX()+buttonShop.getWidth()+200, table.getOriginY());
-			buttonQuit.setWidth(200);
+			buttonQuit.setWidth(300);
 			buttonQuit.setHeight(40);
 			buttonQuit.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
