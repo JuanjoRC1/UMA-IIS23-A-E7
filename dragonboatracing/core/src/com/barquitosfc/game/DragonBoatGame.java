@@ -159,7 +159,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 fin = new Texture(Gdx.files.internal("minijuego/fin.png"));
 		 Tuboar = new Array<Rectangle>();
 		 Tuboab = new Array<Rectangle>();
-			camfla = new OrthographicCamera();
+		 	camfla = new OrthographicCamera();
 			leftLimitmini = camfla.position.x - Gdx.graphics.getWidth() / 2;
 			rightLimitmini = camfla.position.x + Gdx.graphics.getWidth() / 2;
 			topLimitmini = camfla.position.y + Gdx.graphics.getHeight() / 2;
@@ -272,6 +272,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.end();
 			
 			batch.begin();
+			
 			font.draw(batch, "x: " + juego.jugador.getX() +"Y: "+ juego.jugador.getY(), 100, juego.jugador.getY()+100);
 			batch.end();
 //			

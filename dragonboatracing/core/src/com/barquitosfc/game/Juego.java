@@ -18,21 +18,36 @@ public class Juego {
 
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
-	public Barco jugador; 
-	public Texture mainBarco, boardPlay; 
-	public Carril C1;
-	public Carril C2;
+	public Barco jugador,IA1,IA2,IA3; 
+	public Texture mainBarco, boardPlay,TIA1,TIA2,TIA3;
+	public Carril C1, C2,C3,C4;
 	
 	public void inicializar() {
-		
+		TIA1=TIA2=TIA3= new Texture(Gdx.files.internal("data/boatp.jpg"));
 		mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		
 		Random random = new Random();
-		int carril = random.nextInt(4);
-		C1 = new Carril(carril); 
-		jugador = new Barco(mainBarco,carril); 
+		
+		C1 = new Carril(2); 
+		C2= new Carril(1);
+		C3= new Carril(3);
+		C4= new Carril(4);
+		jugador = new Barco(mainBarco,2); 
 		jugador.setPosition(C1.getPuntoSpawn(), HEIGHT/7);
+		
+		
+		IA1= new Barco(TIA1,1);
+		IA1.setPosition(C2.getPuntoSpawn(), HEIGHT/7);
+		
+		
+		IA2= new Barco(TIA2,3);
+		IA2.setPosition(C3.getPuntoSpawn(), HEIGHT/7);
+		
+	
+		IA3= new Barco(TIA3,3);
+		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT/7);
+		
 		
 	}
 	
@@ -54,7 +69,7 @@ public class Juego {
 
 		// Genera el mapa Hay que mejorar
 		batch.begin();
-		for(int i = 0; i < 100000 ; i++) {
+		for(int i = 0; i < 20 ; i++) {
 			batch.draw(boardPlay,0,HEIGHT*i);
 		}
 		batch.end();
@@ -62,7 +77,11 @@ public class Juego {
 		//Dibuja al jugador
 		batch.begin();
 		jugador.draw(batch);
+		IA1.draw(batch);
+		IA2.draw(batch);
+		IA3.draw(batch);
 		batch.end();
+		
 		
 	}
 	
