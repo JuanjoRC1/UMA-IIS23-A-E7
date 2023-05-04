@@ -302,7 +302,7 @@ public class Tienda {
         
         batch.begin();
 		batch.draw(fondoTienda,0,0);
-		batch.draw(barcosE, 775, 600, 400, 300);
+		batch.draw(barcosE, 775, 490, 400, 300);
 		batch.draw(velocidadB, 700, 310, 500, 40);
 		batch.draw(vidaB, 700, 160, 500, 40);
 		batch.draw(letreroVida, 840, 215, 200, 30);
@@ -325,7 +325,7 @@ public class Tienda {
 		stage.addActor(table);
 		
 		Button siguienteBarco= new Button(new Button.ButtonStyle(spriteSiguiente,spriteSiguiente,spriteSiguiente));
-		siguienteBarco.setPosition(1220, 710);
+		siguienteBarco.setPosition(1220, 600);
 		siguienteBarco.setSize(70,70);
 		siguienteBarco.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -346,7 +346,7 @@ public class Tienda {
 		table.addActor(siguienteBarco);
 		
 		Button anteriorBarco= new Button(new Button.ButtonStyle(spriteAnterior,spriteAnterior,spriteAnterior));
-		anteriorBarco.setPosition(660, 710);
+		anteriorBarco.setPosition(660, 600);
 		anteriorBarco.setSize(70,70);
 		anteriorBarco.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {

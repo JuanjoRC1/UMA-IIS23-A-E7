@@ -469,7 +469,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    			} catch (InterruptedException e) {
 				    			    e.printStackTrace();
 				    			}
-					    	  gameState=GameState.QUIT;
+					    	  gameState=GameState.PLAY;
 					      }
 					   }
 					 for (Iterator<Rectangle> iterar = Tuboar.iterator(); iterar.hasNext(); ) {
@@ -489,7 +489,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    			    e.printStackTrace();
 				    			}
 				    		
-					    	  gameState=GameState.QUIT;
+					    	  gameState=GameState.PLAY;
 					      }
 				      }
 	     }
