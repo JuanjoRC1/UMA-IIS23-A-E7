@@ -18,12 +18,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Juego {
 	
-
+	public int salvavida;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	public Barco jugador,IA1,IA2,IA3; 
 	public Texture mainBarco, boardPlay,TIA1,TIA2,TIA3;
-	public Carril C1, C2,C3,C4;
+	public Carril C1,C2,C3,C4;
 
 	
 	public  Juego() {
@@ -51,6 +51,7 @@ public class Juego {
 		IA3= new Barco(TIA3,3);
 		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT / 7);
 		
+
 		
 		
 	}
@@ -129,7 +130,11 @@ public class Juego {
 		//IA1
 		IA2.setY(IA2.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
 		//IA1
+
 		IA3.setY(IA3.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
+
+		IA3.setY(IA3.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
+
 		
 		
 	}

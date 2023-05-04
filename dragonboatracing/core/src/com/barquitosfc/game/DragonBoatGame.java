@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -256,7 +256,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			actualizarIA();
 			batch.begin();
 			
-			font.draw(batch, "x: " + juego.jugador.getX() +"Y: "+ juego.jugador.getY(), 100, juego.jugador.getY()+100);
+			font.draw(batch, "x: " + juego.jugador.getVidas() +"Y: "+ juego.jugador.getY(), 100, juego.jugador.getY()+100);
 			batch.end();
 //			
             handleInput();
@@ -550,6 +550,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
 				         juego.jugador.getVidas();
+				         velocity.y -= 70;
+				         acceleration.x = 0;
 				      }
 			   }
  
@@ -560,6 +562,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
 				         juego.jugador.setVidas();
+				         velocity.y -= 70;
+				         acceleration.x = 0;
 				  }
 			   }
 			 
@@ -571,9 +575,26 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
 				         juego.jugador.setVidas();
+				         velocity.y -= 70;
+				         acceleration.x = 0;
 				      }
 			 }
 			 
+
+			 
+			 if(juego.jugador.getVidas() == 0) {
+				 	ilit = 140;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+//					juego.inicializar(); 
+//					juego.iniciar(table, batch, stage);
+					gameState=GameState.MENU;
+					
+					juego.jugador.setVidas(1);
+			 }
 
 	        }
 	        

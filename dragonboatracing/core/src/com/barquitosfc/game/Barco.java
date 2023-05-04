@@ -3,6 +3,8 @@ package com.barquitosfc.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class Barco extends Sprite{
 	private int vidas = 1;
@@ -20,7 +22,6 @@ public class Barco extends Sprite{
 	public void draw2(SpriteBatch batch) {
 		this.draw(batch);
 	}
-	
 	public int getVidas() {
 		return vidas;
 	}
@@ -46,6 +47,12 @@ public class Barco extends Sprite{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		this.dispose();
+		
+	}
+
+	public void addAction(Action fadeOutAction2) {
+		// TODO Auto-generated method stub
+
 		
 	}
 
