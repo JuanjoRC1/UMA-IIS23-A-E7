@@ -29,24 +29,23 @@ public class Juego {
 		
 		Random random = new Random();
 		
+
 		C2 = new Carril(2); 
 		C1= new Carril(1);
+
 		C3= new Carril(3);
 		C4= new Carril(4);
 		jugador = new Barco(mainBarco,2); 
 		jugador.setPosition(C2.getPuntoSpawn(), HEIGHT/7);
-		
-		
+
 		IA1= new Barco(TIA1,1);
-		IA1.setPosition(C1.getPuntoSpawn(), HEIGHT/7);
-		
+		IA1.setPosition(C1.getPuntoSpawn(), HEIGHT / 7);
 		
 		IA2= new Barco(TIA2,3);
-		IA2.setPosition(C3.getPuntoSpawn(), HEIGHT/7);
+		IA2.setPosition(C3.getPuntoSpawn(), HEIGHT / 7);
 		
-	
 		IA3= new Barco(TIA3,3);
-		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT/7);
+		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT / 7);
 		
 		
 	}
@@ -118,14 +117,14 @@ public class Juego {
 			IA3.setX(Carril2(C4));
 		}
 		
-		
+		Random random = new Random();
 	//MOVIEMIENTO VERTICAL  DE LAS IAS	
 		//IA1
-		IA1.setY(IA1.getY()+(100*Gdx.graphics.getDeltaTime()));
+		IA1.setY(IA1.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
 		//IA1
-		IA2.setY(IA2.getY()+(100*Gdx.graphics.getDeltaTime()));
+		IA2.setY(IA2.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
 		//IA1
-		IA3.setY(IA3.getY()+(100*Gdx.graphics.getDeltaTime()));
+		IA3.setY(IA3.getY()+(random.nextInt(4)+ 80*Gdx.graphics.getDeltaTime()));
 		
 		
 	}
@@ -133,7 +132,6 @@ public class Juego {
 	public int Carril(Carril i) {
 		int ladoIz = 0; 
 		ladoIz = i.getLateral1();
-		 
 		 return ladoIz; 
 		
 	}

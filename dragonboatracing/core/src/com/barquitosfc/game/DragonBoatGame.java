@@ -44,7 +44,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected  float gravity=(float) -1.4;
 	protected int aceler;
 	protected int barcoDef,vidas,vPunta,dinero;
-	protected float ilit = 500; 
+	protected float ilit = HEIGHT / 7; 
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
@@ -589,6 +589,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 				//	LIMITES DEL BARCO VERTICAL
 				if(ilit <  bottomLimit) ilit = bottomLimit; 
+
 				
 				if (juego.jugador.getY()<(ilit+10)) {
 					juego.jugador.setY((ilit)+10);
