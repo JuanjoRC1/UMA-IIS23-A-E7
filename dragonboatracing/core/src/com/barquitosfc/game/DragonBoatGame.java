@@ -416,13 +416,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 				   
 				   
 				    if(Gdx.input.isKeyPressed(Keys.SPACE)&&minijuego.jugador.getY()<1450) {
-				    	jump.play();
+				    	
 				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
 				    }
 				    final int tiempoDeEsperaEntreObstaculosmini = 1250;
 				  
 				    if(TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini&&minijuego.jugador.getX()>1986) {
-				    	
+				    	bum.play();
 				    	ct++;
 				    }
 				    if(minijuego.jugador.getY()==1080) {
@@ -430,13 +430,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 				    }
 				    batch.begin();
-				    font = new BitmapFont(Gdx.files.internal("minijuego/fuente.ttf"));
-			        font.getData().scale(7f);
+//				    font = new BitmapFont(Gdx.files.internal("minijuego/fuente.ttf"));
+//			        font.getData().scale(7f);
 					font.draw(batch, "La posicion es "+minijuego.jugador.getY(),minijuego.jugador.getX(), 1080);
 					batch.end();
 				    batch.begin();
 				    
-					font.draw(batch, "La puntuacion es "+ct, minijuego.jugador.getX(), 1080/2);
+					font.draw(batch, "La puntuacion es "+ct, minijuego.jugador.getX()+1920/4, 1080/2);
 					batch.end();
 				   // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
@@ -455,11 +455,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 //					   }
 					 Rectangle drag= minijuego.jugador.getBoundingRectangle();
 					 for (Iterator<Rectangle> iter = Tuboab.iterator(); iter.hasNext(); ) {
-						 Iterator<Rectangle> iterar = Tuboar.iterator();
+					
 					      Rectangle Tuboab = iter.next();
-					      Rectangle Tuboar = iterar.next();
+					 
 //					      roca.y -= 100 * Gdx.graphics.getDeltaTime();
-				      if(Tuboab.overlaps(drag)||Tuboar.overlaps(drag)) {
+				      if(Tuboab.overlaps(drag)) {
 				    		 bum.play();
 				    		batch.begin();
 				    		batch.draw(fin, minijuego.jugador.getX()+500, camfla.position.y);
@@ -472,6 +472,26 @@ public class DragonBoatGame extends ApplicationAdapter {
 					    	  gameState=GameState.QUIT;
 					      }
 					   }
+					 for (Iterator<Rectangle> iterar = Tuboar.iterator(); iterar.hasNext(); ) {
+						 
+					  
+					      Rectangle Tuboar = iterar.next();
+					      
+				      if(Tuboar.overlaps(drag)) {
+				    		 bum.play();
+				    		batch.begin();
+				    		batch.draw(fin, minijuego.jugador.getX()+500, camfla.position.y);
+				    		 batch.end();
+				    		
+				    		 try {
+				    			    Thread.sleep(1300); // 5000 milisegundos son equivalentes a 5 segundos
+				    			} catch (InterruptedException e) {
+				    			    e.printStackTrace();
+				    			}
+				    		
+					    	  gameState=GameState.QUIT;
+					      }
+				      }
 	     }
 //	     public void handleInputflapi() { 
 //	    	 if (Gdx.input.isKeyPressed(Keys.G) ) {
