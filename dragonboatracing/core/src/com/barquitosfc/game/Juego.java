@@ -29,16 +29,16 @@ public class Juego {
 		
 		Random random = new Random();
 		
-		C1 = new Carril(2); 
-		C2= new Carril(1);
+		C2 = new Carril(2); 
+		C1= new Carril(1);
 		C3= new Carril(3);
 		C4= new Carril(4);
 		jugador = new Barco(mainBarco,2); 
-		jugador.setPosition(C1.getPuntoSpawn(), HEIGHT/7);
+		jugador.setPosition(C2.getPuntoSpawn(), HEIGHT/7);
 		
 		
 		IA1= new Barco(TIA1,1);
-		IA1.setPosition(C2.getPuntoSpawn(), HEIGHT/7);
+		IA1.setPosition(C1.getPuntoSpawn(), HEIGHT/7);
 		
 		
 		IA2= new Barco(TIA2,3);
@@ -77,15 +77,58 @@ public class Juego {
 		//Dibuja al jugador
 		batch.begin();
 		jugador.draw(batch);
+		batch.end();
+		
+		batch.begin();
 		IA1.draw(batch);
+		batch.end();
+		
+		batch.begin();
 		IA2.draw(batch);
+		batch.end();
+		
+		batch.begin();
 		IA3.draw(batch);
 		batch.end();
 		
+	
+	
+	//LIMITES DE LAS IAS
+		
+			//IA1
+		if (IA1.getX() < Carril(C1)+IA1.getWidth()) {
+			IA1.setX(Carril(C1));
+		}
+		if (IA1.getX() >  Carril2(C1)-IA1.getWidth()) {
+			IA1.setX(Carril2(C1));
+		}
+			//IA2
+		if (IA2.getX() < Carril(C3)+IA2.getWidth()) {
+			IA2.setX(Carril(C3));
+		}
+		if (IA2.getX() >  Carril2(C3)-IA2.getWidth()) {
+			IA2.setX(Carril2(C3));
+		}
+		
+			//IA3
+		if (IA3.getX() < Carril(C4)+IA3.getWidth()) {
+			IA3.setX(Carril(C4));
+		}
+		if (IA3.getX() >  Carril2(C4)-IA3.getWidth()) {
+			IA3.setX(Carril2(C4));
+		}
+		
+		
+	//MOVIEMIENTO VERTICAL  DE LAS IAS	
+		//IA1
+		IA1.setY(IA1.getY()+(100*Gdx.graphics.getDeltaTime()));
+		//IA1
+		IA2.setY(IA2.getY()+(100*Gdx.graphics.getDeltaTime()));
+		//IA1
+		IA3.setY(IA3.getY()+(100*Gdx.graphics.getDeltaTime()));
+		
 		
 	}
-	
-
 	
 	public int Carril(Carril i) {
 		int ladoIz = 0; 
