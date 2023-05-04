@@ -38,7 +38,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public Music omega;
 	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini;
 	protected Vector2 velocity = new Vector2(0,0);
-	protected Vector2 velocitybar = new Vector2();
 	protected Vector2 acceleration = new Vector2(0,0);
 	protected Texture fondofla;
 	protected  float gravity=(float) -1.4;
@@ -48,7 +47,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
-	protected Texture board,boardPlay,boardminit,boatTexture,	Barra1Texture,Barra2Texture,BolaTexture,TRoca,TTronco,TCoco,Tuboabt,Tuboart,fin;
+	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,Tuboabt,Tuboart,fin;
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
@@ -56,8 +55,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected OrthographicCamera camfla;
 	protected SpriteBatch batch;
 	protected Sprite Bird;
-	protected Sprite Barra1;
-	protected Sprite Barra2;
 	protected Sprite Bola;
 	protected SpriteDrawable spriteBInicio;
 	protected SpriteDrawable spriteBAjustes;
@@ -75,9 +72,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
    
     
-//Para el minijuego
-	protected int speedx = 200; 
-	protected int speedy = 200;
+
 	private Sound jump; 
 	public DragonBoatGame() {
 		this(0,0,0,0);
@@ -115,19 +110,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
-		 Barra1Texture=new Texture(Gdx.files.internal("data/barco_rojo.png"));
-		 Barra2Texture=new Texture(Gdx.files.internal("data/barco_azul.png"));
-		 BolaTexture= new Texture(Gdx.files.internal("data/bala.png"));
-		
-		 Barra1= new Sprite(Barra1Texture);
-		 Barra1.setY(HEIGHT/2);
-		 Barra1.setX(WIDTH-1670);
-		 Barra2= new Sprite(Barra2Texture);
-		 Barra2.setY(HEIGHT/2);
-		 Barra2.setX(WIDTH-250);
-		 Bola= new Sprite(BolaTexture);
-		 Bola.setX(WIDTH/2);
-		 Bola.setY(HEIGHT/2);
+	
 
 		 
 		 spriteBInicio= new SpriteDrawable(new Sprite(bInicio));
@@ -281,10 +264,7 @@ public class DragonBoatGame extends ApplicationAdapter {
             break;
 			
 		case CONFIG:
-			/*Ventana ventana = new Ventana();
-			Thread t1= new Thread();
-			
-			t1.start();*/
+		
 			 
 			float pos=minijuego.jugador.getX()+1500;
 			minijuego.iniciar(table, batch,stage);
@@ -296,30 +276,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if(minijuego.jugador.getX()==pos) {
 				 ct++;
 			 }
-			// for(Rectangle tuboab: Tuboab) {batch.draw(Tuboabt, tuboab.x, tuboab.y);}
+	
 			batch.end();
 			batch.begin();
 			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
 			batch.end();
 			
-			//  handleInputflapi();
+			
 			updateflapi(Gdx.graphics.getDeltaTime()*250);
-//			table=new Table();
-//			table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
-//			Gdx.gl.glClearColor(0, 0, 0, 1);
-//	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);	        
-//			ScreenUtils.clear(0, 0, 0.2f, 1);		
-//			batch.begin();
-//			for(int i = 0; i < 100 ; i++) {
-//				batch.draw(boardminit,0,HEIGHT*i);
-//			}
-//			
-//			batch.draw(BolaTexture,Bola.getX(),Bola.getY() );
-//			batch.draw(Barra1Texture, Barra1.getX(),Barra1.getY());
-//			batch.draw(Barra2Texture, Barra2.getX(),Barra2.getY());
-//			batch.end();
-//			 handleInputm();
-//	         updatemin(Gdx.graphics.getDeltaTime());
+
 			
 			break;
 			
@@ -442,18 +407,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 				   // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
 					     spawntuboab(Tuboab,Tuboar);
-					     //spawntuboar(Tuboar);
 					     
 					 }
-//					 for (Iterator<Rectangle> iter = Rocas.iterator(); iter.hasNext(); ) {
-//					      Rectangle roca = iter.next();
-////					    
-//					      if(roca.y + 64 < bottomLimit+100) iter.remove();
-//					      if(roca.overlaps(rect1)) {
-//						         iter.remove();
-//						         juego.jugador.getVidas();
-//						      }
-//					   }
+
 					 Rectangle drag= minijuego.jugador.getBoundingRectangle();
 					 for (Iterator<Rectangle> iter = Tuboab.iterator(); iter.hasNext(); ) {
 					
@@ -537,35 +493,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 				    juego.jugador.setX(juego.jugador.getX() + velocity.x * deltaTime);
 				    juego.jugador.setY(juego.jugador.getY() + velocity.y * deltaTime);
-	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
+	         
 	       
-//	    		Bol
-	            Bola.setX(Bola.getX()+speedx*deltaTime);
-	            Bola.setY(Bola.getY()+speedy*deltaTime);
-	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
-	            Rectangle bar2 = Barra2.getBoundingRectangle(); 
-	            Rectangle bol=Bola.getBoundingRectangle();
-				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-100||bar1.overlaps(bol)||bar2.overlaps(bol))
-				{
-					speedx*=-1;
-					speedy *=-1;
-				}
-				if (Bola.getX() < 25||Bola.getX()>WIDTH) {
-					reset();
-					speedx*=-1;
-				}
-				if (Bola.getY() >700||Bola.getY()<0) {
-					speedy *=-1;
-				}
-/*	 		 LIMITES de la barra VERTICAL
-				if (Barra1.getY() < 0) {
-				    Barra1.setY(0);
-				    velocity.y = 0; 
-	            }
-				if (Barra1.getY() > 700) {
-				    Barra1.setY(700);
-				    velocity.y = 0; 
-	            }*/
+
 	            
 //			     MOVIMIENTO DEL BARCO
 				if(juego.jugador.getY() > (ilit)+1) {
@@ -644,12 +574,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				      }
 			 }
 			 
-//			 if(juego.jugador.getVidas() == 0) {
-//				 juego.inicializar();
-//				 juego.iniciar(table, batch, stage);
-//				
-//				 juego.jugador.setVidas(1);
-//			 }
+
 	        }
 	        
 	        public void stopBoat() {
@@ -665,66 +590,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar) {
 	        	float y=MathUtils.random(900, 1000);
 	  	     
-		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,83,564);
-		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-900,83,564);
+		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
+		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-900,70,590);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();
 	  	   }
-//	        protected void spawntuboar(Array<Rectangle> Tuboar) {
-//	        	 Rectangle tuboar = new Rectangle((rightLimitmini+360),MathUtils.random(0, HEIGHT-64),83,564);
-//		  	      Tuboar.add(tuboar);
-//		  	      lastDropTimeTuboar = TimeUtils.millis();
-//		  	   }
-	        //Controles
-	        public void handleInputm() { 
-	            if (Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.UP) ) {
-	                    velocity.y = 100;
-	                    
-	            }
-	            if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
-	                    	velocity.y = -100;
-	            }
-
-	        }
-	        
-	        public void updatemin(float deltaTime) {
-
-
-	        	
-	            Barra1.setY(Barra1.getY() + velocity.y * deltaTime);
-	       
-//	    		Bol
-	            Bola.setX(Bola.getX()+speedx*deltaTime);
-	            Bola.setY(Bola.getY()+speedy*deltaTime);
-	            Rectangle bar1 = Barra1.getBoundingRectangle(); 
-	            Rectangle bar2 = Barra2.getBoundingRectangle(); 
-	            Rectangle bol=Bola.getBoundingRectangle();
-				if(Bola.getX()<=25&& Bola.getY()>=Barra1.getY()&& Bola.getY()<=Barra1.getY()-400||bar1.overlaps(bol)||bar2.overlaps(bol))
-				{
-					speedx*=-1;
-					speedy *=-1.2;
-				}
-				if (Bola.getX() < 25||Bola.getX()>WIDTH) {
-					speedx*=-1;
-				}
-				if (Bola.getY() >840 ||Bola.getY()<200) {
-					speedy *=-0.8;
-				}
-// 		 LIMITES de la barra VERTICAL
-				if (Barra1.getY() <= 200) {
-				    
-				    velocity.y = +400; 
-	            }
-				if (Barra1.getY() >= 750) {
-				    
-				    velocity.y = -400; 
-	            }
-	            
 
 	       
-	        }
+	       
 	        
+	       
 	        
 	        public void actualizarIA() {
 	        	Rectangle rect1 = juego.IA1.getBoundingRectangle();
