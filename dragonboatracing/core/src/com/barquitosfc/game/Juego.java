@@ -178,13 +178,11 @@ public class Juego {
 	//MOVIEMIENTO VERTICAL  DE LAS IAS	
 		//IA1
 		IA1.setY(IA1.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
-		//IA1
+		//IA2
 		IA2.setY(IA2.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
-		//IA1
+		//IA3
 
 		IA3.setY(IA3.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
-
-		IA3.setY(IA3.getY()+(random.nextInt(4)+ 100*Gdx.graphics.getDeltaTime()));
 
 		
 		
