@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class Barco extends Sprite{
-	private int vidas = 1;
+	private int vidas = 5;
 	private int vPunta = 300;
 	private int agilidad = 200;
 	private int carril ;

@@ -3,6 +3,10 @@ package com.barquitosfc.game;
 import java.util.Iterator;
 import java.util.Random;
 
+
+
+import javax.management.RuntimeErrorException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,8 +31,56 @@ public class Juego {
 
 	
 	public  Juego() {
-		TIA1=TIA2=TIA3= new Texture(Gdx.files.internal("data/boatp.jpg"));
-		mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
+		
+		//ASIGNACION DE SKIN AL USUARIO	
+		switch(Tienda.eleccionBarco) {
+		case 0: mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+			break;
+		case 1: mainBarco = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
+			break;
+		case 2: mainBarco = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
+		break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+		
+		//TIA1=TIA2=TIA3= new Texture(Gdx.files.internal("data/boatp.jpg"));
+		//mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
+		
+		
+		//ASIGNACION DE SKIN AL BARCO IA 1.
+		switch(Tienda.eleccionBarco) {
+		case 0: TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
+			break;
+		case 1: TIA1 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
+			break;
+		case 2: TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+		
+		//ASIGNACION DE SKIN AL BARCO IA 2.
+		switch(Tienda.eleccionBarco) {
+		case 0: TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
+			break;
+		case 1: TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
+			break;
+		case 2: TIA2 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+		
+		//ASIGNACION DE SKIN AL BARCO IA 3.
+		switch(Tienda.eleccionBarco) {
+		case 0: TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
+			break;
+		case 1: TIA3 = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+			break;
+		case 2: TIA3 = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+		
+		
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 		
 
@@ -81,8 +133,7 @@ public class Juego {
 		
 		//Dibuja al jugador
 		batch.begin();
-		jugador.draw(batch);
-		batch.end();
+		jugador.draw(batch);		batch.end();
 		
 		batch.begin();
 		IA1.draw(batch);

@@ -16,7 +16,7 @@ public class Barra {
 	
 	public Barra( boolean left) {
 		
-		if (left) {
+		if (left) { 
 			x = 0;
 		}
 		else {

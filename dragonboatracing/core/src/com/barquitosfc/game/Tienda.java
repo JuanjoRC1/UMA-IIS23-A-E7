@@ -1,5 +1,8 @@
 package com.barquitosfc.game;
 
+
+
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.barquitosfc.game.DragonBoatGame.GameState;
 
+
+
 public class Tienda {
 	protected int dinero = 12;
 	protected int vidas1= 5;
@@ -25,7 +30,7 @@ public class Tienda {
 	protected int HEIGHT= 1920;
 	protected int vidasS=vidas1;
 	protected int vPuntaS=vPunta1;
-	protected int eleccionBarco=0;
+	protected static int eleccionBarco=0;
 	protected int dineroSeguridad = dinero;
     protected int barcoSeguridad = eleccionBarco;    
     protected int vidaSeguridad1 = vidas1;
@@ -118,6 +123,7 @@ public class Tienda {
     protected Texture confirmar;
     protected Texture grifoCoin;
 
+
     
     public void inicializar() {
     	siguiente = new Texture(Gdx.files.internal("data/Flecha_Derecha.png"));
@@ -185,9 +191,9 @@ public class Tienda {
    	 	barraV18 = new Texture(Gdx.files.internal("data/Barra_Velocidad18.png"));
    	 	barraV19 = new Texture(Gdx.files.internal("data/Barra_Velocidad19.png"));
    	 	barraV20 = new Texture(Gdx.files.internal("data/Barra_Velocidad20.png"));
-   	 	barco1 = new Texture(Gdx.files.internal("data/Protitpo_Barco1.png"));
-   	 	barco2 = new Texture(Gdx.files.internal("data/Protitpo_Barco2.png"));
-   	 	barco3 = new Texture(Gdx.files.internal("data/Protitpo_Barco3.png"));
+   	 	barco1 = new Texture(Gdx.files.internal("data/BARCO_FIRE.png"));
+   	 	barco2 = new Texture(Gdx.files.internal("data/BARCO_CANARIO.png"));
+   	 	barco3 = new Texture(Gdx.files.internal("data/BARCO_NATURE.png"));
    	 	n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
    	 	n1 = new Texture(Gdx.files.internal("data/Numero1.png"));
    	 	n2 = new Texture(Gdx.files.internal("data/Numero2.png"));
@@ -472,8 +478,9 @@ public class Tienda {
 				vidasS=vidaSeguridad1;
 				vPuntaS = velocidadSeguridad1;
 				dinero = dineroSeguridad;
+				DragonBoatGame.gameState=DragonBoatGame.GameState.MENU;
 				return false;
-				
+				 
 			}
 		});
 		table.addActor(volverMenu);
@@ -483,11 +490,14 @@ public class Tienda {
 		confirmar.setSize(100,100);
 		confirmar.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				DragonBoatGame cambio= new DragonBoatGame(eleccionBarco,vidasS,vPuntaS,dinero);
-				cambio.gameState=DragonBoatGame.GameState.MENU;
+				//DragonBoatGame cambio= new DragonBoatGame(eleccionBarco,vidasS,vPuntaS,dinero);
+				DragonBoatGame.gameState=DragonBoatGame.GameState.MENU;				
 				return false;
 				
 			}
+			
+		
+
 		});
 		table.addActor(confirmar);
 		
@@ -497,7 +507,10 @@ public class Tienda {
 		Gdx.input.setInputProcessor(stage);
 		
 		
+	
 	}
 	
+
+
 }
 

@@ -96,6 +96,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		camera.update();
 		gameState=GameState.MENU;
 		stage = new Stage();
+		
 		//BOTONES
 		 bInicio= new Texture(Gdx.files.internal("ui/Boton_INICIO.png"));
 		 bAjustes= new Texture(Gdx.files.internal("ui/Boton_AJUSTES.png"));
