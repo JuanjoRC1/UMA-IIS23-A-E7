@@ -169,6 +169,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	}
 
+	public void setValoresBarco(int eleccionBarco,int vidasS,int vPuntaS,int dinero) {
+        this.barcoDef = eleccionBarco;
+    }
+	
 	@Override
 	public void render () {
 		
@@ -246,7 +250,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-			
+			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
@@ -290,6 +294,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case SHOP:
+			setValoresBarco(Tienda.eleccionBarco, 5, 5, 5);
 			tienda.iniciar(table,batch,stage);
 			break;
 			

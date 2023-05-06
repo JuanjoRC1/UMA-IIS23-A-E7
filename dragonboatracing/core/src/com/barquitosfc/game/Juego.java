@@ -32,65 +32,18 @@ public class Juego {
 	
 	public  Juego() {
 		
-		//ASIGNACION DE SKIN AL USUARIO	
-		switch(Tienda.eleccionBarco) {
-		case 0: mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
-			break;
-		case 1: mainBarco = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
-			break;
-		case 2: mainBarco = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
-		break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
-		//TIA1=TIA2=TIA3= new Texture(Gdx.files.internal("data/boatp.jpg"));
-		//mainBarco = new Texture(Gdx.files.internal("data/boatp.jpg"));
-		
-		
-		//ASIGNACION DE SKIN AL BARCO IA 1.
-		switch(Tienda.eleccionBarco) {
-		case 0: TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
-			break;
-		case 1: TIA1 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
-			break;
-		case 2: TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
-			break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
-		//ASIGNACION DE SKIN AL BARCO IA 2.
-		switch(Tienda.eleccionBarco) {
-		case 0: TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
-			break;
-		case 1: TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
-			break;
-		case 2: TIA2 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
-			break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
-		//ASIGNACION DE SKIN AL BARCO IA 3.
-		switch(Tienda.eleccionBarco) {
-		case 0: TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
-			break;
-		case 1: TIA3 = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
-			break;
-		case 2: TIA3 = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
-			break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
+		mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+		TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
+		TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
+		TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
 		
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
-		
-
-		
-
-		
+	
 		C1= new Carril(1);
 		C2 = new Carril(2); 
 		C3= new Carril(3);
 		C4= new Carril(4);
+		
 		jugador = new Barco(mainBarco,2); 
 		jugador.setPosition(C2.getPuntoSpawn(), HEIGHT/7);
 
@@ -102,13 +55,52 @@ public class Juego {
 		
 		IA3= new Barco(TIA3,3);
 		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT / 7);
+	
+	}
+	//METODO PARA ASIGNAR LA SKIN SELECCIONADA EN LA TIENDA ANTERIORMENTE
+	public void setSkinBarcos(int barco) {
 		
+		Texture barcoFuego = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+		Texture barcoCanario = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
+		Texture barcoNatura = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
+		Texture barcoEvil = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
 
+		//ASIGNACION DE SKIN AL BARCO DEL USUARIO
+		switch(barco) {  
+		case 0: mainBarco.load(barcoFuego.getTextureData());
+			break;
+		case 1: mainBarco.load(barcoCanario.getTextureData());
+			break;
+		case 2: mainBarco.load(barcoNatura.getTextureData());
+		break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
 		
+		//ASIGNACION DE SKIN AL BARCO IA 1.
+		switch(barco) {
+		case 0: TIA1.load(barcoCanario.getTextureData());
+			break;
+		case 1: TIA1.load(barcoEvil.getTextureData());
+			break;
+		case 2: TIA1.load(barcoCanario.getTextureData());
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
 		
+		//ASIGNACION DE SKIN AL BARCO IA 2.
+		switch(barco) { 
+		case 0: TIA2.load(barcoNatura.getTextureData());
+			break;
+		case 1: TIA2.load(barcoNatura.getTextureData());
+			break;
+		case 2: TIA2.load(barcoEvil.getTextureData());
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
 	}
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
+		
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
