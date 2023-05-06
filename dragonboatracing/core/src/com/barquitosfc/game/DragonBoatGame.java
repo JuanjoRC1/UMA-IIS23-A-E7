@@ -42,7 +42,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Texture fondofla;
 	protected  float gravity=(float) -1.4;
 	protected int aceler;
-	protected int barcoDef,vidas,vPunta,dinero;
+	protected int barcoDef;
+	protected int vidas = Tienda.vidasS;
+	protected int vPunta = Tienda.vPuntaS;
+	protected int dinero = Tienda.dinero;
+	
 	protected float ilit = HEIGHT / 7; 
 	protected Barco boat;
 	protected BitmapFont font;
@@ -75,7 +79,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	private Sound jump; 
 	public DragonBoatGame() {
-		this(0,0,0,0);
+		this(0,Tienda.vidasS,Tienda.vPuntaS*30,Tienda.dinero);
 	}
 	public DragonBoatGame(int eleccionBarco,int vidasS,int vPuntaS,int dinero) {
 		this.barcoDef=eleccionBarco;
@@ -125,8 +129,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 
 		 // Juego 
 		 juego = new Juego();
-		 
-		 
+		 //Barco
+		 boat = new Barco(boatTexture,1);
 		 //minijuego
 			n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
 	   	 	n1 = new Texture(Gdx.files.internal("data/Numero1.png"));
@@ -169,8 +173,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	}
 
-	public void setValoresBarco(int eleccionBarco,int vidasS,int vPuntaS,int dinero) {
+	public void setValoresBarco(int eleccionBarco,int vidasS,int vPuntaS,int dineroS) {
         this.barcoDef = eleccionBarco;
+        this.vidas = vidasS;
+        this.vPunta = vPuntaS*30;
+        this.dinero = dineroS;
     }
 	
 	@Override
@@ -250,6 +257,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
+//			System.out.println("Las vidas actuales son: " + "("+vidas+") La velocidad actual es: " + "("+vPunta+")");
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 //			PINTAR LOS OBSTACULOS
@@ -261,7 +269,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			actualizarIA();
 			batch.begin();
 			
-			font.draw(batch, "x: " + juego.jugador.getVidas() +"Y: "+ juego.jugador.getY(), 100, juego.jugador.getY()+100);
+			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta, 100, juego.jugador.getY()+100);
 			batch.end();
 //			
             handleInput();
@@ -294,8 +302,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case SHOP:
-			setValoresBarco(Tienda.eleccionBarco, 5, 5, 5);
+			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 			tienda.iniciar(table,batch,stage);
+			juego.setStatsBarco(vidas, vPunta);
+
 			break;
 			
 		case MINIJUEGO:
@@ -555,8 +565,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
-				         juego.jugador.getVidas();
-				         velocity.y -= 70;
+						 juego.setStatsBarco(vidas, vPunta-vPunta/20);
+						 vidas = juego.jugador.getVidas();
+						 vPunta = juego.jugador.getvPunta();
+				         velocity.y -= 70; 
 				         acceleration.x = 0;
 				      }
 			   }
@@ -567,7 +579,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) {
 				         iter.remove();
-				         juego.jugador.setVidas();
+						 juego.setStatsBarco(vidas-1, vPunta-vPunta/20);
+						 vidas = juego.jugador.getVidas();
+						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
 				         acceleration.x = 0;
 				  }
@@ -580,7 +594,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
-				         juego.jugador.setVidas();
+						 juego.setStatsBarco(vidas-2, vPunta-vPunta/20);
+						 vidas = juego.jugador.getVidas();
+						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
 				         acceleration.x = 0;
 				      }
@@ -588,18 +604,30 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 
 
 			 
-			 if(juego.jugador.getVidas() == 0) {
-				 	ilit = 140;
+			 if(vidas <= 0) {
+				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
 				 	velocity.set(0,0);
 					camera.setToOrtho(false,WIDTH,HEIGHT);
 					batch = new SpriteBatch();
 					camera.update();
+					
 //					juego.inicializar(); 
 //					juego.iniciar(table, batch, stage);
+//					vidas = Tienda.vidasS; 
+//				juego.jugador.setVidas(vidas);
+//					System.out.println("VIDAS BARCO = (" + juego.jugador.getVidas() + ")");
+
+//					System.out.println("VIDAS = (" + vidas + ")");
+//					vPunta = Tienda.vPuntaS;
+//					juego.jugador.setVidas(vPunta);
+//					System.out.println("VELOCIDAD = (" + vPunta + ")");
+					juego = new Juego();
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					gameState=GameState.MENU;
 					
-					juego.jugador.setVidas(1);
+					
+					
 			 }
 
 	        }

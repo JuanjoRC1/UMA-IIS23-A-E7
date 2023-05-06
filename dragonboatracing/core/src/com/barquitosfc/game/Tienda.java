@@ -3,6 +3,8 @@ package com.barquitosfc.game;
 
 
 
+import java.security.PublicKey;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,7 +22,7 @@ import com.barquitosfc.game.DragonBoatGame.GameState;
 
 
 public class Tienda {
-	protected int dinero = 12;
+	protected static int dinero = 12;
 	protected int vidas1= 5;
 	protected int vPunta1= 10;
 	protected int vidas2= 10;
@@ -28,8 +30,8 @@ public class Tienda {
 	protected int vidas3= 5;
 	protected int vPunta3= 5;
 	protected int HEIGHT= 1920;
-	protected int vidasS=vidas1;
-	protected int vPuntaS=vPunta1;
+	protected static int vidasS= 5;
+	protected static int vPuntaS= 10;
 	protected static int eleccionBarco=0;
 	protected int dineroSeguridad = dinero;
     protected int barcoSeguridad = eleccionBarco;    
@@ -137,7 +139,7 @@ public class Tienda {
    	 	letreroVida = new Texture(Gdx.files.internal("data/Cartel_Vida.png"));
    	 	letreroVelocidad = new Texture(Gdx.files.internal("data/Cartel_Velocidad.png"));
    	 	grifoCoin = new Texture(Gdx.files.internal("data/grifocoin.png"));
-   	 	fondoTienda = new Texture(Gdx.files.internal("fondos/FONDO_TIENDA.png"));
+   	 	fondoTienda = new Texture(Gdx.files.internal("fondos/FONDO_TIENDA_HD.png"));
    	 	spriteMasR = new SpriteDrawable(new Sprite(masR)); 
    	 	spriteMenosR = new SpriteDrawable(new Sprite(menosR)); 
    	 	spriteMasM = new SpriteDrawable(new Sprite(masM)); 
@@ -492,25 +494,20 @@ public class Tienda {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 				//DragonBoatGame cambio= new DragonBoatGame(eleccionBarco,vidasS,vPuntaS,dinero);
 				DragonBoatGame.gameState=DragonBoatGame.GameState.MENU;				
-				return false;
-				
+				return false;				
 			}
-			
-		
-
 		});
 		table.addActor(confirmar);
-		
 		
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		Gdx.input.setInputProcessor(stage);
 		
-		
-	
 	}
-	
-
-
+	public void setStatsBarco(int vidas, int vPunta) {
+		vidasS = vidas;
+		vPuntaS = vPunta;
+		
+	}
 }
 

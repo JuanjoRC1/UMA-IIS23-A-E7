@@ -179,6 +179,10 @@ public class Juego {
 		
 		
 	}
+	public void setStatsBarco(int vidillas, int velocidad) {
+		jugador.setVidas(vidillas);
+		jugador.setvPunta(velocidad);
+	}
 		
 	
 	
