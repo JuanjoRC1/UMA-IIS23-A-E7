@@ -269,7 +269,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			actualizarIA();
 			batch.begin();
 			
-			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta, 100, juego.jugador.getY()+100);
+			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta + "Velocidad Actual: " + juego.jugador.getvPunta(), 100, juego.jugador.getY()+100);
 			batch.end();
 //			
             handleInput();
@@ -611,19 +611,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					camera.setToOrtho(false,WIDTH,HEIGHT);
 					batch = new SpriteBatch();
 					camera.update();
-					
-//					juego.inicializar(); 
-//					juego.iniciar(table, batch, stage);
-//					vidas = Tienda.vidasS; 
-//				juego.jugador.setVidas(vidas);
-//					System.out.println("VIDAS BARCO = (" + juego.jugador.getVidas() + ")");
-
-//					System.out.println("VIDAS = (" + vidas + ")");
-//					vPunta = Tienda.vPuntaS;
-//					juego.jugador.setVidas(vPunta);
-//					System.out.println("VELOCIDAD = (" + vPunta + ")");
 					juego = new Juego();
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
 					gameState=GameState.MENU;
 					
 					
