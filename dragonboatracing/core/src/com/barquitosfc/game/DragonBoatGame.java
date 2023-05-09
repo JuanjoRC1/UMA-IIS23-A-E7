@@ -52,7 +52,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
-	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,Tuboabt,Tuboart,fin;
+	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin;
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
@@ -166,7 +166,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 //Obstaculos
 		 
 		 TRoca = new Texture(Gdx.files.internal("data/Rocap.png"));
-		 TCoco = new Texture(Gdx.files.internal("data/Icocop.png"));
+		 TCoco2 = new Texture(Gdx.files.internal("data/Icocop.png"));
+		 TCoco = new Texture(Gdx.files.internal("data/Dcocop.png"));
 		 TTronco = new Texture(Gdx.files.internal("data/Troncop.png")); 
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
@@ -271,7 +272,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();	
 			 for(Rectangle roca: Rocas) {batch.draw(TRoca, roca.x, roca.y);}
 			 for(Rectangle tronco: Troncos) {batch.draw(TTronco, tronco.x, tronco.y);}
-			 for(Rectangle cocodrilo: Cocodrilos) {batch.draw(TCoco, cocodrilo.x, cocodrilo.y);}
+			 for(Rectangle cocodrilo: Cocodrilos) {
+				 if (cocodrilo.x < WIDTH / 2) batch.draw(TCoco, cocodrilo.x, cocodrilo.y);
+				 else batch.draw(TCoco2, cocodrilo.x, cocodrilo.y);
+			 }
 			batch.end();
 			actualizarIA();
 			batch.begin();
@@ -596,8 +600,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			      Rectangle cocodrilo = iter.next();
-			      if(cocodrilo.x < WIDTH/ 2)
-			    	  cocodrilo.x += 20 * Gdx.graphics.getDeltaTime();
+			      if(cocodrilo.x < WIDTH/ 2) {
+			    	  cocodrilo.x += 30 * Gdx.graphics.getDeltaTime();
+ 
+			      } else { 
+			    	  cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime();
+			      }
 			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
