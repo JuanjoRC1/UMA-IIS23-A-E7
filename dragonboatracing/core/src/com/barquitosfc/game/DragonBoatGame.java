@@ -399,9 +399,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch = new SpriteBatch();
 					camera.update();
 					juego = new Juego();
-					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos);
-					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos);
-					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos);	
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,1);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,3);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,4);	
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					juego.jugador.setvPunta(vPunta);
 	                gameState = GameState.MENU;
@@ -644,7 +644,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
 				         acceleration.x = 0;
-				      }
+				      } 
 			 }
 			 
 
