@@ -381,6 +381,23 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 	                stopBoat();
 	            }
+	            
+	            if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+	            	ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+	                gameState = GameState.MENU;
+	            }
+	            
 	            if(!Gdx.input.isKeyPressed(Keys.ANY_KEY))
 	            if(juego.jugador.getRotation() < 0)
 	            	juego.jugador.rotate(+1);
@@ -412,6 +429,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    	
 				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
 				    }
+				    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+		                gameState = GameState.MENU;
+		            }
+				    
 				    final int tiempoDeEsperaEntreObstaculosmini = 1250;
 				  
 				    if(TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini&&minijuego.jugador.getX()>1986) {
