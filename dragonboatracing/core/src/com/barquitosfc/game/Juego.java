@@ -140,43 +140,47 @@ public class Juego {
 		batch.end();
 		
 	
-	
+	 
 	//LIMITES DE LAS IAS
 		
-			//IA1
-		if (IA1.getX() < Carril(C1)+IA1.getWidth()) {
-			IA1.setX(Carril(C1));
+		/*	//IA1
+		if (IA1.getX() < CarrilIzq(C1)+IA1.getWidth()) {
+			IA1.setX(CarrilIzq(C1));
 		}
-		if (IA1.getX() >  Carril2(C1)-IA1.getWidth()) {
-			IA1.setX(Carril2(C1));
+		if (IA1.getX() >  CarrilDer(C1)-IA1.getWidth()) {
+			IA1.setX(CarrilDer(C1));
 		}
 			//IA2
-		if (IA2.getX() < Carril(C3)+IA2.getWidth()) {
-			IA2.setX(Carril(C3));
+		if (IA2.getX() < CarrilIzq(C3)+IA2.getWidth()) {
+			IA2.setX(CarrilIzq(C3));
 		}
-		if (IA2.getX() >  Carril2(C3)-IA2.getWidth()) {
-			IA2.setX(Carril2(C3));
+		if (IA2.getX() >  CarrilDer(C3)-IA2.getWidth()) {
+			IA2.setX(CarrilDer(C3));
 		}
 		
 			//IA3
-		if (IA3.getX() < Carril(C4)+IA3.getWidth()) {
-			IA3.setX(Carril(C4));
+		if (IA3.getX() < CarrilIzq(C4)+IA3.getWidth()) {
+			IA3.setX(CarrilIzq(C4));
 		}
-		if (IA3.getX() >  Carril2(C4)-IA3.getWidth()) {
-			IA3.setX(Carril2(C4));
-		}
+		if (IA3.getX() >  CarrilDer(C4)-IA3.getWidth()) {
+			IA3.setX(CarrilDer(C4));
+		}*/
 		
-		Random random = new Random();
-	//MOVIEMIENTO VERTICAL  DE LAS IAS	
+		//Random random = new Random();
+	/*//MOVIEMIENTO VERTICAL  DE LAS IAS	
 		//IA1
 		IA1.setY(IA1.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
 		//IA2
 		IA2.setY(IA2.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
 		//IA3
-
-		IA3.setY(IA3.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
-
-		
+		IA3.setY(IA3.getY()+(random.nextInt(4)+ 1*Gdx.graphics.getDeltaTime()));
+	//MOVIEMIENTO VERTICAL  DE LAS IAS	
+			//IA1
+			IA1.setX(IA1.getX()+(random.nextInt(4)+ 300*Gdx.graphics.getDeltaTime()));
+			//IA2
+			IA2.setX(IA2.getX()+(random.nextInt(4)+ 300*Gdx.graphics.getDeltaTime()));
+			//IA3	
+			IA3.setX(IA3.getX()+(random.nextInt(4)+ 300*Gdx.graphics.getDeltaTime()));*/
 		
 	}
 	public void setStatsBarco(int vidillas, int velocidad) {
@@ -187,14 +191,14 @@ public class Juego {
 	
 	
 	
-	public int Carril(Carril i) {
+	public int CarrilIzq(Carril i) {
 		int ladoIz = 0; 
 		ladoIz = i.getLateral1();
 		 return ladoIz; 
 		
 	}
 	
-	public int Carril2(Carril i) {
+	public int CarrilDer(Carril i) {
 		int ladoDer = 0;
 		ladoDer = i.getLateral2();
 		return ladoDer; 

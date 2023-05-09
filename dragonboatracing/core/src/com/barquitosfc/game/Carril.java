@@ -16,7 +16,7 @@ public class Carril {
 			lateral1 = 550; 
 			lateral2 = 1920/2-20;
 			puntoSpawn = 755; 
-		}
+		} 
 		else if (numero == 3) {
 			lateral1 = 1920/2;
 			lateral2 = 1920/2 +390; 

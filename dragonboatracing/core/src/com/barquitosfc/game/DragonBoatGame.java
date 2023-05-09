@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import java.awt.Color;
 import java.awt.Graphics;
+import com.badlogic.gdx.utils.Array;
 
 
 
@@ -66,14 +67,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected SpriteDrawable spriteBSalir;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
-	protected Array<Rectangle> Rocas,Troncos,Cocodrilos;
+	protected Array<Rectangle>Troncos,Rocas,Cocodrilos;
 	protected Array<Rectangle> Tuboar,Tuboab;
 	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos,lastDropTimeTuboab,lastDropTimeTuboar;
 	protected Tienda tienda;
 	protected Juego juego;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
-
+	protected AISystem AI1,AI2,AI3;
    
     
 
@@ -170,6 +171,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
 		 Cocodrilos = new Array<Rectangle>();
+		 
+		 //IA
+		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos);
+		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos);
+		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos);
+		 
 
 	}
 
@@ -257,7 +264,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case PLAY:
-//			System.out.println("Las vidas actuales son: " + "("+vidas+") La velocidad actual es: " + "("+vPunta+")");
+			
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 //			PINTAR LOS OBSTACULOS
@@ -269,7 +276,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			actualizarIA();
 			batch.begin();
 			
-			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta + "Velocidad Actual: " + juego.jugador.getvPunta(), 100, juego.jugador.getY()+100);
+			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
 			batch.end();
 //			
             handleInput();
@@ -523,13 +530,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            
 //				  LIMITES DEL BARCO HORIZONTAL
 				
-				if (juego.jugador.getX() < juego.Carril(juego.C2)) {
-					juego.jugador.setX(juego.Carril(juego.C2));
+				if (juego.jugador.getX() < juego.CarrilIzq(juego.C2)) {
+					juego.jugador.setX(juego.CarrilIzq(juego.C2));
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}
-				if (juego.jugador.getX() >  juego.Carril2(juego.C2)) {
-					juego.jugador.setX(juego.Carril2(juego.C2));
+				if (juego.jugador.getX() >  juego.CarrilDer(juego.C2)) {
+					juego.jugador.setX(juego.CarrilDer(juego.C2));
 				    velocity.x = 0; 
 				    camera.position.x = WIDTH / 2;
 				}
@@ -577,7 +584,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      Rectangle tronco = iter.next();
 			      tronco.y -= 100 * Gdx.graphics.getDeltaTime();
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
-			      if(tronco.overlaps(rect1)) {
+			      if(tronco.overlaps(rect1)) { 
 				         iter.remove();
 						 juego.setStatsBarco(vidas-1, vPunta-vPunta/20);
 						 vidas = juego.jugador.getVidas();
@@ -612,6 +619,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch = new SpriteBatch();
 					camera.update();
 					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos);	
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					juego.jugador.setvPunta(vPunta);
 					gameState=GameState.MENU;
@@ -641,13 +651,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();
 	  	   }
+	        
+	       public void actualizarIA() {
+	    	   AI1.update(Gdx.graphics.getDeltaTime(),1);
+	    	  // AI2.update(Gdx.graphics.getDeltaTime());
+	    	  // AI3.update(Gdx.graphics.getDeltaTime());
+	       }
 
 	       
 	       
 	        
 	       
 	        
-	        public void actualizarIA() {
+/*	        public void actualizarIA() {
 	        	Rectangle rect1 = juego.IA1.getBoundingRectangle();
 	        	Rectangle rect2 = juego.IA2.getBoundingRectangle();
 	        	Rectangle rect3 = juego.IA3.getBoundingRectangle();
@@ -826,11 +842,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	    		      }
 	    		      if(cocodrilo.overlaps(rect3)) {
 	    			         iter.remove();
-	    			         juego.IA3.getVidas();
+	    			         juego.IA3.getVidas(); 	
 	    			      }
 	    		   }
 	    		
-	    	}
+	    	} */
 		     
 
 	}
