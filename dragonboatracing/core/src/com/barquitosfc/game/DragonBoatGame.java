@@ -173,9 +173,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Cocodrilos = new Array<Rectangle>();
 		 
 		 //IA
-		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos);
-		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos);
-		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos);
+		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
+		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
+		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
 		 
 
 	}
@@ -424,7 +424,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					font.draw(batch, "La posicion es "+minijuego.jugador.getY(),minijuego.jugador.getX(), 1080);
 					batch.end();
 				    batch.begin();
-				    
+				     
 					font.draw(batch, "La puntuacion es "+ct, minijuego.jugador.getX()+1920/4, 1080/2);
 					batch.end();
 				   // espera 100 milisegundos entre cada generaci�n de obst�culos
@@ -572,7 +572,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
-						 juego.setStatsBarco(vidas, vPunta-vPunta/20);
+						 juego.setStatsBarco(vidas, vPunta); 	//-vPunta/20);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70; 
@@ -586,7 +586,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) { 
 				         iter.remove();
-						 juego.setStatsBarco(vidas-1, vPunta-vPunta/20);
+						 juego.setStatsBarco(vidas,vPunta);//	-1, vPunta-vPunta/20);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
@@ -598,10 +598,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      Rectangle cocodrilo = iter.next();
 			      if(cocodrilo.x < WIDTH/ 2)
 			    	  cocodrilo.x += 20 * Gdx.graphics.getDeltaTime();
-			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
+			      if(cocodrilo.y + 64 < bottomLimit+100 || cocodrilo.x < leftLimit || cocodrilo.x>rightLimit) iter.remove();
 			      if(cocodrilo.overlaps(rect1)) {
 				         iter.remove();
-						 juego.setStatsBarco(vidas-2, vPunta-vPunta/20);
+						 juego.setStatsBarco(vidas, vPunta); //-2, vPunta-vPunta/20);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
@@ -619,9 +619,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch = new SpriteBatch();
 					camera.update();
 					juego = new Juego();
-					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos);
-					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos);
-					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos);	
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);	
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					juego.jugador.setvPunta(vPunta);
 					gameState=GameState.MENU;
@@ -654,8 +654,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        
 	       public void actualizarIA() {
 	    	   AI1.update(Gdx.graphics.getDeltaTime(),1);
-	    	  // AI2.update(Gdx.graphics.getDeltaTime());
-	    	  // AI3.update(Gdx.graphics.getDeltaTime());
+	    	   AI2.update(Gdx.graphics.getDeltaTime(),3);
+	    	   AI3.update(Gdx.graphics.getDeltaTime(),4);
 	       }
 
 	       

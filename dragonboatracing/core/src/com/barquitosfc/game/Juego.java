@@ -32,7 +32,7 @@ public class Juego {
 	
 	public  Juego() {
 		
-		mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+		mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png")); 
 		TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
 		TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
 		TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
