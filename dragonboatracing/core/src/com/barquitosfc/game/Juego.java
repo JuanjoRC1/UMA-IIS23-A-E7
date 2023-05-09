@@ -39,6 +39,19 @@ public class Juego {
 		
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 	
+
+		
+		//ASIGNACION DE SKIN AL USUARIO	
+		
+		
+		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
+		
+		mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
+		TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
+		TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
+		TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
+		
+
 		C1= new Carril(1);
 		C2 = new Carril(2); 
 		C3= new Carril(3);
@@ -52,14 +65,14 @@ public class Juego {
 		
 		IA2= new Barco(TIA2,3);
 		IA2.setPosition(C3.getPuntoSpawn(), HEIGHT / 7);
-		
+		 
 		IA3= new Barco(TIA3,3);
 		IA3.setPosition(C4.getPuntoSpawn(), HEIGHT / 7);
 	
 	}
 	//METODO PARA ASIGNAR LA SKIN SELECCIONADA EN LA TIENDA ANTERIORMENTE
-	public void setSkinBarcos(int barco) {
-		
+	public void setSkinBarcos(int barco) {  
+ 
 		Texture barcoFuego = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 		Texture barcoCanario = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
 		Texture barcoNatura = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
@@ -87,9 +100,33 @@ public class Juego {
 		default: throw new RuntimeException("Barco no Valido");
 		}
 		
+
+		switch(barco) {  
+		case 0: mainBarco.load(barcoFuego.getTextureData());
+			break;
+		case 1: mainBarco.load(barcoCanario.getTextureData());
+			break;
+		case 2: mainBarco.load(barcoNatura.getTextureData());
+		break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+		
+		
+		//ASIGNACION DE SKIN AL BARCO IA 1.
+		switch(barco) {
+		case 0: TIA1.load(barcoCanario.getTextureData());
+			break;
+		case 1: TIA1.load(barcoEvil.getTextureData());
+			break;
+		case 2: TIA1.load(barcoCanario.getTextureData());
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+		
+
 		//ASIGNACION DE SKIN AL BARCO IA 2.
 		switch(barco) { 
-		case 0: TIA2.load(barcoNatura.getTextureData());
+		case 0: TIA2.load(barcoNatura.getTextureData()); 
 			break;
 		case 1: TIA2.load(barcoNatura.getTextureData());
 			break;
@@ -97,11 +134,27 @@ public class Juego {
 			break;
 		default: throw new RuntimeException("Barco no Valido");
 		}
+
+		
+		//ASIGNACION DE SKIN AL BARCO IA 3.
+		switch(barco) {
+		case 0: TIA3.load(barcoEvil.getTextureData());
+			break;
+		case 1: TIA3.load(barcoFuego.getTextureData());
+			break;
+		case 2: TIA3.load(barcoFuego.getTextureData());
+			break;
+		default: throw new RuntimeException("Barco no Valido");
+		}
+
 	}
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
 		
+
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
+		
+		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
@@ -123,6 +176,8 @@ public class Juego {
 		}
 		batch.end();
 		
+		
+		
 		//Dibuja al jugador
 		batch.begin();
 		jugador.draw(batch);		batch.end();
@@ -138,50 +193,7 @@ public class Juego {
 		batch.begin();
 		IA3.draw(batch);
 		batch.end();
-		
 	
-	 
-	//LIMITES DE LAS IAS
-		
-		/*	//IA1
-		if (IA1.getX() < CarrilIzq(C1)+IA1.getWidth()) {
-			IA1.setX(CarrilIzq(C1));
-		}
-		if (IA1.getX() >  CarrilDer(C1)-IA1.getWidth()) {
-			IA1.setX(CarrilDer(C1));
-		}
-			//IA2
-		if (IA2.getX() < CarrilIzq(C3)+IA2.getWidth()) {
-			IA2.setX(CarrilIzq(C3));
-		}
-		if (IA2.getX() >  CarrilDer(C3)-IA2.getWidth()) {
-			IA2.setX(CarrilDer(C3));
-		}
-		
-			//IA3
-		if (IA3.getX() < CarrilIzq(C4)+IA3.getWidth()) {
-			IA3.setX(CarrilIzq(C4));
-		}
-		if (IA3.getX() >  CarrilDer(C4)-IA3.getWidth()) {
-			IA3.setX(CarrilDer(C4));
-		}*/
-		
-		//Random random = new Random();
-	/*//MOVIEMIENTO VERTICAL  DE LAS IAS	
-		//IA1
-		IA1.setY(IA1.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
-		//IA2
-		IA2.setY(IA2.getY()+(random.nextInt(4)+ 110*Gdx.graphics.getDeltaTime()));
-		//IA3
-		IA3.setY(IA3.getY()+(random.nextInt(4)+ 1*Gdx.graphics.getDeltaTime()));
-	//MOVIEMIENTO VERTICAL  DE LAS IAS	
-			//IA1
-			IA1.setX(IA1.getX()+(random.nextInt(4)+ 300*Gdx.graphics.getDeltaTime()));
-			//IA2
-			IA2.setX(IA2.getX()+(random.nextInt(4)+ 300*Gdx.graphics.getDeltaTime()));
-			//IA3	
-			IA3.setX(IA3.getX()+(random.nextInt(4)+ 300*Gdx.graphics.getDeltaTime()));*/
-		
 	}
 	public void setStatsBarco(int vidillas, int velocidad) {
 		jugador.setVidas(vidillas);

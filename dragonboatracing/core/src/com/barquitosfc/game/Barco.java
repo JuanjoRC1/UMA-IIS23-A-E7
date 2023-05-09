@@ -16,20 +16,20 @@ public class Barco extends Sprite{
 	public Barco(Texture boatTexture, int i ) {
 		super(boatTexture);
 		setTexture(boatTexture);
-		carril = i; 
+		carril = i;  
 	}
 
 	public void draw2(SpriteBatch batch) {
 		this.draw(batch);
-	}
+	} 
 	public int getVidas() {
 		return vidas;
 	}
 	public void setVidas(int i) {
 		vidas =i ; 
-	}
+	} 
 	public void setVidas() {
-		vidas -= 1;
+		vidas -= 1; 
 	}
 	public int getvPunta() {
 		return vPunta;
