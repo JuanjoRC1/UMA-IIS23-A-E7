@@ -76,6 +76,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
 
 	protected AISystem AI1,AI2,AI3;
+	protected List<Boolean>estadosMovimiento;
    
 	private Sound jump; 
 	
@@ -115,8 +116,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
 		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
-		 boardminit = new Texture(Gdx.files.internal("fondos/fondomini.png"));
-		 boatTexture= new Texture(Gdx.files.internal("data/boat.jpeg"));
+		 boardminit = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
+		 boatTexture= new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 	
 
 		 
@@ -175,6 +176,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
 		 Cocodrilos = new Array<Rectangle>();
+		 
 		 
 		 //IA
 		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
@@ -272,6 +274,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
+			
+			actualizarIA();
 
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
@@ -282,14 +286,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 				 else batch.draw(TCoco2, cocodrilo.x, cocodrilo.y);
 			 }
 			batch.end();
-			actualizarIA();
-			batch.begin();
+		    handleInput();
+			update(Gdx.graphics.getDeltaTime());
 			
+			batch.begin();
 			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
 			batch.end();
 //			
-            handleInput();
-			update(Gdx.graphics.getDeltaTime());
+          
             break;
 			 
 		case CONFIG:
@@ -628,23 +632,32 @@ public class DragonBoatGame extends ApplicationAdapter {
 				  }
 			   }
 			 
+//			 Random random = new Random();
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
-			      Rectangle cocodrilo = iter.next();
-			      if(cocodrilo.x < WIDTH/ 2) {
-			    	  cocodrilo.x += 30 * Gdx.graphics.getDeltaTime();
- 
-			      } else { 
-			    	  cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime();
-			      }
-			      if(cocodrilo.y + 64 < bottomLimit+100) iter.remove();
-			      if(cocodrilo.overlaps(rect1)) { 
+			     Rectangle cocodrilo = iter.next();
+			     boolean mueveDerecha = true;
+			     if (mueveDerecha) { // si nos estamos moviendo hacia la derecha
+			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posición en x
+			         if (cocodrilo.x >= WIDTH) { // si hemos llegado al borde derecho del mapa
+			             mueveDerecha = false; // cambiar la dirección del movimiento
+			         }
+			     } else { // si nos estamos moviendo hacia la izquierda
+			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posición en x
+			         if (cocodrilo.x <= 0) { // si hemos llegado al borde izquierdo del mapa
+			             iter.remove(); // eliminar el cocodrilo
+			         }
+			     }
+			     if (cocodrilo.y + 64 < bottomLimit + 100) {
+			         iter.remove();
+			     }
+			     if(cocodrilo.overlaps(rect1)) { 
 				         iter.remove();
 						 juego.setStatsBarco(vidas, vPunta); //-2, vPunta-vPunta/20);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
 				         acceleration.x = 0;
-				      } 
+				 } 
 			 }
 			 
 
