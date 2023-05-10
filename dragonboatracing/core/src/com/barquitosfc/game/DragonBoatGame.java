@@ -32,7 +32,7 @@ import com.badlogic.gdx.utils.Array;
 public class DragonBoatGame extends ApplicationAdapter {
 	Texture img;
 	public enum GameState {
-		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO
+		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO, ESCCONFIG
 	}
 	public Sound bum;
 	public int ct;
@@ -76,6 +76,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Array<Rectangle> Tuboar,Tuboab;
 	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos,lastDropTimeTuboab,lastDropTimeTuboar;
 	protected Tienda tienda;
+	protected EscAjustes escAjustes;
 	protected Juego juego;
 	protected Ajustes ajustes;
 	protected minijuego minijuego;
@@ -376,6 +377,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 			break;
 			
+		case ESCCONFIG:
+			escAjustes.inicializar();
+			updateEsc(Gdx.graphics.getDeltaTime());
+			escAjustes.iniciar(table, batch, stage, juego);
+			
+			
+			break;
 			}
 	}
 	@Override
@@ -431,19 +439,24 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            }
 	            
 	            if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-	            	ilit = HEIGHT/7;
-				 	acceleration.set(0, 0); 
-				 	velocity.set(0,0);
-					camera.setToOrtho(false,WIDTH,HEIGHT);
-					batch = new SpriteBatch();
-					camera.update();
-					juego = new Juego();
-					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,1);
-					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,3);
-					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,4);	
-					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
-					juego.jugador.setvPunta(vPunta);
-	                gameState = GameState.MENU;
+	            	
+	            	 	
+//	            	ilit = HEIGHT/7;
+//				 	acceleration.set(0, 0); 
+//				 	velocity.set(0,0);
+//					camera.setToOrtho(false,WIDTH,HEIGHT);
+//					batch = new SpriteBatch();
+//					camera.update();
+//					juego = new Juego();
+//					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,1);
+//					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,3);
+//					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,4);	
+//					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+//					juego.jugador.setvPunta(vPunta);
+//	                gameState = GameState.MENU;
+	            	
+	            	escAjustes = new EscAjustes();
+	            	gameState=GameState.ESCCONFIG;
 	            }
 	            
 	            if(!Gdx.input.isKeyPressed(Keys.ANY_KEY))
@@ -478,6 +491,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
 				    }
 				    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+				    	batch = new SpriteBatch();
 		                gameState = GameState.MENU;
 		            }
 				    
@@ -539,7 +553,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    		 try {
 				    			    Thread.sleep(1300); // 5000 milisegundos son equivalentes a 5 segundos
 				    			} catch (InterruptedException e) {
+				    				
 				    			    e.printStackTrace();
+				    			    
 				    			}
 				    		
 					    	  gameState=GameState.PLAY;
@@ -672,12 +688,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			     Rectangle cocodrilo = iter.next();
 			     boolean mueveDerecha = true;
 			     if (mueveDerecha) { // si nos estamos moviendo hacia la derecha
-			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posición en x
+			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posiciï¿½n en x
 			         if (cocodrilo.x >= WIDTH) { // si hemos llegado al borde derecho del mapa
-			             mueveDerecha = false; // cambiar la dirección del movimiento
+			             mueveDerecha = false; // cambiar la direcciï¿½n del movimiento
 			         }
 			     } else { // si nos estamos moviendo hacia la izquierda
-			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posición en x
+			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posiciï¿½n en x
 			         if (cocodrilo.x <= 0) { // si hemos llegado al borde izquierdo del mapa
 			             iter.remove(); // eliminar el cocodrilo
 			         }
@@ -716,6 +732,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					
 			 }
 
+	        }
+	        
+	        
+	        public void updateEsc(float deltaTime) {
+	        	camera.update();
 	        }
 	        
 	        public void stopBoat() {
