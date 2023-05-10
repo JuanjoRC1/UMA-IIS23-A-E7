@@ -57,7 +57,7 @@ public class EscAjustes {
         
 		stage = new Stage();
 		table=new Table();
-		table.setPosition(0,juego.jugador.getY());
+		table.setPosition(0,0);
 		table.setFillParent(true);
 		table.setHeight(200);
 		stage.addActor(table);
@@ -65,7 +65,7 @@ public class EscAjustes {
 		//Botones Reanudar
 		Button buttonReanudar= new Button(new Button.ButtonStyle(spriteBReanudar,spriteBReanudar,spriteBReanudar));
 //		TextButton buttonPlay= new TextButton("Inicio",getSkin());
-		buttonReanudar.setPosition(500, juego.jugador.getY());
+		buttonReanudar.setPosition(800, 500);
 		buttonReanudar.setSize(300,40);
 		buttonReanudar.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -78,7 +78,7 @@ public class EscAjustes {
 		//Botones Salir
 		Button buttonSalir= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
 //		TextButton buttonPlay= new TextButton("Inicio",getSkin());
-		buttonSalir.setPosition(500, juego.jugador.getY()+200);
+		buttonSalir.setPosition(800, 400);
 		buttonSalir.setSize(300,40);
 		buttonSalir.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -102,7 +102,7 @@ public class EscAjustes {
 						
 			}
 		});
-		table.addActor(buttonAjustes);
+//		table.addActor(buttonAjustes);
 		
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
