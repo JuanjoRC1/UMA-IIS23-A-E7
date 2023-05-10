@@ -83,8 +83,7 @@ public class EscAjustes {
 		buttonSalir.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
 				DragonBoatGame.gameState=GameState.MENU;
-				return false;
-						
+				return false;		
 			}
 		});
 		table.addActor(buttonSalir);
