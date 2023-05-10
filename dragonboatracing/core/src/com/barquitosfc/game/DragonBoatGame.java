@@ -49,8 +49,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected int dinero = Tienda.dinero;
 	protected int unidadVida;
 	protected int decenaVida;
-	protected Texture unidadS,contadorVida;
-	protected Texture decenaS;
+	protected Texture unidadS,contadorVida,decenaS,unidadCt,decenaCt;
+	int unidadC,decenaC;
+	
 	protected Texture unidad[] = new Texture[10];
 	protected Texture decena[] = new Texture[10];
 	protected float ilit = HEIGHT / 7; 
@@ -253,6 +254,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 			});
 			table.addActor(buttonPlay);
+	    	//Botones Inicio
+				Button buttonPlaymini= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
+//				TextButton buttonPlay= new TextButton("Inicio",getSkin());
+				buttonPlaymini.setPosition(table.getOriginX()-200, table.getOriginY()+152);
+				buttonPlaymini.setSize(300,40);
+				buttonPlaymini.addListener(new InputListener() {
+					public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+						gameState=GameState.MINIJUEGO;
+						return false;
+						
+					}
+				});
+				table.addActor(buttonPlaymini);
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
 			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
@@ -349,7 +363,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case MINIJUEGO:
-			
+			unidadC = ct%10;
+			decenaC = ct/10;
+			unidadCt = unidad[unidadC];
+			decenaCt = decena[decenaC];
 			float pos=minijuego.jugador.getX()+1500;
 			minijuego.iniciar(table, batch,stage);
 			batch.begin();
@@ -363,7 +380,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 			batch.end();
 			batch.begin();
+			
 			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
+			batch.draw(unidadCt, minijuego.jugador.getX()+500, 1300, 30, 30);
+			batch.draw(decenaCt, minijuego.jugador.getX()+470, 1300, 30, 30);
 			batch.end();
 			
 			
@@ -672,12 +692,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			     Rectangle cocodrilo = iter.next();
 			     boolean mueveDerecha = true;
 			     if (mueveDerecha) { // si nos estamos moviendo hacia la derecha
-			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posición en x
+			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posiciï¿½n en x
 			         if (cocodrilo.x >= WIDTH) { // si hemos llegado al borde derecho del mapa
-			             mueveDerecha = false; // cambiar la dirección del movimiento
+			             mueveDerecha = false; // cambiar la direcciï¿½n del movimiento
 			         }
 			     } else { // si nos estamos moviendo hacia la izquierda
-			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posición en x
+			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posiciï¿½n en x
 			         if (cocodrilo.x <= 0) { // si hemos llegado al borde izquierdo del mapa
 			             iter.remove(); // eliminar el cocodrilo
 			         }
