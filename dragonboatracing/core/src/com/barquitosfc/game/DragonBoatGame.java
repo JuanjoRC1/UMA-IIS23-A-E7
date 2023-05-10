@@ -47,7 +47,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected  int vidas = Tienda.vidasS; 
 	protected int vPunta = Tienda.vPuntaS;
 	protected int dinero = Tienda.dinero;
-	
+	protected int unidadVida;
+	protected int decenaVida;
+	protected Texture unidadS,contadorVida;
+	protected Texture decenaS;
+	protected Texture unidad[] = new Texture[10];
+	protected Texture decena[] = new Texture[10];
 	protected float ilit = HEIGHT / 7; 
 	protected Barco boat;
 	protected BitmapFont font;
@@ -72,6 +77,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos,lastDropTimeTuboab,lastDropTimeTuboar;
 	protected Tienda tienda;
 	protected Juego juego;
+	protected Ajustes ajustes;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
 
@@ -183,7 +189,28 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
 		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
 		 
-
+		 //Numeros para la vida
+		 unidad[0] = n0;
+		 unidad[1] = n1;
+		 unidad[2] = n2;
+		 unidad[3] = n3;
+		 unidad[4] = n4;
+		 unidad[5] = n5;
+		 unidad[6] = n6;
+		 unidad[7] = n7;
+		 unidad[8] = n8;
+		 unidad[9] = n9;
+		 decena[0] = n0;
+		 decena[1] = n1;
+		 decena[2] = n2;
+		 decena[3] = n3;
+		 decena[4] = n4;
+		 decena[5] = n5;
+		 decena[6] = n6;
+		 decena[7] = n7;
+		 decena[8] = n8;
+		 decena[9] = n9;
+		 contadorVida = new Texture(Gdx.files.internal("data/Contador_Vida.png"));
 	}
 
 	public void setValoresBarco(int eleccionBarco,int vidasS,int vPuntaS,int dineroS) {
@@ -272,6 +299,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 		case PLAY:
 
+			unidadVida = vidas%10;
+			decenaVida = vidas/10;
+			unidadS = unidad[unidadVida];
+			decenaS = decena[decenaVida];
+			
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 			
@@ -290,15 +322,34 @@ public class DragonBoatGame extends ApplicationAdapter {
 			update(Gdx.graphics.getDeltaTime());
 			
 			batch.begin();
-			font.draw(batch, "VIDAS: " + vidas +"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
+			font.draw(batch,"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
+			batch.draw(contadorVida, 100, juego.jugador.getY()-50, 200, 90);
+			batch.draw(unidadS, 170, juego.jugador.getY()-20, 30, 30);
+			batch.draw(decenaS, 130, juego.jugador.getY()-20, 30, 30);
 			batch.end();
 //			
           
             break;
 			 
 		case CONFIG:
-		
-			 
+			ajustes = new Ajustes();
+			ajustes.iniciar(table,batch,stage);
+			
+			break;
+			
+		case SHOP:
+			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+			tienda.iniciar(table,batch,stage);
+
+			juego.setStatsBarco(vidas, vPunta);
+
+
+			setValoresBarco(Tienda.eleccionBarco, 5, 5, 5);
+
+			break;
+			
+		case MINIJUEGO:
+			
 			float pos=minijuego.jugador.getX()+1500;
 			minijuego.iniciar(table, batch,stage);
 			batch.begin();
@@ -317,22 +368,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			
 			updateflapi(Gdx.graphics.getDeltaTime()*250);
-
-			
-			break;
-			
-		case SHOP:
-			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
-			tienda.iniciar(table,batch,stage);
-
-			juego.setStatsBarco(vidas, vPunta);
-
-
-			setValoresBarco(Tienda.eleccionBarco, 5, 5, 5);
-
-			break;
-			
-		case MINIJUEGO:
 			
 			break;
 			

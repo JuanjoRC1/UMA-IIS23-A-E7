@@ -135,7 +135,7 @@ public class Tienda {
    	 	masM = new Texture(Gdx.files.internal("ui/Boton_Mas_Morado.png"));
    	 	menosM = new Texture(Gdx.files.internal("ui/Boton_Menos_Morado.png"));
    	 	confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
-   	 	casa = new Texture(Gdx.files.internal("data/Casa_Menu.png"));
+   	 	casa = new Texture(Gdx.files.internal("data/Reset.png"));
    	 	letreroVida = new Texture(Gdx.files.internal("data/Cartel_Vida.png"));
    	 	letreroVelocidad = new Texture(Gdx.files.internal("data/Cartel_Velocidad.png"));
    	 	grifoCoin = new Texture(Gdx.files.internal("data/grifocoin.png"));
@@ -481,7 +481,7 @@ public class Tienda {
 				vidasS=vidaSeguridad1;
 				vPuntaS = velocidadSeguridad1;
 				dinero = dineroSeguridad;
-				DragonBoatGame.gameState=DragonBoatGame.GameState.MENU;
+				DragonBoatGame.gameState=DragonBoatGame.GameState.MENU;	
 				return false;
 			}
 		});
