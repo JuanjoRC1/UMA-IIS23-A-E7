@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.barquitosfc.game.DragonBoatGame.GameState;
 
 public class Tienda {
-	protected static int dinero = 12;
+	protected static int dinero = 0;
 	protected static int vidas1= 5;
 	protected static int vPunta1= 10;
 	protected int vidas2= 10;

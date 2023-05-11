@@ -269,7 +269,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 						
 					}
 				});
-//				table.addActor(buttonPlaymini);
+				table.addActor(buttonPlaymini);
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
 			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
@@ -331,7 +331,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 for(Rectangle roca: Rocas) {batch.draw(TRoca, roca.x, roca.y);}
 			 for(Rectangle tronco: Troncos) {batch.draw(TTronco, tronco.x, tronco.y);}
 			 for(Rectangle cocodrilo: Cocodrilos) {
-				 if(cocodrilo.getWidth()>0) {
+				 if(cocodrilo.getWidth()>=78) {
 					 batch.draw(TCoco, cocodrilo.x, cocodrilo.y);
 				 }else {
 					 batch.draw(TCoco2, cocodrilo.x, cocodrilo.y);
@@ -343,9 +343,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			batch.begin();
 			font.draw(batch,"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
-			batch.draw(contadorVida, 100, juego.jugador.getY()-50, 200, 90);
-			batch.draw(unidadS, 170, juego.jugador.getY()-20, 30, 30);
-			batch.draw(decenaS, 130, juego.jugador.getY()-20, 30, 30);
+			batch.draw(contadorVida, 80, juego.jugador.getY()-70, 160, 72);
+			batch.draw(unidadS, 140, juego.jugador.getY()-45, 24, 24);
+			batch.draw(decenaS, 110, juego.jugador.getY()-45, 24, 24);											
 			batch.end();
 //			
           
@@ -360,12 +360,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		case SHOP:
 			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 			tienda.iniciar(table,batch,stage);
-
 			juego.setStatsBarco(vidas, vPunta);
-
-
-		
-
+			
 			break;
 			
 		case MINIJUEGO:
@@ -391,7 +387,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(unidadCt, minijuego.jugador.getX()+500, 1300, 30, 30);
 			batch.draw(decenaCt, minijuego.jugador.getX()+470, 1300, 30, 30);
 			batch.end();
-			
 			
 			updateflapi(Gdx.graphics.getDeltaTime()*250);
 			
@@ -500,7 +495,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    float height = 22;
 		    boolean mueveDerecha = x < WIDTH / 2;
 		    if (!mueveDerecha) {
-		        width *= -1; // Si se mueve hacia la izquierda, invertimos la anchura para que el sprite mire hacia la izquierda
+		        width = width-1; // Si se mueve hacia la izquierda, invertimos la anchura para que el sprite mire hacia la izquierda
 		    }
 		    Rectangle cocodrilo = new Rectangle(x, y, width, height);
 		    Cocodrilos.add(cocodrilo);
@@ -534,21 +529,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	            }
 	            
 	            if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-	            	
-	            	 	
-//	            	ilit = HEIGHT/7;
-//				 	acceleration.set(0, 0); 
-//				 	velocity.set(0,0);
-//					camera.setToOrtho(false,WIDTH,HEIGHT);
-//					batch = new SpriteBatch();
-//					camera.update();
-//					juego = new Juego();
-//					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,1);
-//					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,3);
-//					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,4);	
-//					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
-//					juego.jugador.setvPunta(vPunta);
-//	                gameState = GameState.MENU;
 	            	
 	            	escAjustes = new EscAjustes();
 	            	gameState=GameState.ESCCONFIG;
@@ -781,7 +761,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 //			 Random random = new Random();
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			     Rectangle cocodrilo = iter.next();
-			     boolean mueveDerecha = cocodrilo.getWidth()>0;
+			     boolean mueveDerecha = cocodrilo.getWidth()>=78;
 			     if (mueveDerecha) { // si nos estamos moviendo hacia la derecha
 			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posicion en x
 			         if (cocodrilo.x >= WIDTH-64) { // si hemos llegado al borde derecho del mapa

@@ -16,7 +16,7 @@ public class AISystem {
 	
 	protected int vInicial = 200;
 	protected int velocidad = vInicial;
-	protected int distanciaEsquivar = 100;
+	protected int distanciaEsquivar = 150;
 	
 	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,int speed) {
 		barco = barquito;
