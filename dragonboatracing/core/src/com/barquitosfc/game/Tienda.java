@@ -285,6 +285,9 @@ public class Tienda {
 		
 		
 	}
+	public void sumaMonedas(int cant) {
+		dinero+=cant;
+	}
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
