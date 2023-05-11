@@ -159,8 +159,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	   	 	n7 = new Texture(Gdx.files.internal("data/Numero7.png"));
 	   	 	n8 = new Texture(Gdx.files.internal("data/Numero8.png"));
 	   	 	n9 = new Texture(Gdx.files.internal("data/Numero9.png"));
-		 Tuboart = new Texture(Gdx.files.internal("minijuego/palochino.png"));
-		 Tuboabt = new Texture(Gdx.files.internal("minijuego/palochino(abajo).png"));
+		 Tuboart = new Texture(Gdx.files.internal("minijuego/palochino(abajo).png"));
+		 Tuboabt = new Texture(Gdx.files.internal("minijuego/palochino.png"));
 		 fin = new Texture(Gdx.files.internal("minijuego/fin.png"));
 		 Tuboar = new Array<Rectangle>();
 		 Tuboab = new Array<Rectangle>();
@@ -177,7 +177,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
 		 jump =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
 		 omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
-		 currentFrame=new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
+		 currentFrame=new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
 		 
 		 //Obstaculos
 		 
@@ -556,7 +556,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 //					camfla.position.x = minijuego.jugador.getX();
 				
 			//	omega.play();
-	    	 currentFrame= minijuego.animacion.getKeyFrame(deltaTime, true);
+	    	
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
@@ -568,7 +568,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				   
 				   
 				    if(Gdx.input.isKeyPressed(Keys.SPACE)&&minijuego.jugador.getY()<1450) {
-				    	
+				    	currentFrame= minijuego.animacion.getKeyFrame(deltaTime*600000, true);
 				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
 				    }
 				    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
@@ -600,13 +600,16 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch.end();
 				   // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
-						 int dis=1000;
+						 int dis=950;
 						 float ran=MathUtils.random(900, 1200);
 						 if(ct>3) {
-							  dis=850;
+							  dis=900;
 							   ran=MathUtils.random(850, 1200);
 						 }else if(ct>8) {
-							  dis=700;
+							  dis=800;
+							   ran=MathUtils.random(750, 1200);
+						 }else if(ct>14) {
+							  dis=750;
 							   ran=MathUtils.random(750, 1200);
 						 }
 					     spawntuboab(Tuboab,Tuboar,dis,ran);

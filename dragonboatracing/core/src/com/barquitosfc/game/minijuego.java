@@ -21,16 +21,16 @@ public class minijuego {
 	public Bird jugador; 
 	public Texture pajarote, boardPlay,fin; 
 	public Sound bum;
-	public Texture[] pajaroani= new Texture[3];
+	public Texture[] pajaroani= new Texture[2];
 	public Animation<Texture> animacion;
 	public void inicializar() {
 		
-		pajarote = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
+		pajarote = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
 		boardPlay = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
 		fin= new Texture(Gdx.files.internal("minijuego/fin.png"));
-		pajaroani[0] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
-		pajaroani[1] = new Texture(Gdx.files.internal("minijuego/dragonflappypos2.png"));
-		pajaroani[2] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
+		pajaroani[0] = new Texture(Gdx.files.internal("minijuego/dragonflappyr.png"));
+		pajaroani[1] = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
+	
 		animacion = new Animation<>(0.1f, pajaroani);
 		animacion.setPlayMode(Animation.PlayMode.LOOP);
 		
