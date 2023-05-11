@@ -14,8 +14,8 @@ public class AISystem {
 	protected Array<Rectangle> cocodrilos;
 	protected Array<Rectangle> eliminados = new Array<Rectangle>();
 	
-	protected int vInicial = 200;
-	protected int velocidad = vInicial;
+	protected int vidas = Tienda.vidasS+1;
+	protected int velocidad;
 	protected int distanciaEsquivar = 150;
 	
 	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,int speed) {
@@ -23,7 +23,7 @@ public class AISystem {
 		rocas = roquitas;
 		troncos = tronquitos;
 		cocodrilos = cocodrilitos;
-		vInicial = speed;
+		velocidad = speed;
 	}
 	
 	
@@ -37,6 +37,7 @@ public class AISystem {
         for (Rectangle obstaculo : troncos) {
             esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
             if(barco.getBoundingRectangle().overlaps(obstaculo)) {
+            	velocidad = velocidad-velocidad/10;
             	 eliminados.add(obstaculo);
             }
         }
@@ -44,6 +45,8 @@ public class AISystem {
         for (Rectangle obstaculo : rocas) {
             esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
             if(barco.getBoundingRectangle().overlaps(obstaculo)) {
+            	vidas--;
+            	velocidad = velocidad-velocidad/20;
            	 eliminados.add(obstaculo);
            }
         }
@@ -51,7 +54,11 @@ public class AISystem {
         for (Rectangle obstaculo : cocodrilos) {
             esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
             if(barco.getBoundingRectangle().overlaps(obstaculo)) {
+            	vidas -=2;
+            	velocidad = velocidad-velocidad/50;
+            	
            	 eliminados.add(obstaculo);
+           	 
            }
         } 
         for (Rectangle eliminado : eliminados) {
@@ -61,7 +68,10 @@ public class AISystem {
         }
         eliminados.clear();
         
-		
+		if(vidas<=0) {
+			velocidad = 0;
+			
+		}
     }
     
 		

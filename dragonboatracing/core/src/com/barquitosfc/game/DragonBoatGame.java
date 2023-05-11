@@ -86,6 +86,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Ajustes ajustes;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
+	protected int  vPuntaIA = (Tienda.vPuntaS*30)-(Tienda.vPuntaS*30)/10;
+
 	protected AISystem AI1,AI2,AI3;
 	protected List<Boolean>estadosMovimiento;
 	protected Texture currentFrame; 
@@ -126,7 +128,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
 		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
-		 boardminit = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
+		 boardminit = new Texture(Gdx.files.internal("minijuego/fondomini2.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 	
 
@@ -189,9 +191,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 
 		 
 		 //IA
-		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
-		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
-		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
+		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPuntaIA);
+		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPuntaIA);
+		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPuntaIA);
 		 
 		 //Numeros para la vida
 		 unidad[0] = n0;
@@ -784,7 +786,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			        	 iter.remove(); // eliminar el cocodrilo
 			         }
 			     } else { // si nos estamos moviendo hacia la izquierda
-			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posicion en x
+			         cocodrilo.x -= 30 * Gdx.graphics.getDeltaTime(); // decrementar la posicion en x
 			         if (cocodrilo.x <= 64) { // si hemos llegado al borde izquierdo del mapa
 			             iter.remove(); // eliminar el cocodrilo
 			         }
@@ -797,7 +799,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 						 juego.setStatsBarco(vidas-2, vPunta-vPunta/50);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
-				         velocity.y -= 70;
+				         velocity.y -= 300;
 				         acceleration.x = 0;
 				 } 
 			 }
