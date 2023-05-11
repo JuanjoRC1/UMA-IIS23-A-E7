@@ -773,14 +773,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 //			 Random random = new Random();
 			 for (Iterator<Rectangle> iter = Cocodrilos.iterator(); iter.hasNext(); ) {
 			     Rectangle cocodrilo = iter.next();
-			     boolean mueveDerecha = cocodrilo.getWidth()>=78;
+			     boolean mueveDerecha = cocodrilo.getX()<=WIDTH/2;
 			     if (mueveDerecha) { // si nos estamos moviendo hacia la derecha
 			         cocodrilo.x += 30 * Gdx.graphics.getDeltaTime(); // incrementar la posicion en x
 			         if (cocodrilo.x >= WIDTH-64) { // si hemos llegado al borde derecho del mapa
 			        	 iter.remove(); // eliminar el cocodrilo
 			         }
 			     } else { // si nos estamos moviendo hacia la izquierda
-			         cocodrilo.x -= 20 * Gdx.graphics.getDeltaTime(); // decrementar la posicion en x
+			         cocodrilo.x -= 30 * Gdx.graphics.getDeltaTime(); // decrementar la posicion en x
 			         if (cocodrilo.x <= 64) { // si hemos llegado al borde izquierdo del mapa
 			             iter.remove(); // eliminar el cocodrilo
 			         }
