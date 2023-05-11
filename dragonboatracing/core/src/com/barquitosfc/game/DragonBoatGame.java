@@ -269,7 +269,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 						
 					}
 				});
-//				table.addActor(buttonPlaymini);
+				table.addActor(buttonPlaymini);
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
 			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
@@ -595,6 +595,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    if(TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini&&minijuego.jugador.getX()>1986) {
 				    	bum.play();
 				    	ct++;
+				    	if(ct%5==0) {
+				    	tienda.sumaMonedas(1);
+				    	}
 				    }
 				    if(minijuego.jugador.getY()==1080) {
 				    	  minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
@@ -611,7 +614,16 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch.end();
 				   // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
-					     spawntuboab(Tuboab,Tuboar);
+						 int dis=1000;
+						 float ran=MathUtils.random(900, 1200);
+						 if(ct>3) {
+							  dis=850;
+							   ran=MathUtils.random(850, 1200);
+						 }else if(ct>8) {
+							  dis=700;
+							   ran=MathUtils.random(750, 1200);
+						 }
+					     spawntuboab(Tuboab,Tuboar,dis,ran);
 					     
 					 }
 
@@ -841,11 +853,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        //Para el minijuego
 
 	        //Obstaculos
-	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar) {
-	        	float y=MathUtils.random(900, 1000);
-	  	     
+	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar,int ydis,float y) {
+	        	
+	        	
 		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
-		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-900,70,590);
+		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis,70,590);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();

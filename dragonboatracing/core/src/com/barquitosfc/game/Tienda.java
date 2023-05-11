@@ -22,7 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.barquitosfc.game.DragonBoatGame.GameState;
 
 public class Tienda {
-	protected static int dinero = 12;
+	protected static int dinero = 0;
 	protected static int vidas1= 5;
 	protected static int vPunta1= 10;
 	protected int vidas2= 10;
@@ -284,6 +284,9 @@ public class Tienda {
 		
 		
 		
+	}
+	public void sumaMonedas(int cant) {
+		dinero+=cant;
 	}
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
