@@ -85,6 +85,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Ajustes ajustes;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
+	protected int  vPuntaIA = (Tienda.vPuntaS*30)-(Tienda.vPuntaS*30)/10;
 
 	protected AISystem AI1,AI2,AI3;
 	protected List<Boolean>estadosMovimiento;
@@ -189,9 +190,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 
 		 
 		 //IA
-		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
-		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
-		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3);
+		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPuntaIA);
+		 AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPuntaIA);
+		 AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPuntaIA);
 		 
 		 //Numeros para la vida
 		 unidad[0] = n0;
