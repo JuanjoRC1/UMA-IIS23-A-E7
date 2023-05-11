@@ -127,7 +127,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		//BACKGROUND
 		 board = new Texture(Gdx.files.internal("fondos/fondoMENU.png"));
 		 boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
-		 boardminit = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
+		 boardminit = new Texture(Gdx.files.internal("minijuego/fondomini2.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 	
 
@@ -794,7 +794,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 						 juego.setStatsBarco(vidas-2, vPunta-vPunta/50);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
-				         velocity.y -= 70;
+				         velocity.y -= 300;
 				         acceleration.x = 0;
 				 } 
 			 }
