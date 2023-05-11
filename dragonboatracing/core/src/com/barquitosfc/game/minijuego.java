@@ -6,26 +6,35 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class minijuego {
+	public float st;
+	public int frame=0;
 	public static final int WIDTH=1920;
 	public static final int HEIGHT	=1080;
 	public Bird jugador; 
 	public Texture pajarote, boardPlay,fin; 
 	public Sound bum;
-	
+	public Texture[] pajaroani= new Texture[3];
+	public Animation<Texture> animacion;
 	public void inicializar() {
-		bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/tumuerto.mp3"));
 		
 		pajarote = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
 		boardPlay = new Texture(Gdx.files.internal("minijuego/fondoflapi.png"));
 		fin= new Texture(Gdx.files.internal("minijuego/fin.png"));
+		pajaroani[0] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
+		pajaroani[1] = new Texture(Gdx.files.internal("minijuego/dragonflappypos2.png"));
+		pajaroani[2] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
+		animacion = new Animation<>(0.1f, pajaroani);
+		animacion.setPlayMode(Animation.PlayMode.LOOP);
 		
-		jugador = new Bird(pajarote);
+		jugador = new Bird(pajaroani[frame]);
 		jugador.setPosition(WIDTH/4, HEIGHT/2);
 	}
 	
@@ -55,9 +64,7 @@ public class minijuego {
 		batch.end();
 		
 		//Dibuja al jugador
-		batch.begin();
-		jugador.draw(batch);
-		batch.end();
+		
 		
 	}
 	

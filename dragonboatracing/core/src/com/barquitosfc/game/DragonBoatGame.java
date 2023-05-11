@@ -39,6 +39,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public Sound bum;
 	public int ct;
 	public Music omega;
+	public TextureRegion[] pajaroani= new TextureRegion[3];
 	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini;
 	protected Vector2 velocity = new Vector2(0,0);
 	protected Vector2 acceleration = new Vector2(0,0);
@@ -85,10 +86,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Ajustes ajustes;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
-
 	protected AISystem AI1,AI2,AI3;
 	protected List<Boolean>estadosMovimiento;
-   
+	protected Texture currentFrame; 
 	private Sound jump; 
 	
 	public DragonBoatGame() {
@@ -175,7 +175,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 bum =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
 		 jump =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
 		 omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
-		 
+		 currentFrame=new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
 		 
 		 //Obstaculos
 		 
@@ -382,12 +382,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 	
 			batch.end();
 			batch.begin();
+			batch.draw(currentFrame, minijuego.jugador.getX(), minijuego.jugador.getY());
+			batch.end();
+			batch.begin();
 			
 			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
 			batch.draw(unidadCt, minijuego.jugador.getX()+500, 1300, 30, 30);
 			batch.draw(decenaCt, minijuego.jugador.getX()+470, 1300, 30, 30);
 			batch.end();
-			
+		minijuego.st=Gdx.graphics.getDeltaTime()*250;
 			updateflapi(Gdx.graphics.getDeltaTime()*250);
 			
 			break;
@@ -551,6 +554,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 //					camfla.position.x = minijuego.jugador.getX();
 				
 			//	omega.play();
+	    	 currentFrame= minijuego.animacion.getKeyFrame(deltaTime, true);
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
