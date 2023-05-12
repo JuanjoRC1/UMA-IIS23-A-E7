@@ -28,8 +28,8 @@ public class minijuego {
 		pajarote = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
 		boardPlay = new Texture(Gdx.files.internal("minijuego/fondomini2.png"));
 		fin= new Texture(Gdx.files.internal("minijuego/fin.png"));
-		pajaroani[0] = new Texture(Gdx.files.internal("minijuego/dragonflappyr.png"));
-		pajaroani[1] = new Texture(Gdx.files.internal("minijuego/dragonflappyr.png"));
+		pajaroani[0] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
+		pajaroani[1] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
 		pajaroani[2] = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
 		pajaroani[3] = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
 		animacion = new Animation<>(100.f, pajaroani);
