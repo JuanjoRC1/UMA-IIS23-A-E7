@@ -539,7 +539,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 //					camfla.position.x = minijuego.jugador.getX();
 				
 			//	omega.play();
-	    	
+	    	 currentFrame= minijuego.animacion.getKeyFrame(deltaTime*1890000, true);
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
@@ -551,7 +551,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				   
 				   
 				    if(Gdx.input.isKeyPressed(Keys.SPACE)&&minijuego.jugador.getY()<1450) {
-				    	currentFrame= minijuego.animacion.getKeyFrame(deltaTime*600000, true);
+				    	
 				    	minijuego.jugador.setY((float) (minijuego.jugador.getY()+5.2*deltaTime));
 				    }
 				    if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
