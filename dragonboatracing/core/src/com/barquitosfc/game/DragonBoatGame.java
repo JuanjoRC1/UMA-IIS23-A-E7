@@ -61,7 +61,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
-	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape;
+	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion;
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
@@ -79,6 +79,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public static final int HEIGHT	=1080;
 	protected Array<Rectangle>Troncos,Rocas,Cocodrilos;
 	protected Array<Rectangle> Tuboar,Tuboab;
+	protected Rectangle escudo,champion;
 	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos,lastDropTimeTuboab,lastDropTimeTuboar;
 	protected Tienda tienda;
 	protected EscAjustes escAjustes;
@@ -91,6 +92,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected List<Boolean>estadosMovimiento;
 	protected Texture currentFrame; 
 	private Sound jump; 
+	protected boolean escudosu=false;
+	protected int vInicial = Tienda.vPuntaS;
+	protected int championx,championy,escudox,escudoy;
 	
 	public DragonBoatGame() {
 		this(0,Tienda.vidasS,Tienda.vPuntaS*30,Tienda.dinero);
@@ -182,10 +186,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 TRoca = new Texture(Gdx.files.internal("data/Rocap.png"));
 		 TCoco2 = new Texture(Gdx.files.internal("data/Icocop.png"));
 		 TCoco = new Texture(Gdx.files.internal("data/Dcocop.png"));
-		 TTronco = new Texture(Gdx.files.internal("data/Troncop.png")); 
+		 TTronco = new Texture(Gdx.files.internal("data/Troncop.png"));
+		 TEscudo = new Texture(Gdx.files.internal("data/boost_shield.png"));
+		 TChampion = new Texture(Gdx.files.internal("data/boost3.png"));
 		 Rocas = new Array<Rectangle>();
 		 Troncos = new Array<Rectangle>();
 		 Cocodrilos = new Array<Rectangle>();
+		 escudo = new Rectangle();
+		 champion = new Rectangle();
 		 
 		 
 		 //IA
@@ -311,6 +319,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			unidadS = unidad[unidadVida];
 			decenaS = decena[decenaVida];
 			
+			
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 			
@@ -327,6 +336,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 					 batch.draw(TCoco2, cocodrilo.x, cocodrilo.y);
 				 }
 			 }
+			 batch.draw(TChampion, champion.x, champion.y);
+			 batch.draw(TEscudo, escudo.x, escudo.y);
 			batch.end();
 		    handleInput();
 			update(Gdx.graphics.getDeltaTime());
@@ -489,6 +500,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    Cocodrilos.add(cocodrilo);
 		    lastDropTimeCocodrilos = TimeUtils.millis();
 		}
+	 protected void spawnEscudo() {
+		  escudo = new Rectangle(MathUtils.random(0, WIDTH-64),
+	    		  (MathUtils.random(topLimit +360, topLimit+400)),52,49);
+	 }
+	 protected void spawnChampion() {
+		  champion = new Rectangle(MathUtils.random(0, WIDTH-64),
+	    		  (MathUtils.random(topLimit+360, topLimit+400)),52,49);
+	 }
+	 
 
 	         //Controles
 	     public void handleInput() { 
@@ -740,11 +760,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
-						 juego.setStatsBarco(vidas, vPunta-vPunta/10); 	//-vPunta/20);
+						 if(escudosu==false) {
+				         juego.setStatsBarco(vidas, vPunta-vPunta/10); 	//-vPunta/20);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70; 
 				         acceleration.x = 0;
+						 }
 				      }
 			   }
  
@@ -754,11 +776,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(tronco.y +64<bottomLimit+100) iter.remove();
 			      if(tronco.overlaps(rect1)) { 
 				         iter.remove();
+				         if(escudosu==false) {
 						 juego.setStatsBarco(vidas-1, vPunta-vPunta/20);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70;
 				         acceleration.x = 0; 
+				         }
 				  }
 			   }
 			 
@@ -782,13 +806,26 @@ public class DragonBoatGame extends ApplicationAdapter {
 			     }
 			     if(cocodrilo.overlaps(rect1)) { 
 				         iter.remove();
+				         if(escudosu==false) {
 						 juego.setStatsBarco(vidas-2, vPunta-vPunta/50);
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 300;
 				         acceleration.x = 0;
+				         }
 				 } 
 			 }
+			 
+			 if(escudo.overlaps(rect1)) {
+		         
+				 escudosu=true;
+		      }
+			 if(champion.overlaps(rect1)) {
+		         
+				 juego.setStatsBarco(vidas, vInicial); 	//-vPunta/20);
+				 vidas = juego.jugador.getVidas();
+		      }
+			 
 			 
 			 if(vidas <= 0) {
 				 	ilit = HEIGHT/7;
