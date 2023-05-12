@@ -62,7 +62,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
-	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion;
+	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion,rema;
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
