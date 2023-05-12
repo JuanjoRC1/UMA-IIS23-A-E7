@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 
 
 public class AISystem {
@@ -17,13 +18,15 @@ public class AISystem {
 	protected int vidas = Tienda.vidasS+1;
 	protected int velocidad;
 	protected int distanciaEsquivar = 150;
+	protected long tiempoInicio;
 	
-	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,int speed) {
+	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,int speed,long time) {
 		barco = barquito;
 		rocas = roquitas;
 		troncos = tronquitos;
 		cocodrilos = cocodrilitos;
 		velocidad = speed;
+		tiempoInicio = time;
 	}
 	
 	
@@ -31,8 +34,9 @@ public class AISystem {
         float centroBarcoX = barco.getBoundingRectangle().getX() + barco.getWidth() / 2;
 		float puntaBarco = barco.getBoundingRectangle().getY() + barco.getHeight();
 		
+		if(TimeUtils.timeSinceMillis(tiempoInicio)>=4500) {
         barco.setY(barco.getY() + velocidad * delta);
-
+		}
         
         for (Rectangle obstaculo : troncos) {
             esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
