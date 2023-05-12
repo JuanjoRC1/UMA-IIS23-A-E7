@@ -432,15 +432,15 @@ public class Tienda {
 		menosVelocidad.setSize(56,56);
 		menosVelocidad.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				if(eleccionBarco==0 && 0<vPunta1){
+				if(eleccionBarco==0 && 10<vPunta1){
 				vPunta1--;
 				vPuntaS--;
 				dinero++;
-				}else if(eleccionBarco==1 && 0<vPunta2) {
+				}else if(eleccionBarco==1 && 5<vPunta2) {
 					vPunta2--;
 					vPuntaS--;
 					dinero++;
-				}else if(eleccionBarco==2 && 0<vPunta3) {
+				}else if(eleccionBarco==2 && 5<vPunta3) {
 					vPunta3--;
 					vPuntaS--;
 					dinero++;
@@ -456,15 +456,15 @@ public class Tienda {
 		menosVida.setSize(56,56);
 		menosVida.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-				if(eleccionBarco==0 &&0<vidas1) {
+				if(eleccionBarco==0 &&5<vidas1) {
 				vidas1--;
 				vidasS--;
 				dinero++;
-				}else if(eleccionBarco==1 && 0<vidas2) {
+				}else if(eleccionBarco==1 && 10<vidas2) {
 				vidas2--;
 				vidasS--;
 				dinero++;
-				}else if(eleccionBarco==2 && 0<vidas3) {
+				}else if(eleccionBarco==2 && 5<vidas3) {
 				vidas3--;
 				vidasS--;
 				dinero++; 

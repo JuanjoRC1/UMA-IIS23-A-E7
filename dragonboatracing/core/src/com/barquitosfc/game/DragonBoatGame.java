@@ -83,7 +83,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Tienda tienda;
 	protected EscAjustes escAjustes;
 	protected Juego juego;
-	protected Ajustes ajustes;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
 	protected int  vPuntaIA = (Tienda.vPuntaS*30)-(Tienda.vPuntaS*30)/10;
@@ -138,7 +137,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 spriteBTienda= new SpriteDrawable(new Sprite(bTienda));
 		 spriteBSalir= new SpriteDrawable(new Sprite(bSalir)); 
 		 
-		 //TIENDA
 		 tienda= new Tienda();
 		 tienda.inicializar();
 		 
@@ -249,7 +247,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//Botones Inicio
 			Button buttonPlay= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
 //			TextButton buttonPlay= new TextButton("Inicio",getSkin());
-			buttonPlay.setPosition(table.getOriginX()-200, table.getOriginY());
+			buttonPlay.setPosition(table.getOriginX(), table.getOriginY());
 			buttonPlay.setSize(300,40);
 			buttonPlay.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -274,21 +272,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 				table.addActor(buttonPlaymini);
 			//BOTON
 //			TextButton buttonConfig= new TextButton("Opciones",getSkin());
-			Button buttonConfig= new Button(new Button.ButtonStyle(spriteBAjustes,spriteBAjustes,spriteBAjustes));
-			buttonConfig.setPosition(buttonPlay.getX()+buttonPlay.getWidth()+200, table.getOriginY());
-			buttonConfig.setSize(300,40);
-
-			buttonConfig.addListener(new InputListener() {
-				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-					gameState=GameState.CONFIG;
-					return false;
-				}
-			});
-			table.addActor(buttonConfig);
+			
 			//BOTON
 			Button buttonShop= new Button(new Button.ButtonStyle(spriteBTienda,spriteBTienda,spriteBTienda));
 //			TextButton buttonShop= new TextButton("Tienda",getSkin());
-			buttonShop.setPosition(buttonConfig.getX()+buttonConfig.getWidth()+200, table.getOriginY());
+			buttonShop.setPosition(table.getOriginX() +550, table.getOriginY());
 			buttonShop.setWidth(300);
 			buttonShop.setHeight(40);
 			buttonShop.addListener(new InputListener() {
@@ -301,7 +289,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			//BOTON
 //			TextButton buttonQuit= new TextButton("Salir",skin);
 			Button buttonQuit= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
-			buttonQuit.setPosition(buttonShop.getX()+buttonShop.getWidth()+200, table.getOriginY());
+			buttonQuit.setPosition(buttonShop.getX()+buttonShop.getWidth()+300, table.getOriginY());
 			buttonQuit.setWidth(300);
 			buttonQuit.setHeight(40);
 			buttonQuit.addListener(new InputListener() {
@@ -353,11 +341,6 @@ public class DragonBoatGame extends ApplicationAdapter {
           
             break;
 			 
-		case CONFIG:
-			ajustes = new Ajustes();
-			ajustes.iniciar(table,batch,stage);
-			
-			break;
 			
 		case SHOP:
 			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
