@@ -36,6 +36,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public enum GameState {
 		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO, ESCCONFIG
 	}
+	public int tiempo=1/120;
 	public Sound bum;
 	public int ct;
 	public Music omega;
@@ -89,7 +90,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	protected AISystem AI1,AI2,AI3;
 	protected List<Boolean>estadosMovimiento;
-	protected Texture currentFrame; 
+	protected Texture currentFrame,currentFramechrum; 
 	private Sound jump; 
 	
 	public DragonBoatGame() {
@@ -176,6 +177,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 jump =  Gdx.audio.newSound(Gdx.files.internal("sonidos/jump.mp3"));
 		 omega =  Gdx.audio.newMusic(Gdx.files.internal("sonidos/omegaelfuelte.mp3"));
 		 currentFrame=new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
+		 currentFramechrum=new Texture(Gdx.files.internal("minijuego/chrumgif.png"));
 		 
 		 //Obstaculos
 		 
@@ -370,6 +372,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(currentFrame, minijuego.jugador.getX(), minijuego.jugador.getY());
 			batch.end();
 			batch.begin();
+			batch.draw(currentFramechrum, minijuego.jugador.getX()+500, 1200);
+			batch.end();
+			batch.begin();
 			
 			font.draw(batch, "x: " + minijuego.jugador.getX() +"Y: "+ minijuego.jugador.getY(), 100, minijuego.jugador.getY()+100);
 			batch.draw(unidadCt, minijuego.jugador.getX()+500, 1300, 30, 30);
@@ -539,7 +544,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 //					camfla.position.x = minijuego.jugador.getX();
 				
 			//	omega.play();
-	    	 currentFrame= minijuego.animacion.getKeyFrame(deltaTime*1890000, true);
+	    	 tiempo+=3;
+	    	 currentFrame= minijuego.animacion.getKeyFrame(tiempo, true);
+	    	 currentFramechrum= minijuego.churumani.getKeyFrame(tiempo, false);
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
