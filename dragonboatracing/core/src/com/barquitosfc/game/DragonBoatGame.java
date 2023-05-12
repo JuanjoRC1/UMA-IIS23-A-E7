@@ -34,7 +34,7 @@ import com.badlogic.gdx.utils.Array;
 public class DragonBoatGame extends ApplicationAdapter {
 	Texture img;
 	public enum GameState {
-		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO, ESCCONFIG,COUNTDOWN;
+		MENU,PLAY,QUIT,SHOP,MINIJUEGO, ESCCONFIG,COUNTDOWN;
 	}
 	public int tiempo=1/120;
 	public Sound bum;
@@ -53,9 +53,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected int dinero = Tienda.dinero;
 	protected int unidadVida;
 	protected int decenaVida;
+	private long lastDropEscudo;
 	protected Texture unidadS,contadorVida,decenaS,unidadCt,decenaCt;
 	int unidadC,decenaC;
-	
+	protected Array<Rectangle> AChampion,AEscudo;
 	protected Texture unidad[] = new Texture[10];
 	protected Texture decena[] = new Texture[10];
 	protected float ilit = HEIGHT / 7; 
@@ -108,6 +109,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		this.vidas=vidasS;
 		this.vPunta=vPuntaS;
 		this.dinero=dinero;
+		this.vInicial=vPuntaS;
 	} 
 	
 	@Override
@@ -200,6 +202,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 escudo = new Rectangle();
 		 champion = new Rectangle();
 		 
+		 escudo = new Rectangle(MathUtils.random(550, 940),
+				 MathUtils.random(4320, 17280),52,49);
+		 champion = new Rectangle(MathUtils.random(550, 940),
+				 1000,52,49);
+		 AEscudo = new Array<Rectangle>();
+		 AChampion = new Array<Rectangle>();
+		 AEscudo.add(escudo);
+		 AChampion.add(champion);
 		 
 		 //IA
 		 AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPuntaIA,tiempoInicio);
@@ -347,8 +357,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					 batch.draw(TCoco2, cocodrilo.x, cocodrilo.y);
 				 }
 			 }
-			 batch.draw(TChampion, champion.x, champion.y);
-			 batch.draw(TEscudo, escudo.x, escudo.y);
+			 
 			batch.end();
 		    handleInput();
 			update(Gdx.graphics.getDeltaTime());
@@ -360,9 +369,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(decenaS, 110, juego.jugador.getY()-45, 24, 24);											
 			batch.end();
 //			
-          
-            break;
+			batch.begin();
+			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
+			for(Rectangle chm: AChampion) {batch.draw(TChampion, chm.x, chm.y);}
+			 batch.end();
 			 
+			 break;
 			
 		case SHOP:
 			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
@@ -468,6 +480,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					 AChampion.add(champion);
 					gameState=GameState.MENU;
 					
 					return false;		
@@ -539,15 +553,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    Cocodrilos.add(cocodrilo);
 		    lastDropTimeCocodrilos = TimeUtils.millis();
 		}
-	 protected void spawnEscudo() {
-		  escudo = new Rectangle(MathUtils.random(0, WIDTH-64),
-	    		  (MathUtils.random(topLimit +360, topLimit+400)),52,49);
-	 }
-	 protected void spawnChampion() {
-		  champion = new Rectangle(MathUtils.random(0, WIDTH-64),
-	    		  (MathUtils.random(topLimit+360, topLimit+400)),52,49);
-	 }
-	 
 
 	         //Controles
 	     public void handleInput() { 
@@ -677,6 +682,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    			    e.printStackTrace();
 				    			}
 					    	  gameState=GameState.PLAY;
+					    	  
 					      }
 					   }
 					 for (Iterator<Rectangle> iterar = Tuboar.iterator(); iterar.hasNext(); ) {
@@ -708,7 +714,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 //	     }
 	   //  }
 	        public void update(float deltaTime) {
-
+	        	
 //				Actualizar la cámara cuando el barco se encuentre fuera de ciertos límites
 				if (juego.jugador.getY() < camera.position.y - HEIGHT / 4) {
 				    camera.position.y = juego.jugador.getY() + HEIGHT / 4;
@@ -779,8 +785,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 				}
 	            
             
-	   		 final int tiempoDeEsperaEntreObstaculos = 400; // espera 100 milisegundos entre cada generaci�n de obst�culos
-			 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<50) {
+	   		 final int tiempoDeEsperaEntreObstaculos = 400; 
+	   		 final int tEscudo=10000;// espera 100 milisegundos entre cada generaci�n de obst�culos
+			 if(TimeUtils.millis()-lastDropEscudo> tEscudo) {
+				 escudosu=false;
+			 }
+	   		 
+	   		 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<50) {
 			     spawnRoca(Rocas);
 			     
 			 }
@@ -792,6 +803,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			     spawnCocodrilo(Cocodrilos);
 			  
 			 }
+			 
 			 
 			    Rectangle rect1 = juego.jugador.getBoundingRectangle(); 
 
@@ -857,15 +869,28 @@ public class DragonBoatGame extends ApplicationAdapter {
 				 } 
 			 }
 			 
-			 if(escudo.overlaps(rect1)) {
-		         
-				 escudosu=true;
-		      }
-			 if(champion.overlaps(rect1)) {
-		         
-				 juego.setStatsBarco(vidas, vInicial); 	//-vPunta/20);
-				 vidas = juego.jugador.getVidas();
-		      }
+			 
+			 for (Iterator<Rectangle> iter = AEscudo.iterator(); iter.hasNext(); ) {
+			      Rectangle esc = iter.next();
+//			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
+			      if(esc.y + 64 < bottomLimit+100) iter.remove();
+			      if(esc.overlaps(rect1)) {
+				         iter.remove();
+						escudosu=true;
+						lastDropEscudo=TimeUtils.millis();
+				      }
+			   }
+			 for (Iterator<Rectangle> iter = AChampion.iterator(); iter.hasNext(); ) {
+			      Rectangle chm = iter.next();
+//			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
+			      if(chm.y + 64 < bottomLimit+100) iter.remove();
+			      if(chm.overlaps(rect1)) {
+				         iter.remove();
+				         vPunta=vInicial; 	//-vPunta/20);
+						 
+				      }
+			   }
+			 
 			 
 			 
 			 if(vidas <= 0) {
@@ -881,6 +906,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					AChampion.add(champion);
 					gameState=GameState.MENU;
 					
 					
