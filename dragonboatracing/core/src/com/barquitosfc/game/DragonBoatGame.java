@@ -98,7 +98,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Texture currentFrame,currentFramechrum; 
 	private Sound jump; 
 	protected boolean escudosu=false;
-	protected int vInicial = Tienda.vPuntaS;
+	protected int vInicial=300;
 	protected int championx,championy,escudox,escudoy;
 	
 	public DragonBoatGame() {
@@ -109,7 +109,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		this.vidas=vidasS;
 		this.vPunta=vPuntaS;
 		this.dinero=dinero;
-		this.vInicial=vPuntaS;
+		
 	} 
 	
 	@Override
@@ -205,7 +205,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 escudo = new Rectangle(MathUtils.random(550, 940),
 				 MathUtils.random(4320, 17280),52,49);
 		 champion = new Rectangle(MathUtils.random(550, 940),
-				 1000,52,49);
+				 MathUtils.random(4320, 17280),52,49);
 		 AEscudo = new Array<Rectangle>();
 		 AChampion = new Array<Rectangle>();
 		 AEscudo.add(escudo);
@@ -364,6 +364,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			batch.begin();
 			font.draw(batch,"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
+			font.draw(batch,"VELOCIDADINC: "+ vInicial , 100, juego.jugador.getY()+50);
 			batch.draw(contadorVida, 80, juego.jugador.getY()-70, 160, 72);
 			batch.draw(unidadS, 140, juego.jugador.getY()-45, 24, 24);
 			batch.draw(decenaS, 110, juego.jugador.getY()-45, 24, 24);											
@@ -380,6 +381,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 			tienda.iniciar(table,batch,stage);
 			juego.setStatsBarco(vidas, vPunta);
+			vInicial=vPunta;
 			
 			break;
 			
@@ -908,6 +910,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(chm.y + 64 < bottomLimit+100) iter.remove();
 			      if(chm.overlaps(rect1)) {
 				         iter.remove();
+				         juego.jugador.setvPunta(vInicial);
 				         vPunta=vInicial; 	//-vPunta/20);
 						 
 				      }
