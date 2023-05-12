@@ -34,7 +34,7 @@ import com.badlogic.gdx.utils.Array;
 public class DragonBoatGame extends ApplicationAdapter {
 	Texture img;
 	public enum GameState {
-		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO, ESCCONFIG,COUNTDOWN;
+		MENU,PLAY,CONFIG,QUIT,SHOP,MINIJUEGO, ESCCONFIG,COUNTDOWN, COUNTDOWNMINI;
 	}
 	public int tiempo=1/120;
 	public Sound bum;
@@ -272,7 +272,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				buttonPlaymini.setSize(300,40);
 				buttonPlaymini.addListener(new InputListener() {
 					public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-						gameState=GameState.MINIJUEGO;
+						gameState=GameState.COUNTDOWNMINI;
 						return false;
 						
 					}
@@ -469,7 +469,29 @@ public class DragonBoatGame extends ApplicationAdapter {
 			Gdx.input.setInputProcessor(stage);
 		
 			break;
-			
+		case COUNTDOWNMINI:
+			minijuego.iniciar(table, batch, stage);
+			float tiempoTranscurridomini = TimeUtils.timeSinceMillis(tiempoInicio);
+		    if (tiempoTranscurridomini < 1000) {
+		    	batch.begin();
+		        batch.draw(n3,1050, 1200, 200, 200);
+		        batch.end();
+		    } else if (tiempoTranscurridomini < 2000) {
+		    	batch.begin();
+		    	 batch.draw(n3,1050, 1200, 200, 200);
+		        batch.end();
+		    } else if (tiempoTranscurridomini < 3000) {
+		    	batch.begin();
+		    	 batch.draw(n3,1050, 1200, 200, 200);
+		        batch.end();
+		    } else if(tiempoTranscurridomini < 4000) {
+		    	batch.begin();
+		    	 batch.draw(n3,1050, 1200, 200, 200);
+		        batch.end();
+		    }else {
+		        gameState = GameState.MINIJUEGO;
+		    }
+			break;
 		case COUNTDOWN:
 			juego.iniciar(table, batch, stage);
 			float tiempoTranscurrido = TimeUtils.timeSinceMillis(tiempoInicio);
@@ -613,15 +635,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    	  minijuego.jugador.setY((minijuego.jugador.getY()+gravity*deltaTime));
 
 				    }
-				    batch.begin();
-//				    font = new BitmapFont(Gdx.files.internal("minijuego/fuente.ttf"));
-//			        font.getData().scale(7f);
-					font.draw(batch, "La posicion es "+minijuego.jugador.getY(),minijuego.jugador.getX(), 1080);
-					batch.end();
-				    batch.begin();
-				     
-					font.draw(batch, "La puntuacion es "+ct, minijuego.jugador.getX()+1920/4, 1080/2);
-					batch.end();
+//				    batch.begin();
+////				    font = new BitmapFont(Gdx.files.internal("minijuego/fuente.ttf"));
+////			        font.getData().scale(7f);
+//					font.draw(batch, "La posicion es "+minijuego.jugador.getY(),minijuego.jugador.getX(), 1080);
+//					batch.end();
+//				    batch.begin();
+//				     
+//					font.draw(batch, "La puntuacion es "+ct, minijuego.jugador.getX()+1920/4, 1080/2);
+//					batch.end();
 				   // espera 100 milisegundos entre cada generaci�n de obst�culos
 					 if (TimeUtils.millis() - lastDropTimeTuboab > tiempoDeEsperaEntreObstaculosmini) {
 						 int dis=950;
@@ -630,10 +652,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 							  dis=900;
 							   ran=MathUtils.random(850, 1200);
 						 }else if(ct>8) {
-							  dis=800;
+							  dis=500;
 							   ran=MathUtils.random(750, 1200);
 						 }else if(ct>14) {
-							  dis=750;
+							  dis=450;
 							   ran=MathUtils.random(750, 1200);
 						 }
 					     spawntuboab(Tuboab,Tuboar,dis,ran);
