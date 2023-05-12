@@ -62,7 +62,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir;
+<<<<<<< HEAD
 	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion;
+=======
+	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,rema;
+>>>>>>> b64702cbc23eb74ce40096c453c74b4bdc67ac7d
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
@@ -801,8 +805,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			      if(roca.y + 64 < bottomLimit+100) iter.remove();
 			      if(roca.overlaps(rect1)) {
 				         iter.remove();
+<<<<<<< HEAD
 						 if(escudosu==false) {
 				         juego.setStatsBarco(vidas, vPunta-vPunta/10); 	//-vPunta/20);
+=======
+				         
+						 juego.setStatsBarco(vidas, vPunta-vPunta/10); 	//-vPunta/20);
+>>>>>>> b64702cbc23eb74ce40096c453c74b4bdc67ac7d
 						 vidas = juego.jugador.getVidas();
 						 vPunta = juego.jugador.getvPunta();
 				         velocity.y -= 70; 
