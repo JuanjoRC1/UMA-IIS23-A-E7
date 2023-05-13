@@ -100,6 +100,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected boolean escudosu=false;
 	protected int vInicial=300;
 	protected int championx,championy,escudox,escudoy;
+	private boolean perdisteIA=false,perdisteVidas=false;
+	private Texture Tperdiste,TpVidas,tCampeon;
+	
+
+
+
 	
 	public DragonBoatGame() {
 		this(0,Tienda.vidasS,Tienda.vPuntaS*30,Tienda.dinero);
@@ -140,9 +146,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 boardminit = new Texture(Gdx.files.internal("minijuego/fondomini2.png"));
 		 boatTexture= new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 		 
+
 		 
+
+		 tCampeon= new Texture(Gdx.files.internal("data/Campeon.png"));
+		 Tperdiste=new Texture(Gdx.files.internal("data/No_Llegaste_A_Meta.png"));
+		 TpVidas= new Texture(Gdx.files.internal("data/Sin_Vidas.png"));
 		 TlineaMeta= new Texture(Gdx.files.internal("fondos/Linea_Meta2.png"));
 		 lineaMeta= new Rectangle(100,939+(1080*1),1706,98);
+
 		 ronda1= new Texture(Gdx.files.internal("data/Ronda_1.png"));
 		 ronda2= new Texture(Gdx.files.internal("data/Ronda_2.png"));
 		 ronda3= new Texture(Gdx.files.internal("data/Ronda_3.png"));
@@ -247,6 +259,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 contadorVida = new Texture(Gdx.files.internal("data/Contador_Vida.png"));
 		 
 		 rema = new Texture(Gdx.files.internal("data/rema.png"));
+		 
+			bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
+			spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
+			
+			bReanudar = new Texture(Gdx.files.internal("ui/Reanudar.png"));
+			spriteBReanudar = new SpriteDrawable(new Sprite(bReanudar));
+			
+			bAjustes = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
+			spriteBAjustes = new SpriteDrawable(new Sprite(bAjustes));
+			
+			fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa.png"));
+			
 	}
 
 	public void setValoresBarco(int eleccionBarco,int vidasS,int vPuntaS,int dineroS) {
@@ -376,7 +400,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
 			for(Rectangle chm: AChampion) {batch.draw(TChampion, chm.x, chm.y);}
-			batch.draw(TlineaMeta,lineaMeta.x,lineaMeta.y);
+//			batch.draw(TlineaMeta,lineaMeta.x,lineaMeta.y);
 			 batch.end();
 			 
 			 break;
@@ -431,22 +455,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case ESCCONFIG:
-			bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
-			spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
+
 			
-			bReanudar = new Texture(Gdx.files.internal("ui/Reanudar.png"));
-			spriteBReanudar = new SpriteDrawable(new Sprite(bReanudar));
-			
-			fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa.png"));
-			
-			updateEsc(Gdx.graphics.getDeltaTime());
+			//updateEsc(Gdx.graphics.getDeltaTime());
 			
 			table.clear();
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	        juego.iniciar(table, batch, stage);
 	        
 	        batch.begin();
-	        batch.draw(fondoEscape,0,juego.jugador.getY()-340);
+	        batch.draw(fondoEscape,550,juego.jugador.getY()-100);
 	        batch.end();
 	        
 			stage = new Stage();
@@ -603,20 +622,94 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    }
 		    break;
 		case FASE:
-			batch.begin();
-			batch.draw(enhorabuena, (WIDTH-1280)/2, (HEIGHT-172)/2, 1280, 172);
-	        batch.end();
+			
 	        
 	        long tiempoTranscurrido2 = TimeUtils.timeSinceMillis(tiempoFase);
-	        if (tiempoTranscurrido2 > 2000) {
-	        	tiempoMini=TimeUtils.millis();
-				gameState= GameState.COUNTDOWNMINI;
+	        if(perdisteVidas) {
+	        	if (tiempoTranscurrido2 < 2000) {
+	        		batch.begin();
+					batch.draw(TpVidas,(WIDTH-1280)/2, (HEIGHT-198)/2, 1280, 198);
+					batch.end();
+				} else {
+
+					ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					AChampion.add(champion);
+					perdisteVidas=false;
+					gameState=GameState.MENU;
+				}
+	        }else if(perdisteIA) {	
+	        	if (tiempoTranscurrido2 > 2000) {
+					ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					 AChampion.add(champion);
+					 perdisteIA=false;
+					gameState=GameState.MENU;
+				} else {
+					batch.begin();
+					batch.draw(Tperdiste,(WIDTH-1280)/2, (HEIGHT-226)/2, 1280, 226);
+					batch.end();
+				}
+	        	
+			}else if(nRonda!=4){
+				batch.begin();
+				batch.draw(enhorabuena, (WIDTH-1280)/2, (HEIGHT-172)/2, 1280, 172);
+		        batch.end();
+        		if (tiempoTranscurrido2 > 2000) {
+	        		tiempoMini=TimeUtils.millis();
+	        		gameState= GameState.COUNTDOWNMINI;
+				}
+				
+			}else {
+				if (tiempoTranscurrido2 > 2000) {
+					ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					 AChampion.add(champion);
+					gameState=GameState.MENU;
+				} else {
+					batch.begin();
+					batch.draw(tCampeon, (WIDTH-1280)/2, (HEIGHT-224)/2, 1280, 224);
+					batch.end();
+				}
 			}
 			}
-		
+		}
 		
 		 
-	}
+	
 	@Override
 	public void dispose () {
 		batch.dispose();
@@ -979,7 +1072,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				      }
 			   }
 			 
-			 if (lineaMeta.overlaps(rect1)) {
+			 if (juego.getLineaMeta() <= juego.jugador.getY()) {
 				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
 				 	velocity.set(0,0);
@@ -998,6 +1091,27 @@ public class DragonBoatGame extends ApplicationAdapter {
 					gameState=GameState.FASE;
 			 }
 			 
+
+			 if (juego.getLineaMeta() <= juego.IA1.getY() || juego.getLineaMeta() <= juego.IA1.getY() ||  juego.getLineaMeta() <= juego.IA1.getY()) {
+				 	ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					AChampion.add(champion);
+					tiempoFase=TimeUtils.millis();
+					perdisteIA=true;
+					gameState=GameState.FASE;
+			 }
+			 
 			 if(vidas <= 0) {
 				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
@@ -1013,7 +1127,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
-					gameState=GameState.MENU;
+					perdisteVidas=true;
+					gameState=GameState.FASE;
 					
 					
 					
@@ -1036,10 +1151,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	        //Obstaculos
 	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar,int ydis,float y) {
-	        	
-	        	
-		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
-		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis-10,70,590);
+
+		  	  Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
+		  	  Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis,70,590);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();
