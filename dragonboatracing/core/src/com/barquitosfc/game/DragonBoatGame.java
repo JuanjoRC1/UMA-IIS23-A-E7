@@ -228,7 +228,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				 300,52,49);
 		 champion = new Rectangle(MathUtils.random(550, 940),
 				 MathUtils.random(4320, 17280),52,49);
-		 escudoI = new Rectangle(100,juego.jugador.getY()+ 50,42,39);
+		 escudoI = new Rectangle(140,juego.jugador.getY() -300,100,100);
 		 AEscudo = new Array<Rectangle>();
 		 AChampion = new Array<Rectangle>();
 		 OEscudo = new Array<Rectangle>();
@@ -395,11 +395,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			update(Gdx.graphics.getDeltaTime());
 			
 			batch.begin();
-			font.draw(batch,"VELOCIDAD: "+ vPunta , 100, juego.jugador.getY()+100);
-			font.draw(batch,"VELOCIDADINC: "+ vInicial , 100, juego.jugador.getY()+50);
-			batch.draw(contadorVida, 80, juego.jugador.getY()-70, 160, 72);
-			batch.draw(unidadS, 140, juego.jugador.getY()-45, 24, 24);
-			batch.draw(decenaS, 110, juego.jugador.getY()-45, 24, 24);											
+			batch.draw(contadorVida, 80, juego.jugador.getY()-40, 160, 72);
+			batch.draw(unidadS, 140, juego.jugador.getY()-15, 24, 24);
+			batch.draw(decenaS, 110, juego.jugador.getY()-15, 24, 24);											
 //			
 
 			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
