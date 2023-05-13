@@ -332,7 +332,7 @@ public class Tienda {
 		batch.draw(decenasV, 1160, 210, 40, 40);
 		batch.draw(unidadesVp, 1210, 360, 40, 40);
 		batch.draw(decenasVp, 1160, 360, 40, 40);
-		font.draw(batch, "dineroSeguridad " + dineroSeguridad, 1700, 850);
+	
 		batch.end();
 		
 		stage = new Stage();
