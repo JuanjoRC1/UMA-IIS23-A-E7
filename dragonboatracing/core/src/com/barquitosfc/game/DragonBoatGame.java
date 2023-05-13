@@ -228,7 +228,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 				 300,52,49);
 		 champion = new Rectangle(MathUtils.random(550, 940),
 				 MathUtils.random(4320, 17280),52,49);
-//TODO
 		 escudoI = new Rectangle(100,juego.jugador.getY()+ 50,42,39);
 		 AEscudo = new Array<Rectangle>();
 		 AChampion = new Array<Rectangle>();
@@ -370,7 +369,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			decenaVida = vidas/10;
 			unidadS = unidad[unidadVida];
 			decenaS = decena[decenaVida];
-			//TODO
+			
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 			
@@ -1076,9 +1075,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 
 			 
 			 for (Iterator<Rectangle> iter = AEscudo.iterator(); iter.hasNext(); ) {
-			      Rectangle esc = iter.next();
-			      if(esc.y + 64 < bottomLimit+100) iter.remove();
-			      if(esc.overlaps(rect1)) {
+			      Rectangle es = iter.next();
+			      if(es.y + 64 < bottomLimit+100) iter.remove();
+			      if(es.overlaps(rect1)) {
 				         iter.remove();
 						escudosu=true;
 						act=true;
