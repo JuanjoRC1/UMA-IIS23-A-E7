@@ -100,6 +100,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected boolean escudosu=false;
 	protected int vInicial=300;
 	protected int championx,championy,escudox,escudoy;
+	private boolean perdisteIA;
 	
 	public DragonBoatGame() {
 		this(0,Tienda.vidasS,Tienda.vPuntaS*30,Tienda.dinero);
@@ -590,12 +591,22 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        batch.end();
 	        
 	        long tiempoTranscurrido2 = TimeUtils.timeSinceMillis(tiempoFase);
-	        if (tiempoTranscurrido2 > 2000) {
-	        	tiempoMini=TimeUtils.millis();
-				gameState= GameState.COUNTDOWNMINI;
+	        
+	        if(!perdisteIA) {	
+	        	if(nRonda!=4){
+	        		if (tiempoTranscurrido2 > 2000) {
+		        		tiempoMini=TimeUtils.millis();
+		        		gameState= GameState.COUNTDOWNMINI;
+					}else {
+						if (tiempoTranscurrido2 > 2000) {
+				        	//TODO PONER PANTALLA FINAL
+							}
+					}
+	        	}
+			}else {
+				//TODO PANTALLA DE PERDER IA E IR A MENU
 			}
-			}
-		
+		}
 		
 		 
 	}
@@ -979,6 +990,30 @@ public class DragonBoatGame extends ApplicationAdapter {
 					gameState=GameState.FASE;
 			 }
 			 
+			 Rectangle rect2= AI1.barco.getBoundingRectangle();
+			 Rectangle rect3= AI2.barco.getBoundingRectangle();
+			 Rectangle rect4= AI3.barco.getBoundingRectangle();
+			 
+			 if (lineaMeta.overlaps(rect2) || lineaMeta.overlaps(rect3) ||  lineaMeta.overlaps(rect4)) {
+				 	ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					AChampion.add(champion);
+					tiempoFase=TimeUtils.millis();
+					perdisteIA=true;
+					gameState=GameState.FASE;
+			 }
+			 
 			 if(vidas <= 0) {
 				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
@@ -1017,10 +1052,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	        //Obstaculos
 	        protected void spawntuboab(Array<Rectangle> Tuboab,Array<Rectangle> Tuboar,int ydis,float y) {
-	        	
-	        	
-		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
-		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis,70,590);
+
+		  	  Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
+		  	  Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis,70,590);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();
