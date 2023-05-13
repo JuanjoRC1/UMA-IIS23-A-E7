@@ -33,7 +33,7 @@ public class EscAjustes {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        batch.draw(fondoEscape,0,juego.jugador.getY()-340);
+        batch.draw(fondoEscape,0,juego.jugador.getY()-340,643,820);
         batch.end();
         
 		stage = new Stage();

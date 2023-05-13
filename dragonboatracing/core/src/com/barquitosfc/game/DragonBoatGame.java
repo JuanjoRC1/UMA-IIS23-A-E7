@@ -269,7 +269,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			bAjustes = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
 			spriteBAjustes = new SpriteDrawable(new Sprite(bAjustes));
 			
-			fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa.png"));
+			fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa1.png"));
 			
 	}
 
@@ -465,7 +465,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        juego.iniciar(table, batch, stage);
 	        
 	        batch.begin();
-	        batch.draw(fondoEscape,550,juego.jugador.getY()-100);
+	        batch.draw(fondoEscape,660,juego.jugador.getY()+25,600,400);
 	        batch.end();
 	        
 			stage = new Stage();
@@ -477,7 +477,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        
 			//Botones Reanudar
 			Button buttonReanudar= new Button(new Button.ButtonStyle(spriteBReanudar,spriteBReanudar,spriteBReanudar));
-			buttonReanudar.setPosition(800, 500);
+			buttonReanudar.setPosition(810, 500);
 			buttonReanudar.setSize(300,40);
 			buttonReanudar.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -489,7 +489,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 			//Botones Salir
 			Button buttonSalir= new Button(new Button.ButtonStyle(spriteBSalir,spriteBSalir,spriteBSalir));
-			buttonSalir.setPosition(800, 400);
+			buttonSalir.setPosition(805, 400);
 			buttonSalir.setSize(300,40);
 			buttonSalir.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
@@ -628,8 +628,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        if(perdisteVidas) {
 	        	if (tiempoTranscurrido2 < 2000) {
 	        		batch.begin();
+	        		batch.draw(boardPlay,0,0);
 					batch.draw(TpVidas,(WIDTH-1280)/2, (HEIGHT-198)/2, 1280, 198);
 					batch.end();
+					
 				} else {
 
 					ilit = HEIGHT/7;
@@ -647,6 +649,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					AEscudo.add(escudo);
 					AChampion.add(champion);
 					perdisteVidas=false;
+					nRonda = 0;
 					gameState=GameState.MENU;
 				}
 	        }else if(perdisteIA) {	
@@ -666,15 +669,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 					AEscudo.add(escudo);
 					 AChampion.add(champion);
 					 perdisteIA=false;
+					 nRonda = 0;
 					gameState=GameState.MENU;
 				} else {
 					batch.begin();
+					batch.draw(boardPlay,0,0);
 					batch.draw(Tperdiste,(WIDTH-1280)/2, (HEIGHT-226)/2, 1280, 226);
 					batch.end();
 				}
 	        	
 			}else if(nRonda!=3){
 				batch.begin();
+				batch.draw(boardPlay,0,0);
 				batch.draw(enhorabuena, (WIDTH-1280)/2, (HEIGHT-172)/2, 1280, 172);
 		        batch.end();
         		if (tiempoTranscurrido2 > 2000) {
@@ -698,9 +704,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					 AChampion.add(champion);
+					 nRonda = 0;
 					gameState=GameState.MENU;
 				} else {
 					batch.begin();
+					batch.draw(boardPlay,0,0);
 					batch.draw(tCampeon, (WIDTH-1280)/2, (HEIGHT-224)/2, 1280, 224);
 					batch.end();
 				}
