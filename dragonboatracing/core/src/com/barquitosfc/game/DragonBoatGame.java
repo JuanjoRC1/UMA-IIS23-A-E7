@@ -499,8 +499,26 @@ public class DragonBoatGame extends ApplicationAdapter {
 		
 			break;
 		case COUNTDOWNMINI:
-			minijuego.iniciar(table, batch, stage);
 		
+	    	// TODO RESETEO DE MINIJUEGO
+//	    	ilit = HEIGHT/7;
+//		 	acceleration.set(0, 0); 
+//		 	velocity.set(0,0);
+//			camera.setToOrtho(false,WIDTH,HEIGHT);
+//			batch = new SpriteBatch();
+//			camera.update();
+//			juego = new Juego();
+//			AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+//			AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+//			AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+//			setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+//			juego.jugador.setvPunta(vPunta);
+//			AEscudo.add(escudo);
+//			AChampion.add(champion);
+//			nRonda++;
+//			tiempoInicio = TimeUtils.millis();
+		// CAMBIAR LO DE ARRIBA PARA QUE RESETEE EL MINIJUEGO
+			minijuego.iniciar(table, batch, stage);
 			long tiempoTranscurridomini = TimeUtils.timeSinceMillis(tiempoMini);
 		    if (tiempoTranscurridomini < 1000) {
 		    	batch.begin();
@@ -519,7 +537,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    	 batch.draw(rema,1050, 1200, 200, 200);
 		        batch.end();
 		    }else {
-		    	// TODO RESETEO DE MINIJUEGO
+
 		        gameState = GameState.MINIJUEGO;
 		    }
 			break;
