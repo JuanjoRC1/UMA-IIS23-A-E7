@@ -745,7 +745,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    			    e.printStackTrace();
 				    			    
 				    			}
-				    		 ilit = HEIGHT/7;
+				    		 	ilit = HEIGHT/7;
 							 	acceleration.set(0, 0); 
 							 	velocity.set(0,0);
 								camera.setToOrtho(false,WIDTH,HEIGHT);
@@ -761,7 +761,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 								AChampion.add(champion);
 								nRonda++;
 								tiempoInicio = TimeUtils.millis();
-					    	  gameState=GameState.PLAY;
+								gameState=GameState.COUNTDOWN;
 					      }
 				      }
 	     }
@@ -942,7 +942,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			   }
 			 
 			 if (lineaMeta.overlaps(rect1)) {
-				 ilit = HEIGHT/7;
+				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
 				 	velocity.set(0,0);
 					camera.setToOrtho(false,WIDTH,HEIGHT);
@@ -956,7 +956,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
-					 tiempoFase=TimeUtils.millis();
+					tiempoFase=TimeUtils.millis();
 					gameState=GameState.FASE;
 			 }
 			 
