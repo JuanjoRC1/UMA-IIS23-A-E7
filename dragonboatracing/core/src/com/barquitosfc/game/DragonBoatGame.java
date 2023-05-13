@@ -604,12 +604,33 @@ public class DragonBoatGame extends ApplicationAdapter {
 					}
 	        	}
 			}else {
-				//TODO PANTALLA DE PERDER IA E IR A MENU
+				if (tiempoTranscurrido2 > 2000) {
+					ilit = HEIGHT/7;
+				 	acceleration.set(0, 0); 
+				 	velocity.set(0,0);
+					camera.setToOrtho(false,WIDTH,HEIGHT);
+					batch = new SpriteBatch();
+					camera.update();
+					juego = new Juego();
+					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					juego.jugador.setvPunta(vPunta);
+					AEscudo.add(escudo);
+					 AChampion.add(champion);
+					gameState=GameState.MENU;
+				} else {
+					batch.begin();
+					//TODO DIBUJAR pantalla de cuando pierdes
+					batch.end();
+				}
+			}
 			}
 		}
 		
 		 
-	}
+	
 	@Override
 	public void dispose () {
 		batch.dispose();
