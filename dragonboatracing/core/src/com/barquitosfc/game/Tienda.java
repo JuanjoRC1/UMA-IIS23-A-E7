@@ -33,10 +33,10 @@ public class Tienda {
 	protected static int vidasS=vidas1;
 	protected static int vPuntaS=vPunta1;
 	protected static int eleccionBarco = 0;
-	protected int dineroSeguridad = dinero;
+	protected int dineroSeguridad;
     protected int barcoSeguridad;    
-    protected int vidaSeguridad1;
-    protected int velocidadSeguridad1;
+    protected int vidaSeguridad1,vidaSeguridad2,vidaSeguridad3;
+    protected int velocidadSeguridad1,velocidadSeguridad2,velocidadSeguridad3;
 	protected int unidadesD;
 	protected int decenasD;
 	protected int unidadesVid;
@@ -274,6 +274,10 @@ public class Tienda {
         dineroSeguridad = dinero;
         vidaSeguridad1 = vidas1;
         velocidadSeguridad1 = vPunta1;
+        vidaSeguridad2 = vidas2;
+        velocidadSeguridad2 = vPunta2;
+        vidaSeguridad3 = vidas3;
+        velocidadSeguridad3 = vPunta3;
         barcoSeguridad = eleccionBarco;
    	 
     }
@@ -289,6 +293,7 @@ public class Tienda {
 	}
 	public void sumaMonedas(int cant) {
 		dinero+=cant;
+		dineroSeguridad+=cant;
 	}
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
@@ -327,7 +332,7 @@ public class Tienda {
 		batch.draw(decenasV, 1160, 210, 40, 40);
 		batch.draw(unidadesVp, 1210, 360, 40, 40);
 		batch.draw(decenasVp, 1160, 360, 40, 40);
-		
+		font.draw(batch, "dineroSeguridad " + dineroSeguridad, 1700, 850);
 		batch.end();
 		
 		stage = new Stage();
@@ -485,6 +490,12 @@ public class Tienda {
 				eleccionBarco= barcoSeguridad;
 				vidasS=vidaSeguridad1;
 				vPuntaS = velocidadSeguridad1;
+				vidas1 = vidaSeguridad1;
+				vidas2 = vidaSeguridad2;
+				vidas3 = vidaSeguridad3;
+				vPunta1 = velocidadSeguridad1;
+				vPunta2 = velocidadSeguridad2;
+				vPunta3 = velocidadSeguridad3;
 				dinero = dineroSeguridad;
 				DragonBoatGame.gameState=DragonBoatGame.GameState.MENU;	
 				return false;
