@@ -100,7 +100,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected boolean escudosu=false;
 	protected int vInicial=300;
 	protected int championx,championy,escudox,escudoy;
-	private boolean perdisteIA;
+	private boolean perdisteIA=false,perdisteVidas=false;
 	private Texture Tperdiste,TpVidas;
 	
 
@@ -607,8 +607,13 @@ public class DragonBoatGame extends ApplicationAdapter {
 			
 	        
 	        long tiempoTranscurrido2 = TimeUtils.timeSinceMillis(tiempoFase);
-	        if(vidas==0) {
-	        	if (tiempoTranscurrido2 > 2000) {
+	        if(perdisteVidas) {
+	        	if (tiempoTranscurrido2 < 2000) {
+	        		batch.begin();
+					batch.draw(TpVidas,(WIDTH-1280)/2, (HEIGHT-198)/2, 1280, 198);
+					batch.end();
+				} else {
+
 					ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
 				 	velocity.set(0,0);
@@ -622,12 +627,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
-					 AChampion.add(champion);
+					AChampion.add(champion);
+					perdisteVidas=false;
 					gameState=GameState.MENU;
-				} else {
-					batch.begin();
-					batch.draw(TpVidas,(WIDTH-1280)/2, (HEIGHT-198)/2, 1280, 198);
-					batch.end();
 				}
 	        }else if(perdisteIA) {	
 	        	if (tiempoTranscurrido2 > 2000) {
@@ -1106,6 +1108,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
+					perdisteVidas=true;
 					gameState=GameState.FASE;
 					
 					
