@@ -519,6 +519,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    	 batch.draw(rema,1050, 1200, 200, 200);
 		        batch.end();
 		    }else {
+		    	// TODO RESETEO DE MINIJUEGO
 		        gameState = GameState.MINIJUEGO;
 		    }
 			break;
@@ -660,9 +661,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	     public void updateflapi(float deltaTime) {
 	    	 		
 
-	    	 tiempo+=3;
-	    	 currentFrame= minijuego.animacion.getKeyFrame(tiempo, true);
-	    	 currentFramechrum= minijuego.churumani.getKeyFrame(tiempo, false);
+	    	 	tiempo+=3;
+	    	 	currentFrame= minijuego.animacion.getKeyFrame(tiempo, true);
+	    	 	currentFramechrum= minijuego.churumani.getKeyFrame(tiempo, false);
 	    	 		camfla.update();
 				    leftLimitmini = camfla.position.x - 1920 / 2;
 				    rightLimitmini = camfla.position.x + 1920 / 2;
