@@ -52,20 +52,21 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected int vPunta = Tienda.vPuntaS;
 	protected int dinero = Tienda.dinero;
 	protected int unidadVida;
-	protected int decenaVida,tiempoP,unidadE,decenaE;
-	protected float laY;
+	protected int decenaVida,tiempoP,unidadE,decenaE,posicion;
+	protected float pos1,pos2,pos3,mipos;
 	
 	private int nRonda=0;
 	private long lastDropEscudo;
-	protected Texture unidadS,contadorVida,decenaS,unidadCt,decenaCt,unidadV,decenaV;
+	protected Texture unidadS,contadorVida,decenaS,unidadCt,decenaCt,unidadV,decenaV,posicionT,panelPos;
 	int unidadC,decenaC;
 	protected Array<Rectangle> AChampion,AEscudo,OEscudo,AUnidad,ADecena;
 	protected Texture unidad[] = new Texture[10];
 	protected Texture decena[] = new Texture[10];
+	protected Texture posicionA[] = new Texture[4];
 	protected float ilit = HEIGHT / 7; 
 	protected Barco boat;
 	protected BitmapFont font;
-	protected Texture bInicio,bAjustes,bTienda,bSalir,ronda1,ronda2,ronda3,rondaFinal,enhorabuena;
+	protected Texture bInicio,bAjustes,bTienda,bSalir,ronda1,ronda2,ronda3,rondaFinal,enhorabuena,primero,segundo,tercero,cuarto;
 	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion,rema,TlineaMeta;
 	protected Stage stage;
 	protected Table table;
@@ -189,6 +190,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 	   	 	n7 = new Texture(Gdx.files.internal("data/Numero7.png"));
 	   	 	n8 = new Texture(Gdx.files.internal("data/Numero8.png"));
 	   	 	n9 = new Texture(Gdx.files.internal("data/Numero9.png"));
+	   	 	primero = new Texture(Gdx.files.internal("data/Posicion1.png"));
+	   	 	segundo = new Texture(Gdx.files.internal("data/Posicion2.png"));
+	   	 	tercero = new Texture(Gdx.files.internal("data/Posicion3.png"));
+	   	 	cuarto = new Texture(Gdx.files.internal("data/Posicion4.png"));
+	   	 	panelPos = new Texture(Gdx.files.internal("data/Panel_Posicion.png"));
 		 Tuboart = new Texture(Gdx.files.internal("minijuego/palochino(abajo).png"));
 		 Tuboabt = new Texture(Gdx.files.internal("minijuego/palochino.png"));
 		 fin = new Texture(Gdx.files.internal("minijuego/fin.png"));
@@ -225,7 +231,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 champion = new Rectangle();
 		 escudoI = new Rectangle();
 		 escudo = new Rectangle(MathUtils.random(550, 940),
-				 300,52,49);
+				 MathUtils.random(4320, 17280),52,49);
 		 champion = new Rectangle(MathUtils.random(550, 940),
 				 MathUtils.random(4320, 17280),52,49);
 		 escudoI = new Rectangle(140,juego.jugador.getY() -300,100,100);
@@ -262,6 +268,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 decena[7] = n7;
 		 decena[8] = n8;
 		 decena[9] = n9;
+		 posicionA[0] = primero;
+		 posicionA[1] = segundo;
+		 posicionA[2] = tercero;
+		 posicionA[3] = cuarto;
+		 
 		 contadorVida = new Texture(Gdx.files.internal("data/Contador_Vida.png"));
 		 
 		 rema = new Texture(Gdx.files.internal("data/rema.png"));
@@ -370,6 +381,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			unidadS = unidad[unidadVida];
 			decenaS = decena[decenaVida];
 			
+			if(mipos>pos1 && mipos>pos2 && mipos>pos3) posicion=0;
+			if((mipos>pos1 && mipos>pos2 && mipos<pos3) || (mipos>pos1 && mipos<pos2 && mipos>pos3) || (mipos<pos1 && mipos>pos2 && mipos>pos3)) posicion=1;
+			if((mipos>pos1 && mipos<pos2 && mipos<pos3) || (mipos<pos1 && mipos>pos2 && mipos<pos3) || (mipos>pos1 && mipos<pos2 && mipos>pos3)) posicion=2;	
+			if(pos1>mipos && pos2>mipos && pos3>mipos) posicion = 3;	
+			posicionT = posicionA[posicion];
+			
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 			
@@ -398,8 +415,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(contadorVida, 80, juego.jugador.getY()-40, 160, 72);
 			batch.draw(unidadS, 140, juego.jugador.getY()-15, 24, 24);
 			batch.draw(decenaS, 110, juego.jugador.getY()-15, 24, 24);											
-//			
-
+			batch.draw(panelPos, 1750,juego.jugador.getY() +400, 130, 100);
+			batch.draw(posicionT, 1765, juego.jugador.getY() +400, 100, 100);
+//			font.draw(batch, "Velocidad " + vPunta, 110, juego.jugador.getY()+50);
+			
 			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
 			for(Rectangle chm: AChampion) {batch.draw(TChampion, chm.x, chm.y);}
 			if(escudosu==true) {
@@ -990,10 +1009,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 if(TimeUtils.millis()-lastDropEscudo> tEscudo) {
 				 escudosu=false;
 			 }
-//			 int t = Math.toIntExact(TimeUtils.millis()-lastDropEscudo);
-//			 int q =t/1000;
-//			 tiempoP = 10 - q;
+			 
 			 escudoI.setY(juego.jugador.getY()+50);
+			 pos1 = AI1.barco.getY();
+			pos2 = AI2.barco.getY();
+			pos3 = AI3.barco.getY();
+			mipos = juego.jugador.getY();
 			 
 	   		 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<50) {
 			     spawnRoca(Rocas);

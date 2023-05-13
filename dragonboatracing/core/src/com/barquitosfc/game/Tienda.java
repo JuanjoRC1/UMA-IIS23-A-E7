@@ -34,9 +34,9 @@ public class Tienda {
 	protected static int vPuntaS=vPunta1;
 	protected static int eleccionBarco = 0;
 	protected int dineroSeguridad = dinero;
-    protected int barcoSeguridad = eleccionBarco;    
-    protected int vidaSeguridad1 = vidas1;
-    protected int velocidadSeguridad1 = vPunta1;
+    protected int barcoSeguridad;    
+    protected int vidaSeguridad1;
+    protected int velocidadSeguridad1;
 	protected int unidadesD;
 	protected int decenasD;
 	protected int unidadesVid;
@@ -271,8 +271,10 @@ public class Tienda {
         decenasA[7] = n7;
         decenasA[8] = n8;
         decenasA[9] = n9;
-        
-        
+        dineroSeguridad = dinero;
+        vidaSeguridad1 = vidas1;
+        velocidadSeguridad1 = vPunta1;
+        barcoSeguridad = eleccionBarco;
    	 
     }
     
