@@ -146,8 +146,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 boatTexture= new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 		 
 		 
-		 TlineaMeta= new Texture(Gdx.files.internal("fondos/Linea_Meta2.png"));
-		 lineaMeta= new Rectangle(100,939+(1080*1),1706,98);
+//		 TlineaMeta= new Texture(Gdx.files.internal("fondos/Linea_Meta2.png"));
+//		 lineaMeta= new Rectangle(100,939+(1080*1),1706,98);
 		 ronda1= new Texture(Gdx.files.internal("data/Ronda_1.png"));
 		 ronda2= new Texture(Gdx.files.internal("data/Ronda_2.png"));
 		 ronda3= new Texture(Gdx.files.internal("data/Ronda_3.png"));
@@ -393,7 +393,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.begin();
 			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
 			for(Rectangle chm: AChampion) {batch.draw(TChampion, chm.x, chm.y);}
-			batch.draw(TlineaMeta,lineaMeta.x,lineaMeta.y);
+//			batch.draw(TlineaMeta,lineaMeta.x,lineaMeta.y);
 			 batch.end();
 			 
 			 break;
@@ -1003,7 +1003,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				      }
 			   }
 			 
-			 if (lineaMeta.overlaps(rect1)) {
+			 if (juego.getLineaMeta() <= juego.jugador.getY()) {
 				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
 				 	velocity.set(0,0);

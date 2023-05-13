@@ -28,6 +28,8 @@ public class Juego {
 	public Barco jugador,IA1,IA2,IA3; 
 	public Texture mainBarco, boardPlay,TIA1,TIA2,TIA3;
 	public Carril C1,C2,C3,C4;
+	public Rectangle lineaMeta;
+	public Texture TlineaMeta;
 
 	
 	public  Juego() {
@@ -36,7 +38,8 @@ public class Juego {
 		TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
 		TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
 		TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
-		
+		TlineaMeta= new Texture(Gdx.files.internal("fondos/Linea_Meta2.png"));
+		lineaMeta= new Rectangle(100,939+(1080*1),1706,98);
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
 	
 
@@ -173,6 +176,11 @@ public class Juego {
 		batch.begin();
 		for(int i = 0; i < 20 ; i++) {
 			batch.draw(boardPlay,0,HEIGHT*i);
+			
+			if(i ==1) {
+				batch.draw(TlineaMeta,lineaMeta.x,HEIGHT*i);
+				lineaMeta.setY(HEIGHT*i +110);
+			}
 		}
 		batch.end();
 		
@@ -200,7 +208,9 @@ public class Juego {
 		jugador.setvPunta(velocidad);
 	}
 		
-	
+	public float getLineaMeta() {
+		return lineaMeta.y;
+	}
 	
 	
 	public int CarrilIzq(Carril i) {
