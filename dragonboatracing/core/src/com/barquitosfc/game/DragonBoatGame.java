@@ -1022,11 +1022,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 					gameState=GameState.FASE;
 			 }
 			 
-			 Rectangle rect2= AI1.barco.getBoundingRectangle();
-			 Rectangle rect3= AI2.barco.getBoundingRectangle();
-			 Rectangle rect4= AI3.barco.getBoundingRectangle();
+//			 Rectangle rect2= AI1.barco.getBoundingRectangle();
+//			 Rectangle rect3= AI2.barco.getBoundingRectangle();
+//			 Rectangle rect4= AI3.barco.getBoundingRectangle();
 			 
-			 if (lineaMeta.overlaps(rect2) || lineaMeta.overlaps(rect3) ||  lineaMeta.overlaps(rect4)) {
+			 if (juego.getLineaMeta() <= juego.IA1.getY() || juego.getLineaMeta() <= juego.IA1.getY() ||  juego.getLineaMeta() <= juego.IA1.getY()) {
 				 	ilit = HEIGHT/7;
 				 	acceleration.set(0, 0); 
 				 	velocity.set(0,0);
