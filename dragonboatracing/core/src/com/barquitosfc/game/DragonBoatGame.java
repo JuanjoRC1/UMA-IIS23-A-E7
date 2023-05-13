@@ -419,8 +419,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			unidadCt = unidad[unidadC];
 			decenaCt = decena[decenaC];
 			float pos=minijuego.jugador.getX()+1500;
+			  batch = new SpriteBatch();
 			minijuego.iniciar(table, batch,stage);
 			batch.begin();
+			
 			for(Rectangle tuboar: Tuboar) {batch.draw(Tuboart, tuboar.x, tuboar.y);
 			 
 			}
@@ -519,9 +521,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 		case COUNTDOWNMINI:
 		
-	    	// TODO RESETEO DE MINIJUEGO
-//	    	ilit = HEIGHT/7;
-//		 	acceleration.set(0, 0); 
+	    	// 
+			
+		
+			camfla.setToOrtho(false,WIDTH,HEIGHT);
+			leftLimitmini = camfla.position.x - Gdx.graphics.getWidth() / 2;
+			rightLimitmini = camfla.position.x + Gdx.graphics.getWidth() / 2;
+			topLimitmini = camfla.position.y + Gdx.graphics.getHeight() / 2;
+			bottomLimitmini = camfla.position.y - Gdx.graphics.getHeight() / 2;
+			ct=0;
+			
+			 batch = new SpriteBatch();
+			camfla.update();
+		
+
 //		 	velocity.set(0,0);
 //			camera.setToOrtho(false,WIDTH,HEIGHT);
 //			batch = new SpriteBatch();
@@ -537,6 +550,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 //			nRonda++;
 //			tiempoInicio = TimeUtils.millis();
 		// CAMBIAR LO DE ARRIBA PARA QUE RESETEE EL MINIJUEGO
+
+			Tuboar.clear();
+			Tuboab.clear();
+			 minijuego=new minijuego();
+			 minijuego.inicializar();
 			minijuego.iniciar(table, batch, stage);
 			long tiempoTranscurridomini = TimeUtils.timeSinceMillis(tiempoMini);
 		    if (tiempoTranscurridomini < 1000) {
@@ -655,7 +673,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch.end();
 				}
 	        	
-			}else if(nRonda!=4){
+			}else if(nRonda!=3){
 				batch.begin();
 				batch.draw(enhorabuena, (WIDTH-1280)/2, (HEIGHT-172)/2, 1280, 172);
 		        batch.end();
@@ -857,6 +875,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    			    e.printStackTrace();
 				    			    
 				    			}
+				    		 
 				    		 	ilit = HEIGHT/7;
 							 	acceleration.set(0, 0); 
 							 	velocity.set(0,0);
@@ -1108,10 +1127,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
+					tiempoFase=TimeUtils.millis();
 					perdisteVidas=true;
 					gameState=GameState.FASE;
-					
-					
 					
 			 }
 
