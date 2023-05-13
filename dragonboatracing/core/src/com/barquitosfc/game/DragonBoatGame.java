@@ -52,11 +52,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected int vPunta = Tienda.vPuntaS;
 	protected int dinero = Tienda.dinero;
 	protected int unidadVida;
-	protected int decenaVida;
+	protected int decenaVida,tiempoP,unidadE,decenaE;
+	protected float laY;
 	private long lastDropEscudo;
-	protected Texture unidadS,contadorVida,decenaS,unidadCt,decenaCt;
+	protected Texture unidadS,contadorVida,decenaS,unidadCt,decenaCt,unidadV,decenaV;
 	int unidadC,decenaC;
-	protected Array<Rectangle> AChampion,AEscudo;
+	protected Array<Rectangle> AChampion,AEscudo,OEscudo,AUnidad,ADecena;
 	protected Texture unidad[] = new Texture[10];
 	protected Texture decena[] = new Texture[10];
 	protected float ilit = HEIGHT / 7; 
@@ -81,7 +82,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public static final int HEIGHT	=1080;
 	protected Array<Rectangle>Troncos,Rocas,Cocodrilos;
 	protected Array<Rectangle> Tuboar,Tuboab;
-	protected Rectangle escudo,champion;
+	protected Rectangle escudo,champion,unidadR,decenaR,escudoI;
 	protected long lastDropTimeRoca,lastDropTimeTroncos,lastDropTimeCocodrilos,lastDropTimeTuboab,lastDropTimeTuboar;
 	protected Tienda tienda;
 	protected EscAjustes escAjustes;
@@ -97,7 +98,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected List<Boolean>estadosMovimiento;
 	protected Texture currentFrame,currentFramechrum; 
 	private Sound jump; 
-	protected boolean escudosu=false;
+	protected boolean escudosu=false,act=false,esc=false;
 	protected int vInicial=300;
 	protected int championx,championy,escudox,escudoy;
 	
@@ -201,13 +202,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 Cocodrilos = new Array<Rectangle>();
 		 escudo = new Rectangle();
 		 champion = new Rectangle();
-		 
+		 escudoI = new Rectangle();
 		 escudo = new Rectangle(MathUtils.random(550, 940),
-				 MathUtils.random(4320, 17280),52,49);
+				 300,52,49);
 		 champion = new Rectangle(MathUtils.random(550, 940),
 				 MathUtils.random(4320, 17280),52,49);
+//TODO
+		 escudoI = new Rectangle(100,juego.jugador.getY()+ 50,42,39);
 		 AEscudo = new Array<Rectangle>();
 		 AChampion = new Array<Rectangle>();
+		 OEscudo = new Array<Rectangle>();
+		 OEscudo.add(escudoI);
 		 AEscudo.add(escudo);
 		 AChampion.add(champion);
 		 
@@ -335,8 +340,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 			decenaVida = vidas/10;
 			unidadS = unidad[unidadVida];
 			decenaS = decena[decenaVida];
-			
-			
+			//TODO
 			juego.setSkinBarcos(barcoDef);
 			juego.iniciar(table, batch, stage);
 			
@@ -368,12 +372,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 			batch.draw(contadorVida, 80, juego.jugador.getY()-70, 160, 72);
 			batch.draw(unidadS, 140, juego.jugador.getY()-45, 24, 24);
 			batch.draw(decenaS, 110, juego.jugador.getY()-45, 24, 24);											
-			batch.end();
 //			
-			batch.begin();
+
 			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
 			for(Rectangle chm: AChampion) {batch.draw(TChampion, chm.x, chm.y);}
-			 batch.end();
+			if(escudosu==true) {
+			for(Rectangle e: OEscudo) {batch.draw(TEscudo, e.x,e.y);}
+			}
+			batch.end();
 			 
 			 break;
 			
@@ -484,6 +490,8 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					 AChampion.add(champion);
+					 OEscudo.add(escudoI);
+					 esc=true;
 					gameState=GameState.MENU;
 					
 					return false;		
@@ -814,7 +822,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 if(TimeUtils.millis()-lastDropEscudo> tEscudo) {
 				 escudosu=false;
 			 }
-	   		 
+//			 int t = Math.toIntExact(TimeUtils.millis()-lastDropEscudo);
+//			 int q =t/1000;
+//			 tiempoP = 10 - q;
+			 escudoI.setY(juego.jugador.getY()+50);
+			 
 	   		 if (TimeUtils.millis() - lastDropTimeRoca > tiempoDeEsperaEntreObstaculos && Rocas.size<50) {
 			     spawnRoca(Rocas);
 			     
@@ -895,12 +907,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 
 			 
 			 for (Iterator<Rectangle> iter = AEscudo.iterator(); iter.hasNext(); ) {
-			      Rectangle esc = iter.next();
+			      Rectangle es = iter.next();
 //			      roca.y -= 100 * Gdx.graphics.getDeltaTime();
-			      if(esc.y + 64 < bottomLimit+100) iter.remove();
-			      if(esc.overlaps(rect1)) {
+			      if(es.y + 64 < bottomLimit+100) iter.remove();
+			      if(es.overlaps(rect1)) {
 				         iter.remove();
 						escudosu=true;
+						act=true;
+						esc=false;
 						lastDropEscudo=TimeUtils.millis();
 				      }
 			   }
@@ -915,8 +929,23 @@ public class DragonBoatGame extends ApplicationAdapter {
 						 
 				      }
 			   }
+			
+			 for (Iterator<Rectangle> iter = OEscudo.iterator(); iter.hasNext(); ) {
+			      Rectangle e = iter.next();
+			      if(e.y + 64 < bottomLimit+100) iter.remove();
+			      if(escudosu==false && act==true) {
+				         iter.remove();
+				         act=false;
+						 esc=false;
+				      }else if(escudosu==true && esc==true && act ==true) {
+				    	  iter.remove();
+				    	  escudosu=false;
+				    	  act=false;
+				    	  esc=false;
+				      }
+			   }
 			 
-			 
+		 //TODO
 			 
 			 if(vidas <= 0) {
 				 	ilit = HEIGHT/7;
@@ -933,6 +962,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
+					OEscudo.add(escudoI);
 					gameState=GameState.MENU;
 					
 					
@@ -943,6 +973,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	       
 	        public void updateEsc(float deltaTime) {
 	        	camera.update();
+	        
 	        }
 	        
 	        public void stopBoat() {
