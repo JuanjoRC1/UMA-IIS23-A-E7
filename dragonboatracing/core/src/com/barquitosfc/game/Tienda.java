@@ -134,7 +134,7 @@ public class Tienda {
    	 	menosR = new Texture(Gdx.files.internal("ui/Simbolo_Menos.png"));
    	 	masM = new Texture(Gdx.files.internal("ui/Boton_Mas_Morado.png"));
    	 	menosM = new Texture(Gdx.files.internal("ui/Boton_Menos_Morado.png"));
-   	 	confirmar = new Texture(Gdx.files.internal("ui/Boton_Tick.png"));
+   	 	confirmar = new Texture(Gdx.files.internal("data/Boton_Confirmar.png"));
    	 	casa = new Texture(Gdx.files.internal("data/Reset.png"));
    	 	letreroVida = new Texture(Gdx.files.internal("data/Cartel_Vida.png"));
    	 	letreroVelocidad = new Texture(Gdx.files.internal("data/Cartel_Velocidad.png"));
