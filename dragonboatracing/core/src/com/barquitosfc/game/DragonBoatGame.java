@@ -331,18 +331,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 			});
 			table.addActor(buttonPlay);
 	    	//Botones Inicio
-				Button buttonPlaymini= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
-				buttonPlaymini.setPosition(table.getOriginX()-200, table.getOriginY()+152);
-				buttonPlaymini.setSize(300,40);
-				buttonPlaymini.addListener(new InputListener() {
-					public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
-						   tiempoMini=TimeUtils.millis();
-						gameState=GameState.COUNTDOWNMINI;
-						return false;
-						
-					}
-				});
-				table.addActor(buttonPlaymini);
+//				Button buttonPlaymini= new Button(new Button.ButtonStyle(spriteBInicio,spriteBInicio,spriteBInicio));
+//				buttonPlaymini.setPosition(table.getOriginX()-200, table.getOriginY()+152);
+//				buttonPlaymini.setSize(300,40);
+//				buttonPlaymini.addListener(new InputListener() {
+//					public boolean touchDown(InputEvent event,float x,float y,int pointer,int button) {
+//						   tiempoMini=TimeUtils.millis();
+//						gameState=GameState.COUNTDOWNMINI;
+//						return false;
+//						
+//					}
+//				});
+//				table.addActor(buttonPlaymini);
 			//BOTON
 
 			
