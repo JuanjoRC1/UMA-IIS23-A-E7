@@ -30,6 +30,7 @@ public class Juego {
 	public Carril C1,C2,C3,C4;
 	public Rectangle lineaMeta;
 	public Texture TlineaMeta;
+	public int Duracion = 15;
 
 	
 	public  Juego() {
@@ -174,10 +175,10 @@ public class Juego {
 
 		// Genera el mapa Hay que mejorar
 		batch.begin();
-		for(int i = 0; i < 20 ; i++) {
+		for(int i = 0; i < Duracion ; i++) {
 			batch.draw(boardPlay,0,HEIGHT*i);
 			
-			if(i ==1) {
+			if(i == Duracion-1) {
 				batch.draw(TlineaMeta,lineaMeta.x,HEIGHT*i);
 				lineaMeta.setY(HEIGHT*i +110);
 			}
