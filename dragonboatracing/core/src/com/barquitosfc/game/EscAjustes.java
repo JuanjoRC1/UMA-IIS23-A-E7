@@ -24,26 +24,7 @@ public class EscAjustes {
 	protected Texture bReanudar, bAjustes, bSalir, fondoEscape;
 	protected SpriteDrawable spriteBSalir, spriteBReanudar, spriteBAjustes;
 	
-	public void inicializar() {
-		
-		bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
-		spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
-		
-		bReanudar = new Texture(Gdx.files.internal("ui/Reanudar.png"));
-		spriteBReanudar = new SpriteDrawable(new Sprite(bReanudar));
-		
-		bAjustes = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
-		spriteBAjustes = new SpriteDrawable(new Sprite(bAjustes));
-		
-		fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa.png"));
-		
-		
-	}
-	
-	
-	public EscAjustes() {
-		this.inicializar();
-	}
+
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage,Juego juego) {
 		

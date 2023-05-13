@@ -102,6 +102,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected int championx,championy,escudox,escudoy;
 	private boolean perdisteIA;
 	
+
+
+
+	
 	public DragonBoatGame() {
 		this(0,Tienda.vidasS,Tienda.vPuntaS*30,Tienda.dinero);
 	}
@@ -248,6 +252,18 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 contadorVida = new Texture(Gdx.files.internal("data/Contador_Vida.png"));
 		 
 		 rema = new Texture(Gdx.files.internal("data/rema.png"));
+		 
+			bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
+			spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
+			
+			bReanudar = new Texture(Gdx.files.internal("ui/Reanudar.png"));
+			spriteBReanudar = new SpriteDrawable(new Sprite(bReanudar));
+			
+			bAjustes = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
+			spriteBAjustes = new SpriteDrawable(new Sprite(bAjustes));
+			
+			fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa.png"));
+			
 	}
 
 	public void setValoresBarco(int eleccionBarco,int vidasS,int vPuntaS,int dineroS) {
@@ -430,22 +446,17 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 			
 		case ESCCONFIG:
-			bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
-			spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
+
 			
-			bReanudar = new Texture(Gdx.files.internal("ui/Reanudar.png"));
-			spriteBReanudar = new SpriteDrawable(new Sprite(bReanudar));
-			
-			fondoEscape = new Texture(Gdx.files.internal("ui/menuPausa.png"));
-			
-			updateEsc(Gdx.graphics.getDeltaTime());
+			//updateEsc(Gdx.graphics.getDeltaTime());
 			
 			table.clear();
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 	        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	        juego.iniciar(table, batch, stage);
 	        
 	        batch.begin();
-	        batch.draw(fondoEscape,0,juego.jugador.getY()-340);
+	        batch.draw(fondoEscape,550,juego.jugador.getY()-100);
 	        batch.end();
 	        
 			stage = new Stage();
