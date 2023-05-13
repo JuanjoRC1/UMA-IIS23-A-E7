@@ -395,8 +395,10 @@ public class DragonBoatGame extends ApplicationAdapter {
 			unidadCt = unidad[unidadC];
 			decenaCt = decena[decenaC];
 			float pos=minijuego.jugador.getX()+1500;
+			  batch = new SpriteBatch();
 			minijuego.iniciar(table, batch,stage);
 			batch.begin();
+			
 			for(Rectangle tuboar: Tuboar) {batch.draw(Tuboart, tuboar.x, tuboar.y);
 			 
 			}
@@ -500,9 +502,20 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 		case COUNTDOWNMINI:
 		
-	    	// TODO RESETEO DE MINIJUEGO
-//	    	ilit = HEIGHT/7;
-//		 	acceleration.set(0, 0); 
+	    	// 
+			
+		
+			camfla.setToOrtho(false,WIDTH,HEIGHT);
+			leftLimitmini = camfla.position.x - Gdx.graphics.getWidth() / 2;
+			rightLimitmini = camfla.position.x + Gdx.graphics.getWidth() / 2;
+			topLimitmini = camfla.position.y + Gdx.graphics.getHeight() / 2;
+			bottomLimitmini = camfla.position.y - Gdx.graphics.getHeight() / 2;
+			ct=0;
+			
+			 batch = new SpriteBatch();
+			camfla.update();
+		
+
 //		 	velocity.set(0,0);
 //			camera.setToOrtho(false,WIDTH,HEIGHT);
 //			batch = new SpriteBatch();
@@ -518,6 +531,11 @@ public class DragonBoatGame extends ApplicationAdapter {
 //			nRonda++;
 //			tiempoInicio = TimeUtils.millis();
 		// CAMBIAR LO DE ARRIBA PARA QUE RESETEE EL MINIJUEGO
+
+			Tuboar.clear();
+			Tuboab.clear();
+			 minijuego=new minijuego();
+			 minijuego.inicializar();
 			minijuego.iniciar(table, batch, stage);
 			long tiempoTranscurridomini = TimeUtils.timeSinceMillis(tiempoMini);
 		    if (tiempoTranscurridomini < 1000) {
@@ -764,6 +782,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 				    			    e.printStackTrace();
 				    			    
 				    			}
+				    		 
 				    		 	ilit = HEIGHT/7;
 							 	acceleration.set(0, 0); 
 							 	velocity.set(0,0);
@@ -1020,7 +1039,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        	
 	        	
 		  	    Rectangle tuboar = new Rectangle(minijuego.jugador.getX()+1500,y,70,590);
-		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis,70,590);
+		  	    Rectangle tuboab = new Rectangle(minijuego.jugador.getX()+1500,y-ydis-10,70,590);
 	  	      Tuboab.add(tuboab);
 	  	      Tuboar.add(tuboar);
 	  	      lastDropTimeTuboab = TimeUtils.millis();
