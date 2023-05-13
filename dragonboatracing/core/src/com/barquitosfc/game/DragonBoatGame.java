@@ -101,7 +101,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected int vInicial=300;
 	protected int championx,championy,escudox,escudoy;
 	private boolean perdisteIA=false,perdisteVidas=false;
-	private Texture Tperdiste,TpVidas;
+	private Texture Tperdiste,TpVidas,tCampeon;
 	
 
 
@@ -149,7 +149,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 		 
 
-
+		 tCampeon= new Texture(Gdx.files.internal("data/Campeon.png"));
 		 Tperdiste=new Texture(Gdx.files.internal("data/No_Llegaste_A_Meta.png"));
 		 TpVidas= new Texture(Gdx.files.internal("data/Sin_Vidas.png"));
 		 TlineaMeta= new Texture(Gdx.files.internal("fondos/Linea_Meta2.png"));
@@ -683,7 +683,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					gameState=GameState.MENU;
 				} else {
 					batch.begin();
-					//TODO PANTALLA FINAL
+					batch.draw(tCampeon, (WIDTH-1280)/2, (HEIGHT-224)/2, 1280, 224);
 					batch.end();
 				}
 			}
