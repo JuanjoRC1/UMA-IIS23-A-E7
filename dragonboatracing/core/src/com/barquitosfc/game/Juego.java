@@ -30,7 +30,7 @@ public class Juego {
 	public Carril C1,C2,C3,C4;
 	public Rectangle lineaMeta;
 	public Texture TlineaMeta;
-	public int Duracion = 15;
+	public int Duracion = 20;
 
 	
 	public  Juego() {

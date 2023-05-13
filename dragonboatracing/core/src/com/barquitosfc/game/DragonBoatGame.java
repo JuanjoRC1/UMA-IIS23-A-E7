@@ -673,7 +673,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					batch.end();
 				}
 	        	
-			}else if(nRonda!=4){
+			}else if(nRonda!=3){
 				batch.begin();
 				batch.draw(enhorabuena, (WIDTH-1280)/2, (HEIGHT-172)/2, 1280, 172);
 		        batch.end();
@@ -1127,10 +1127,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
+					tiempoFase=TimeUtils.millis();
 					perdisteVidas=true;
 					gameState=GameState.FASE;
-					
-					
 					
 			 }
 
