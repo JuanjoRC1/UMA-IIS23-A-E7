@@ -892,6 +892,44 @@ public class DragonBoatGame extends ApplicationAdapter {
 					 }
 
 					 Rectangle drag= minijuego.jugador.getBoundingRectangle();
+					 for (Iterator<Rectangle> iterar = Tuboab.iterator(); iterar.hasNext(); ) {
+						 
+						  
+					      Rectangle Tuboab = iterar.next();
+					      
+				      if(Tuboab.overlaps(drag)) {
+				    		 bum.play();
+				    		batch.begin();
+				    		batch.draw(fin, minijuego.jugador.getX()+500, camfla.position.y);
+				    		 batch.end();
+				    		
+				    		 try {
+				    			    Thread.sleep(1300); // 5000 milisegundos son equivalentes a 5 segundos
+				    			} catch (InterruptedException e) {
+				    				
+				    			    e.printStackTrace();
+				    			    
+				    			}
+				    		 
+				    		 	ilit = HEIGHT/7;
+							 	acceleration.set(0, 0); 
+							 	velocity.set(0,0);
+								camera.setToOrtho(false,WIDTH,HEIGHT);
+								batch = new SpriteBatch();
+								camera.update();
+								juego = new Juego();
+								AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+								AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);
+								AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,vPunta-vPunta/3,tiempoInicio);	
+								setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+								juego.jugador.setvPunta(vPunta);
+								AEscudo.add(escudo);
+								AChampion.add(champion);
+								nRonda++;
+								tiempoInicio = TimeUtils.millis();
+								gameState=GameState.COUNTDOWN;
+					      }
+				      }
 					 for (Iterator<Rectangle> iterar = Tuboar.iterator(); iterar.hasNext(); ) {
 						 
 					  
