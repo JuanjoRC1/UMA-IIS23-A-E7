@@ -27,8 +27,8 @@ public class Tienda {
 	protected static int vPunta1= 10;
 	protected int vidas2= 10;
 	protected int vPunta2= 5;
-	protected int vidas3= 5;
-	protected int vPunta3= 5;
+	protected int vidas3= 7;
+	protected int vPunta3= 7;
 	protected int HEIGHT= 1920;
 	protected static int vidasS=vidas1;
 	protected static int vPuntaS=vPunta1;
