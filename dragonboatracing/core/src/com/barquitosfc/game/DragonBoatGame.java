@@ -675,6 +675,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
+					OEscudo.add(escudoI);
 					perdisteVidas=false;
 					nRonda = 0;
 					gameState=GameState.MENU;
@@ -1145,6 +1146,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);
+					OEscudo.add(escudoI);
 					tiempoFase=TimeUtils.millis();
 					gameState=GameState.FASE;
 			 }
