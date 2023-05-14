@@ -67,7 +67,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Barco boat;
 	protected BitmapFont font;
 	protected Texture bInicio,bAjustes,bTienda,bSalir,ronda1,ronda2,ronda3,rondaFinal,enhorabuena,primero,segundo,tercero,cuarto;
-	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion,rema,TlineaMeta;
+	protected Texture board,boardPlay,boardminit,boatTexture,TRoca,TTronco,TCoco,TCoco2,Tuboabt,Tuboart,fin,bReanudar,fondoEscape,TEscudo,TChampion,vuela,rema,TlineaMeta;
 	protected Stage stage;
 	protected Table table;
 	public   static GameState gameState;
@@ -285,6 +285,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 contadorVida = new Texture(Gdx.files.internal("data/Contador_Vida.png"));
 		 
 		 rema = new Texture(Gdx.files.internal("data/rema.png"));
+		 vuela = new Texture(Gdx.files.internal("data/vuela.png"));
 		 
 			bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
 			spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
@@ -592,7 +593,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 		        batch.end();
 		    } else if(tiempoTranscurridomini < 4000) {
 		    	batch.begin();
+
 		    	 batch.draw(vuela,(WIDTH-200)/2, (HEIGHT-200), 200, 200);
+
 		        batch.end();
 		    }else {
 
