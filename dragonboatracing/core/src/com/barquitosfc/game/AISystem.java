@@ -15,18 +15,50 @@ public class AISystem {
 	protected Array<Rectangle> cocodrilos;
 	protected Array<Rectangle> eliminados = new Array<Rectangle>();
 	
-	protected int vidas = Tienda.vidasS+1;
+	protected int vidas;
 	protected int velocidad;
-	protected int distanciaEsquivar = 150;
+	protected int distanciaEsquivar = 0;
 	protected long tiempoInicio;
+	protected int numeroBarco = 0;
 	
-	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,int speed,long time) {
+	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,long time,int dificultad,int numBarco) {
 		barco = barquito;
 		rocas = roquitas;
 		troncos = tronquitos;
 		cocodrilos = cocodrilitos;
-		velocidad = speed;
 		tiempoInicio = time;
+		distanciaEsquivar = dificultad;
+		numeroBarco = numBarco;
+		
+		switch (numeroBarco) {
+			case 0:
+				velocidad = (Tienda.vPuntaS)*25;
+				vidas = 7;
+				break;
+			case 1:
+				velocidad = (Tienda.vPuntaS)*25-100;
+				vidas = 15;
+				break;
+			case 2:
+				velocidad = (Tienda.vPuntaS)*25-25;
+				vidas = 10;
+				break;
+		}
+		switch(dificultad) {
+			case 30:
+				break;
+			case 50:
+				velocidad = velocidad+60;
+				break;
+			case 80:
+				velocidad = velocidad+90;
+				break;
+			case 100:
+				velocidad = velocidad+100;
+				break;
+			
+		}
+
 	}
 	
 	
@@ -34,7 +66,7 @@ public class AISystem {
         float centroBarcoX = barco.getBoundingRectangle().getX() + barco.getWidth() / 2;
 		float puntaBarco = barco.getBoundingRectangle().getY() + barco.getHeight();
 		
-		if(TimeUtils.timeSinceMillis(tiempoInicio)>=4500) {
+		if(TimeUtils.timeSinceMillis(tiempoInicio)>=5500) {
         barco.setY(barco.getY() + velocidad * delta);
 		}
         

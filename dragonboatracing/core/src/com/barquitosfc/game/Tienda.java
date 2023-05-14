@@ -10,9 +10,11 @@ import java.security.PublicKey;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.barquitosfc.game.DragonBoatGame.GameState;
 
 public class Tienda {
-	protected static int dinero = 0;
+	protected static int dinero = 5;
 	protected static int vidas1= 5;
 	protected static int vPunta1= 10;
 	protected int vidas2= 10;
@@ -124,6 +126,12 @@ public class Tienda {
     protected Texture decenasVp;
     protected Texture confirmar;
     protected Texture grifoCoin;
+    protected Texture[] barcoFire = new Texture[3];
+    protected Texture[] barcoNature = new Texture[3];
+    protected Texture[] barcoCanario = new Texture[3];
+	public Animation<Texture> barcoFireAni,BarcoNatureAni, barcoCanarioAni;
+	protected float tiempoAnimacion = 0f;
+
 
 
     
@@ -148,6 +156,7 @@ public class Tienda {
    	 	spriteBConfirmar = new SpriteDrawable(new Sprite(confirmar));
    	 	spriteSiguiente = new SpriteDrawable(new Sprite(siguiente));
    		spriteAnterior = new SpriteDrawable( new Sprite(anterior));
+   		
    	 	barra0 = new Texture(Gdx.files.internal("data/Barra_Vacia.png"));;
    	 	barra1 = new Texture(Gdx.files.internal("data/Barra_Vida1.png"));;
    	 	barra2 = new Texture(Gdx.files.internal("data/Barra_Vida2.png"));;
@@ -169,9 +178,6 @@ public class Tienda {
         barra18= new Texture(Gdx.files.internal("data/Barra_Vida18.png"));; 
         barra19= new Texture(Gdx.files.internal("data/Barra_Vida19.png"));;
         barra20= new Texture(Gdx.files.internal("data/Barra_Vida.png"));;
-        barcosElec[0] = barco1;
-        barcosElec[1] = barco2;
-        barcosElec[2] = barco3;
    	 	barraV0 = new Texture(Gdx.files.internal("data/Barra_Vacia.png"));
    	 	barraV1 = new Texture(Gdx.files.internal("data/Barra_Velocidad1.png"));
    	 	barraV2 = new Texture(Gdx.files.internal("data/Barra_Velocidad2.png"));
@@ -193,9 +199,37 @@ public class Tienda {
    	 	barraV18 = new Texture(Gdx.files.internal("data/Barra_Velocidad18.png"));
    	 	barraV19 = new Texture(Gdx.files.internal("data/Barra_Velocidad19.png"));
    	 	barraV20 = new Texture(Gdx.files.internal("data/Barra_Velocidad20.png"));
-   	 	barco1 = new Texture(Gdx.files.internal("data/BARCO_FIRE.png"));
-   	 	barco2 = new Texture(Gdx.files.internal("data/BARCO_CANARIO.png"));
-   	 	barco3 = new Texture(Gdx.files.internal("data/BARCO_NATURE.png"));
+   	 	
+   	 	
+        barcosElec[0] = barco1;
+        barcosElec[1] = barco2;
+        barcosElec[2] = barco3;
+        
+   	 	barco1 = new Texture(Gdx.files.internal("data/BARCO_FIRE_CENTER.png"));
+   	 	barco2 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_CENTER.png"));
+   	 	barco3 = new Texture(Gdx.files.internal("data/BARCO_NATURE_CENTER.png"));
+   	 	
+   	 	barcoFire[0] = new Texture(Gdx.files.internal("data/BARCO_FIRE_LEFT.png"));
+   	 	barcoFire[1] = new Texture(Gdx.files.internal("data/BARCO_FIRE_CENTER.png"));
+   	 	barcoFire[2] = new Texture(Gdx.files.internal("data/BARCO_FIRE_RIGHT.png"));
+   	 	
+   	 	barcoCanario[0] = new Texture(Gdx.files.internal("data/BARCO_CANARIO_LEFT.png"));
+	 	barcoCanario[1] = new Texture(Gdx.files.internal("data/BARCO_CANARIO_CENTER.png"));
+	 	barcoCanario[2] = new Texture(Gdx.files.internal("data/BARCO_CANARIO_RIGHT.png"));
+	 	
+	 	barcoNature[0] = new Texture(Gdx.files.internal("data/BARCO_NATURE_LEFT.png"));
+   	 	barcoNature[1] = new Texture(Gdx.files.internal("data/BARCO_NATURE_CENTER.png"));
+   	 	barcoNature[2] = new Texture(Gdx.files.internal("data/BARCO_NATURE_RIGHT.png"));
+   	 	
+   	 	barcoFireAni = new Animation<>(1.0f / 3.0f, barcoFire);
+   	 	barcoFireAni.setPlayMode(Animation.PlayMode.LOOP);
+   	 	barcoCanarioAni = new Animation<>(1.0f / 3.0f, barcoCanario);
+	 	barcoCanarioAni.setPlayMode(Animation.PlayMode.LOOP);
+	 	BarcoNatureAni = new Animation<>(1.0f / 3.0f, barcoNature);
+   	 	BarcoNatureAni.setPlayMode(Animation.PlayMode.LOOP);
+
+   	 	
+   	 	
    	 	n0 = new Texture(Gdx.files.internal("data/Numero0.png"));
    	 	n1 = new Texture(Gdx.files.internal("data/Numero1.png"));
    	 	n2 = new Texture(Gdx.files.internal("data/Numero2.png"));
@@ -296,6 +330,8 @@ public class Tienda {
 		dineroSeguridad+=cant;
 	}
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
+		Animation<Texture> animacionBarcosE = barcoFireAni;
+
 		table.clear();// en vez de hacer table clear cambiamos a un nuevo stage con Gdx.input.setInputProcessor( new stage);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -318,9 +354,19 @@ public class Tienda {
         unidadesVp = unidadesA[unidadesVel];
         decenasVp = decenasA[decenasVel];
         
+        if (eleccionBarco == 1) {
+            animacionBarcosE = barcoCanarioAni;
+        } else if (eleccionBarco == 2) {
+            animacionBarcosE = BarcoNatureAni;
+        }
+        
+        tiempoAnimacion += Gdx.graphics.getDeltaTime();
+        Texture frameActual = animacionBarcosE.getKeyFrame(tiempoAnimacion);
+       
+        
         batch.begin();
 		batch.draw(fondoTienda,0,0);
-		batch.draw(barcosE, 775, 490, 400, 300);
+		batch.draw(frameActual, 775, 490, 400, 300);
 		batch.draw(velocidadB, 700, 310, 500, 40);
 		batch.draw(vidaB, 700, 160, 500, 40);
 		batch.draw(letreroVida, 840, 215, 200, 30);

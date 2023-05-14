@@ -33,12 +33,9 @@ public class minijuego {
 		pajaroani[1] = new Texture(Gdx.files.internal("minijuego/dragonflappy.png"));
 		pajaroani[2] = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
 		pajaroani[3] = new Texture(Gdx.files.internal("minijuego/dragonflappy2.png"));
-		churumb[0] = new Texture(Gdx.files.internal("minijuego/chrumgif.png"));
-		churumb[1] = new Texture(Gdx.files.internal("minijuego/Sujeto.png"));
-		churumb[2] = new Texture(Gdx.files.internal("minijuego/churumgif2.png"));
 
-		churumani = new Animation<>(100.f, churumb);
-		churumani.setPlayMode(Animation.PlayMode.LOOP);
+
+
 		animacion = new Animation<>(100.f, pajaroani);
 		animacion.setPlayMode(Animation.PlayMode.LOOP);
 		

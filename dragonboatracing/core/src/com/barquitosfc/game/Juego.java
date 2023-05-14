@@ -93,28 +93,7 @@ public class Juego {
 		default: throw new RuntimeException("Barco no Valido");
 		}
 		
-		//ASIGNACION DE SKIN AL BARCO IA 1.
-		switch(barco) {
-		case 0: TIA1.load(barcoCanario.getTextureData());
-			break;
-		case 1: TIA1.load(barcoEvil.getTextureData());
-			break;
-		case 2: TIA1.load(barcoCanario.getTextureData());
-			break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
 
-		switch(barco) {  
-		case 0: mainBarco.load(barcoFuego.getTextureData());
-			break;
-		case 1: mainBarco.load(barcoCanario.getTextureData());
-			break;
-		case 2: mainBarco.load(barcoNatura.getTextureData());
-		break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
 		
 		//ASIGNACION DE SKIN AL BARCO IA 1.
 		switch(barco) {
