@@ -93,7 +93,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Juego juego;
 	protected minijuego minijuego;
 	protected Texture n0,n1,n2,n3,n4,n5,n6,n7,n8,n9;
-	protected Texture vuela;
 	protected Carril carril; 
 	protected long tiempoInicio;
 	 protected long tiempoFase,tiempoMini;
@@ -102,14 +101,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 	protected Texture currentFrame,currentFramechrum; 
 	private Sound jump; 
 	protected boolean escudosu=false,act=false,esc=false;
-	protected int vInicial=300;
+	protected int vInicial=200;
 	protected int championx,championy,escudox,escudoy;
 	private boolean perdisteIA=false,perdisteVidas=false;
 	private Texture Tperdiste,TpVidas,tCampeon;
 	protected int facil = 30;
 	protected int normal = 50;
-	protected int dificil = 80;
-	protected int experto = 100;
+	protected int dificil = 100;
+	protected int experto = 150;
 	protected int IA1Stats = 1;
 	protected int IA2Stats = 2;
 	protected int IA3Stats = 0;
@@ -121,7 +120,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 
 	
 	public DragonBoatGame() {
-		this(0,Tienda.vidasS,Tienda.vPuntaS*30,Tienda.dinero);
+		this(0,Tienda.vidasS,Tienda.vPuntaS*20,Tienda.dinero);
 	}
 	public DragonBoatGame(int eleccionBarco,int vidasS,int vPuntaS,int dinero) {
 		this.barcoDef=eleccionBarco;
@@ -285,7 +284,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		 contadorVida = new Texture(Gdx.files.internal("data/Contador_Vida.png"));
 		 
 		 rema = new Texture(Gdx.files.internal("data/rema.png"));
-		 vuela = new Texture(Gdx.files.internal("data/vuela.png"));
+		 vuela = new Texture(Gdx.files.internal("minijuego/vuela.png"));
 		 
 			bSalir = new Texture(Gdx.files.internal("ui/Salir_ESC.png"));
 			spriteBSalir = new SpriteDrawable(new Sprite(bSalir));
@@ -1271,9 +1270,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 	  	   }
 	        
 	       public void actualizarIA() {
-	    	   AI1.update(Gdx.graphics.getDeltaTime(),1);
-	    	   AI2.update(Gdx.graphics.getDeltaTime(),3);
-	    	   AI3.update(Gdx.graphics.getDeltaTime(),4);
+	    	   AI1.update(Gdx.graphics.getDeltaTime(),1,vPunta);
+	    	   AI2.update(Gdx.graphics.getDeltaTime(),3,vPunta);
+	    	   AI3.update(Gdx.graphics.getDeltaTime(),4,vPunta);
 	       }
 	       
 }	       

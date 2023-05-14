@@ -30,39 +30,41 @@ public class AISystem {
 		distanciaEsquivar = dificultad;
 		numeroBarco = numBarco;
 		
-		switch (numeroBarco) {
-			case 0:
-				velocidad = (Tienda.vPuntaS)*25;
-				vidas = 7;
-				break;
-			case 1:
-				velocidad = (Tienda.vPuntaS)*25-100;
-				vidas = 15;
-				break;
-			case 2:
-				velocidad = (Tienda.vPuntaS)*25-25;
-				vidas = 10;
-				break;
-		}
-		switch(dificultad) {
-			case 30:
-				break;
-			case 50:
-				velocidad = velocidad+60;
-				break;
-			case 80:
-				velocidad = velocidad+90;
-				break;
-			case 100:
-				velocidad = velocidad+100;
-				break;
-			
-		}
+		
 
 	}
 	
 	
-	public void update(float delta,int numCarril) {
+	public void update(float delta,int numCarril,int speed) {
+		
+		switch (numeroBarco) {
+		case 0:
+			velocidad = speed-5;
+			vidas = 7;
+			break;
+		case 1:
+			velocidad = speed-20;
+			vidas = 15;
+			break;
+		case 2:
+			velocidad = speed-10;
+			vidas = 10;
+			break;
+	}
+	switch(distanciaEsquivar) {
+		case 30:
+			break;
+		case 50:
+			velocidad = speed+5;
+			break;
+		case 100:
+			velocidad = speed+10;
+			break;
+		case 150:
+			velocidad = speed+10;
+			break;
+		
+	}
         float centroBarcoX = barco.getBoundingRectangle().getX() + barco.getWidth() / 2;
 		float puntaBarco = barco.getBoundingRectangle().getY() + barco.getHeight();
 		
