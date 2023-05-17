@@ -21,7 +21,7 @@ public class AISystem {
 	protected long tiempoInicio;
 	protected int numeroBarco = 0;
 	
-	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,long time,int dificultad,int numBarco) {
+	public AISystem(Barco barquito, Array<Rectangle> tronquitos, Array<Rectangle> roquitas,Array<Rectangle> cocodrilitos,long time,int dificultad,int numBarco,int speed) {
 		barco = barquito;
 		rocas = roquitas;
 		troncos = tronquitos;
@@ -30,41 +30,42 @@ public class AISystem {
 		distanciaEsquivar = dificultad;
 		numeroBarco = numBarco;
 		
-		
-
-	}
-	
-	
-	public void update(float delta,int numCarril,int speed) {
-		
 		switch (numeroBarco) {
 		case 0:
-			velocidad = speed-5;
-			vidas = 7;
+			velocidad = speed-10;
+			vidas = 5;
 			break;
 		case 1:
 			velocidad = speed-20;
-			vidas = 15;
+			vidas = 8;
 			break;
 		case 2:
-			velocidad = speed-10;
-			vidas = 10;
+			velocidad = speed-15;
+			vidas = 6;
 			break;
 	}
 	switch(distanciaEsquivar) {
 		case 30:
 			break;
 		case 50:
-			velocidad = speed+5;
+			velocidad = velocidad+5;
+			break;
+		case 80:
+			velocidad = velocidad+10;
 			break;
 		case 100:
-			velocidad = speed+10;
-			break;
-		case 150:
-			velocidad = speed+10;
+			velocidad = velocidad+15;
 			break;
 		
 	}
+		
+
+	}
+	
+	
+	public void update(float delta,int numCarril) {
+		
+		
         float centroBarcoX = barco.getBoundingRectangle().getX() + barco.getWidth() / 2;
 		float puntaBarco = barco.getBoundingRectangle().getY() + barco.getHeight();
 		
