@@ -42,15 +42,15 @@ public class DragonBoatGame extends ApplicationAdapter {
 	public Music omega;
 	public TextureRegion[] pajaroani= new TextureRegion[3];
 	float leftLimit, rightLimit, topLimit, bottomLimit,leftLimitmini, rightLimitmini, topLimitmini, bottomLimitmini;
-	protected Vector2 velocity = new Vector2(0,0);
+	protected Vector2 velocity = new Vector2(0,0); //V
 	protected Vector2 acceleration = new Vector2(0,0);
 	protected Texture fondofla;
-	protected  float gravity=(float) -1.4;
+	protected  float gravity=(float) -1.4; // Gravedad usada para el minijuego
 	protected int aceler;
 	protected int barcoDef;
-	protected  int vidas = Tienda.vidasS; 
-	protected int vPunta = Tienda.vPuntaS;
-	protected int dinero = Tienda.dinero;
+	protected  int vidas = Tienda.vidasS;  // Vidas seleccionadas en la tienda.
+	protected int vPunta = Tienda.vPuntaS; // Velocidad seleccionada en la tienda
+	protected int dinero = Tienda.dinero;  // Dinero actual.
 	protected int unidadVida;
 	protected int decenaVida,tiempoP,unidadE,decenaE,posicion;
 	protected float pos1,pos2,pos3,mipos;
@@ -383,13 +383,14 @@ public class DragonBoatGame extends ApplicationAdapter {
 			if(pos1>mipos && pos2>mipos && pos3>mipos) posicion = 3;	
 			posicionT = posicionA[posicion];
 			
-			juego.setSkinBarcos(barcoDef);
+			juego.setSkinBarcos(barcoDef,true,0);
 			juego.iniciar(table, batch, stage);
 			
 			 AI1.tiempoInicio = tiempoInicio;
 			 AI2.tiempoInicio = tiempoInicio;
 			 AI3.tiempoInicio = tiempoInicio;
 			actualizarIA();
+			
 
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
@@ -603,7 +604,9 @@ public class DragonBoatGame extends ApplicationAdapter {
 			break;
 		case COUNTDOWN:
 			juego.iniciar(table, batch, stage);
-			
+			AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA1Stats,Tienda.vPuntaS*30);
+			AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA2Stats,Tienda.vPuntaS*30);
+			AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA3Stats,Tienda.vPuntaS*30);
 			long tiempoTranscurrido = TimeUtils.timeSinceMillis(tiempoInicio);
 			if (tiempoTranscurrido < 1000) {
 				batch.begin();
@@ -1271,8 +1274,30 @@ public class DragonBoatGame extends ApplicationAdapter {
 	        
 	       public void actualizarIA() {
 	    	   AI1.update(Gdx.graphics.getDeltaTime(),1);
+	    	   if(AI1.vidas<=0) {
+	    		   AI1.velocidad = 0;
+	    		   juego.setSkinBarcos(barcoDef, false, 1);
+	    		    batch.begin();
+	    			juego.IA1.draw(batch);
+	    			batch.end();
+	    	   }
 	    	   AI2.update(Gdx.graphics.getDeltaTime(),3);
+	    	   if(AI2.vidas<=0) {
+	    		   AI2.velocidad = 0;
+	    		   juego.setSkinBarcos(barcoDef, false,2);
+	    		   batch.begin();
+	    		   juego.IA2.draw(batch);
+	    		   batch.end();
+	    	   }
 	    	   AI3.update(Gdx.graphics.getDeltaTime(),4);
+	    	   if(AI3.vidas<=0) {
+	    		   AI3.velocidad = 0;
+	    		   juego.setSkinBarcos(barcoDef, false,3);
+	    		   batch.begin();
+	    		   juego.IA3.draw(batch);
+	    		   batch.end();
+	    	   }
+	    	   
 	       }
 	       
 }	       

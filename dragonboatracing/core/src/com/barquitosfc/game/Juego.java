@@ -35,10 +35,7 @@ public class Juego {
 	
 	public  Juego() {
 		
-		mainBarco = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png")); 
-		TIA1 = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
-		TIA2 = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
-		TIA3 = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
+		
 		TlineaMeta= new Texture(Gdx.files.internal("fondos/Linea_Meta2.png"));
 		lineaMeta= new Rectangle(100,939+(1080*1),1706,98);
 		boardPlay = new Texture(Gdx.files.internal("fondos/Fondo_Rio.png"));
@@ -75,61 +72,118 @@ public class Juego {
 	
 	}
 	//METODO PARA ASIGNAR LA SKIN SELECCIONADA EN LA TIENDA ANTERIORMENTE
-	public void setSkinBarcos(int barco) {  
- 
+	public void setSkinBarcos(int barco,boolean vivo,int numIA) {  
+		
 		Texture barcoFuego = new Texture(Gdx.files.internal("data/BARCO_FIRE_OV.png"));
 		Texture barcoCanario = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV.png"));
 		Texture barcoNatura = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV.png"));
 		Texture barcoEvil = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV.png"));
+		
 
 		//ASIGNACION DE SKIN AL BARCO DEL USUARIO
-		switch(barco) {  
-		case 0: mainBarco.load(barcoFuego.getTextureData());
+		if(vivo) {
+			switch(barco) {  
+			case 0: mainBarco.load(barcoFuego.getTextureData());
+				break;
+			case 1: mainBarco.load(barcoCanario.getTextureData());
+				break;
+			case 2: mainBarco.load(barcoNatura.getTextureData());
 			break;
-		case 1: mainBarco.load(barcoCanario.getTextureData());
-			break;
-		case 2: mainBarco.load(barcoNatura.getTextureData());
-		break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-		
+			default: throw new RuntimeException("Barco no Valido");
+			}
+			
+	
+			
+			//ASIGNACION DE SKIN AL BARCO IA 1.
+			switch(barco) {
+			case 0: TIA1.load(barcoCanario.getTextureData());
+				break;
+			case 1: TIA1.load(barcoEvil.getTextureData());
+				break;
+			case 2: TIA1.load(barcoCanario.getTextureData());
+				break;
+			default: throw new RuntimeException("Barco no Valido");
+			}
+			
+	
+			//ASIGNACION DE SKIN AL BARCO IA 2.
+			switch(barco) { 
+			case 0: TIA2.load(barcoNatura.getTextureData()); 
+				break;
+			case 1: TIA2.load(barcoNatura.getTextureData());
+				break;
+			case 2: TIA2.load(barcoEvil.getTextureData());
+				break;
+			default: throw new RuntimeException("Barco no Valido");
+			}
+	
+			
+			//ASIGNACION DE SKIN AL BARCO IA 3.
+			switch(barco) {
+			case 0: TIA3.load(barcoEvil.getTextureData());
+				break;
+			case 1: TIA3.load(barcoFuego.getTextureData());
+				break;
+			case 2: TIA3.load(barcoFuego.getTextureData());
+				break;
+			default: throw new RuntimeException("Barco no Valido");
+			}
+			
+			switch(barco) {
+			case 0: TIA3.load(barcoEvil.getTextureData());
+				break;
+			case 1: TIA3.load(barcoFuego.getTextureData());
+				break;
+			case 2: TIA3.load(barcoFuego.getTextureData());
+				break;
+			default: throw new RuntimeException("Barco no Valido");
+			}
+			
+		}else {
+			Texture barcoFireEvilDead = new Texture(Gdx.files.internal("data/BARCO_EVIL_OV_ByN.png"));
+			Texture barcoCanarioDead = new Texture(Gdx.files.internal("data/BARCO_CANARIO_OV_ByN.png"));
+			Texture barcoNaturaDead = new Texture(Gdx.files.internal("data/BARCO_NATURE_OV_ByN.png"));
 
-		
-		//ASIGNACION DE SKIN AL BARCO IA 1.
-		switch(barco) {
-		case 0: TIA1.load(barcoCanario.getTextureData());
-			break;
-		case 1: TIA1.load(barcoEvil.getTextureData());
-			break;
-		case 2: TIA1.load(barcoCanario.getTextureData());
-			break;
-		default: throw new RuntimeException("Barco no Valido");
+			//ASIGNACION DE SKIN AL BARCO IA 1.
+			if(numIA == 1) {
+				switch(barco) {
+				case 0: TIA1.load(barcoCanarioDead.getTextureData());
+					break;
+				case 1: TIA1.load(barcoFireEvilDead.getTextureData());
+					break;
+				case 2: TIA1.load(barcoCanarioDead.getTextureData());
+					break;
+				default: throw new RuntimeException("Barco no Valido");
+				}
+				
+			}
+			//ASIGNACION DE SKIN AL BARCO IA 2.
+			if(numIA == 2) {
+				switch(barco) { 
+				case 0: TIA2.load(barcoNaturaDead.getTextureData()); 
+					break;
+				case 1: TIA2.load(barcoNaturaDead.getTextureData());
+					break;
+				case 2: TIA2.load(barcoFireEvilDead.getTextureData());
+					break;
+				default: throw new RuntimeException("Barco no Valido");
+				}
+			}
+	
+			
+			//ASIGNACION DE SKIN AL BARCO IA 3.
+			if(numIA == 3) {
+				switch(barco) {
+				case 0: TIA3.load(barcoFireEvilDead.getTextureData());
+					break;
+				case 1: TIA3.load(barcoFireEvilDead.getTextureData());
+					break;
+				case 2: TIA3.load(barcoFireEvilDead.getTextureData());
+					break;
+				default: throw new RuntimeException("Barco no Valido");
+				}
+			}
 		}
-		
-
-		//ASIGNACION DE SKIN AL BARCO IA 2.
-		switch(barco) { 
-		case 0: TIA2.load(barcoNatura.getTextureData()); 
-			break;
-		case 1: TIA2.load(barcoNatura.getTextureData());
-			break;
-		case 2: TIA2.load(barcoEvil.getTextureData());
-			break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-
-		
-		//ASIGNACION DE SKIN AL BARCO IA 3.
-		switch(barco) {
-		case 0: TIA3.load(barcoEvil.getTextureData());
-			break;
-		case 1: TIA3.load(barcoFuego.getTextureData());
-			break;
-		case 2: TIA3.load(barcoFuego.getTextureData());
-			break;
-		default: throw new RuntimeException("Barco no Valido");
-		}
-
 	}
 	
 	public void iniciar(Table table,SpriteBatch batch,Stage stage) {
@@ -163,7 +217,6 @@ public class Juego {
 			}
 		}
 		batch.end();
-		
 		
 		
 		//Dibuja al jugador

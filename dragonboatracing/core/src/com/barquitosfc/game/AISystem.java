@@ -30,7 +30,7 @@ public class AISystem {
 		distanciaEsquivar = dificultad;
 		numeroBarco = numBarco;
 		
-		switch (numeroBarco) {
+		switch (numeroBarco) { // Dependiendo del barco escogido por la IA tendrá unas características u otras
 		case 0:
 			velocidad = speed-10;
 			vidas = 5;
@@ -38,33 +38,34 @@ public class AISystem {
 		case 1:
 			velocidad = speed-20;
 			vidas = 8;
+
 			break;
 		case 2:
 			velocidad = speed-15;
 			vidas = 6;
-			break;
-	}
-	switch(distanciaEsquivar) {
-		case 30:
-			break;
-		case 50:
-			velocidad = velocidad+5;
-			break;
-		case 80:
-			velocidad = velocidad+10;
-			break;
-		case 100:
-			velocidad = velocidad+15;
-			break;
-		
-	}
-		
 
+			break;
+		}
+		switch(distanciaEsquivar) { // Dependiendo de la distancia de esquive (que está asociada a la dificultad)
+									//  que a su vez está asocidada a cada fase la IA aumenta su velocidad.
+			case 30:
+				break;
+			case 50:
+				velocidad = velocidad+5;
+				break;
+			case 80:
+				velocidad = velocidad+10;
+				break;
+			case 100:
+				velocidad = velocidad+15;
+				break;
+			
+		}
+		
 	}
 	
 	
 	public void update(float delta,int numCarril) {
-		
 		
         float centroBarcoX = barco.getBoundingRectangle().getX() + barco.getWidth() / 2;
 		float puntaBarco = barco.getBoundingRectangle().getY() + barco.getHeight();
@@ -72,24 +73,24 @@ public class AISystem {
 		if(TimeUtils.timeSinceMillis(tiempoInicio)>=5500) {
         barco.setY(barco.getY() + velocidad * delta);
 		}
-        
-        for (Rectangle obstaculo : troncos) {
-            esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
-            if(barco.getBoundingRectangle().overlaps(obstaculo)) {
-            	velocidad = velocidad-velocidad/10;
-            	 eliminados.add(obstaculo);
-            }
-        }
-        
-        for (Rectangle obstaculo : rocas) {
+        // Modifica los parametros de la IA cuando se choca con un tronco
+        for (Rectangle obstaculo : troncos) { 
             esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
             if(barco.getBoundingRectangle().overlaps(obstaculo)) {
             	vidas--;
             	velocidad = velocidad-velocidad/20;
+            	 eliminados.add(obstaculo);
+            }
+        }
+        // Modifica los parametros de la IA cuando se choca con una roca
+        for (Rectangle obstaculo : rocas) {
+            esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
+            if(barco.getBoundingRectangle().overlaps(obstaculo)) {
+            	velocidad = velocidad-velocidad/10;
            	 eliminados.add(obstaculo);
            }
         }
-        
+        // Modifica los parametros de la IA cuando se choca con un cocodrilo
         for (Rectangle obstaculo : cocodrilos) {
             esquivarObstaculo(obstaculo, centroBarcoX, puntaBarco, delta,numCarril);
             if(barco.getBoundingRectangle().overlaps(obstaculo)) {
@@ -99,7 +100,7 @@ public class AISystem {
            	 eliminados.add(obstaculo);
            	 
            }
-        } 
+        } //elimina los obstáculos con los que se ha chocado la IA
         for (Rectangle eliminado : eliminados) {
         	troncos.removeValue(eliminado, true);
             rocas.removeValue(eliminado, true);
@@ -107,12 +108,9 @@ public class AISystem {
         }
         eliminados.clear();
         
-		if(vidas<=0) {
-			velocidad = 0;
-			
-		}
+        
     }
-    
+
 		
 
 		
