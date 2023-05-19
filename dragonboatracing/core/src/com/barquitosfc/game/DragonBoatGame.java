@@ -603,6 +603,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 		    }
 			break;
 		case COUNTDOWN:
+			juego.setSkinBarcos(barcoDef,true,0);
 			juego.iniciar(table, batch, stage);
 			AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA1Stats,Tienda.vPuntaS*30);
 			AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA2Stats,Tienda.vPuntaS*30);
@@ -744,7 +745,7 @@ public class DragonBoatGame extends ApplicationAdapter {
 					AI1 = new AISystem(juego.IA1, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA1Stats,Tienda.vPuntaS*30);
 					AI2 = new AISystem(juego.IA2, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA2Stats,Tienda.vPuntaS*30);
 					AI3 = new AISystem(juego.IA3, Troncos, Rocas, Cocodrilos,tiempoInicio,facil,IA3Stats,Tienda.vPuntaS*30);
-					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero);
+					setValoresBarco(Tienda.eleccionBarco, Tienda.vidasS, Tienda.vPuntaS, Tienda.dinero+3);
 					juego.jugador.setvPunta(vPunta);
 					AEscudo.add(escudo);
 					AChampion.add(champion);

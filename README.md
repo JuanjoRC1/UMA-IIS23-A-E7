@@ -17,3 +17,6 @@ Participantes:
 7. Cotilla García, Juan Carlos
 
 8. Lobato Rebollo, Miguel Alejandro
+
+Link del trello:
+https://trello.com/invite/b/CHYiAtP9/ATTIcb0ce8553b0baae7c6d350e2aa3716b8ECCEA249/planificacion-software

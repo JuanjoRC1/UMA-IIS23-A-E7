@@ -169,8 +169,6 @@ public class Juego {
 				default: throw new RuntimeException("Barco no Valido");
 				}
 			}
-	
-			
 			//ASIGNACION DE SKIN AL BARCO IA 3.
 			if(numIA == 3) {
 				switch(barco) {
