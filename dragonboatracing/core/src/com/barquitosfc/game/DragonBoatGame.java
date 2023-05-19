@@ -389,12 +389,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			 AI1.tiempoInicio = tiempoInicio;
 			 AI2.tiempoInicio = tiempoInicio;
 			 AI3.tiempoInicio = tiempoInicio;
-			actualizarIA();
+			
 			
 
 //			PINTAR LOS OBSTACULOS
 			batch.begin();	
-			
+			actualizarIA();
 			 for(Rectangle roca: Rocas) {batch.draw(TRoca, roca.x, roca.y);}
 			 for(Rectangle tronco: Troncos) {batch.draw(TTronco, tronco.x, tronco.y);}
 			 for(Rectangle cocodrilo: Cocodrilos) {
@@ -409,12 +409,12 @@ public class DragonBoatGame extends ApplicationAdapter {
 			update(Gdx.graphics.getDeltaTime());
 			
 			batch.begin();
+	
 			batch.draw(contadorVida, 80, juego.jugador.getY()-40, 160, 72);
 			batch.draw(unidadS, 140, juego.jugador.getY()-15, 24, 24);
 			batch.draw(decenaS, 110, juego.jugador.getY()-15, 24, 24);											
 			batch.draw(panelPos, 1750,juego.jugador.getY() +400, 130, 100);
 			batch.draw(posicionT, 1765, juego.jugador.getY() +400, 100, 100);
-//			font.draw(batch, "Velocidad " + vPunta, 110, juego.jugador.getY()+50);
 			
 			for(Rectangle esc: AEscudo) {batch.draw(TEscudo, esc.x, esc.y);}
 			for(Rectangle chm: AChampion) {batch.draw(TChampion, chm.x, chm.y);}
@@ -422,7 +422,6 @@ public class DragonBoatGame extends ApplicationAdapter {
 			for(Rectangle e: OEscudo) {batch.draw(TEscudo, e.x,e.y);}
 			}
 			
-//			batch.draw(TlineaMeta,lineaMeta.x,lineaMeta.y);
 			 batch.end();
 			 
 			 break;
@@ -1278,25 +1277,19 @@ public class DragonBoatGame extends ApplicationAdapter {
 	    	   if(AI1.vidas<=0) {
 	    		   AI1.velocidad = 0;
 	    		   juego.setSkinBarcos(barcoDef, false, 1);
-	    		    batch.begin();
 	    			juego.IA1.draw(batch);
-	    			batch.end();
 	    	   }
 	    	   AI2.update(Gdx.graphics.getDeltaTime(),3);
 	    	   if(AI2.vidas<=0) {
 	    		   AI2.velocidad = 0;
 	    		   juego.setSkinBarcos(barcoDef, false,2);
-	    		   batch.begin();
 	    		   juego.IA2.draw(batch);
-	    		   batch.end();
 	    	   }
 	    	   AI3.update(Gdx.graphics.getDeltaTime(),4);
 	    	   if(AI3.vidas<=0) {
 	    		   AI3.velocidad = 0;
 	    		   juego.setSkinBarcos(barcoDef, false,3);
-	    		   batch.begin();
 	    		   juego.IA3.draw(batch);
-	    		   batch.end();
 	    	   }
 	    	   
 	       }
